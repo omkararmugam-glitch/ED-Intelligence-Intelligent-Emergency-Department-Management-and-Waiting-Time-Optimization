@@ -1,0 +1,24 @@
+# Runtime dependencies for the dashboard image.
+#
+# The dashboard fits nothing and loads no model. It asks the API for every number
+# and reads the pipeline's saved tables for the rest, so none of the training
+# stack belongs here: no lightgbm, no scikit-learn, no simpy, no lifelines, no
+# matplotlib (charts are drawn by Altair in the browser).
+#
+# `pyarrow` IS required: Shift replay reads `visits_validated.parquet` directly.
+# `altair` is not pinned here on purpose -- Streamlit pins the version it renders
+# with, and pinning it separately is how that gets broken.
+#
+# Every pin below is identical to requirements.txt / requirements-api.txt.
+
+# --- tables the pages read ---
+numpy==1.26.4
+pandas==2.2.3
+# Bumped from 17.0.0 for CVE-2026-25087 (use-after-free, HIGH), fixed in 23.0.1.
+# Safe for the reproduction: pyarrow only round-trips the intermediate parquet
+# files, and float64 survives that exactly, so no metric moves.
+pyarrow==23.0.1
+
+# --- the dashboard itself ---
+streamlit==1.41.1
+requests==2.32.3

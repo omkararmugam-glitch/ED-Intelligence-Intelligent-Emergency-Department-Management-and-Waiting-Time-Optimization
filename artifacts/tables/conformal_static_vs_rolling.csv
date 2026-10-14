@@ -1,0 +1,13 @@
+scope,method,n,nominal_coverage,empirical_coverage,coverage_gap,mean_width_minutes,median_width_minutes
+overall,static,8198,0.9,0.849,-0.051,39.04,43.8
+overall,rolling,8198,0.9,0.8875,-0.0125,46.49,50.26
+ESI 1,static,188,0.9,0.8404,-0.0596,10.65,11.35
+ESI 1,rolling,188,0.9,0.8777,-0.0223,11.84,12.34
+ESI 2,static,1171,0.9,0.8523,-0.0477,10.5,11.11
+ESI 2,rolling,1171,0.9,0.8898,-0.0102,13.24,13.64
+ESI 3,static,3345,0.9,0.8508,-0.0492,44.96,55.96
+ESI 3,rolling,3345,0.9,0.8876,-0.0124,53.23,55.47
+ESI 4,static,2555,0.9,0.8329,-0.0671,41.78,50.42
+ESI 4,rolling,2555,0.9,0.8834,-0.0166,52.45,56.25
+ESI 5,static,939,0.9,0.8839,-0.0161,51.81,61.61
+ESI 5,rolling,939,0.9,0.8978,-0.0022,54.66,62.74

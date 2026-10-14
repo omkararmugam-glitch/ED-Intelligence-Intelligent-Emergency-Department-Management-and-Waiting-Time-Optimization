@@ -1,0 +1,6 @@
+hour_band,n,nominal_coverage,empirical_coverage,coverage_gap,mean_width_arrivals
+overall,288,0.9,0.8924,-0.0076,8.918
+afternoon,72,0.9,0.9028,0.0028,11.096
+evening,72,0.9,0.9306,0.0306,9.879
+morning,72,0.9,0.8056,-0.0944,8.839
+night,72,0.9,0.9306,0.0306,5.859

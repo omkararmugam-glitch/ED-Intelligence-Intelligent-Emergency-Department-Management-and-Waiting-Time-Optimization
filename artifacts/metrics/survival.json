@@ -1,0 +1,589 @@
+{
+  "administrative_censor_minutes": 720.0,
+  "covariates": [
+    "triage_level",
+    "age",
+    "is_ambulance",
+    "n_waiting",
+    "hour_sin",
+    "hour_cos"
+  ],
+  "cox": [
+    {
+      "cause": "seen",
+      "coef": -0.3169,
+      "covariate": "triage_level",
+      "hazard_ratio": 0.7284,
+      "hr_lower_95": 0.7212,
+      "hr_upper_95": 0.7357,
+      "interpretation": "time-averaged only: the effect changes over the wait",
+      "n": 55973,
+      "n_events": 53974,
+      "p_value": 0.0,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "seen",
+      "coef": 0.0001,
+      "covariate": "age",
+      "hazard_ratio": 1.0001,
+      "hr_lower_95": 0.9998,
+      "hr_upper_95": 1.0005,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 53974,
+      "p_value": 0.40893938931181495,
+      "significant_at_5pct": false,
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "seen",
+      "coef": 0.0586,
+      "covariate": "is_ambulance",
+      "hazard_ratio": 1.0604,
+      "hr_lower_95": 1.037,
+      "hr_upper_95": 1.0843,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 53974,
+      "p_value": 2.5305570302964546e-07,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "seen",
+      "coef": -0.1763,
+      "covariate": "n_waiting",
+      "hazard_ratio": 0.8384,
+      "hr_lower_95": 0.8367,
+      "hr_upper_95": 0.84,
+      "interpretation": "time-averaged only: the effect changes over the wait",
+      "n": 55973,
+      "n_events": 53974,
+      "p_value": 0.0,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "seen",
+      "coef": 0.2377,
+      "covariate": "hour_sin",
+      "hazard_ratio": 1.2683,
+      "hr_lower_95": 1.2507,
+      "hr_upper_95": 1.2862,
+      "interpretation": "time-averaged only: the effect changes over the wait",
+      "n": 55973,
+      "n_events": 53974,
+      "p_value": 2.637919856473731e-244,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "seen",
+      "coef": 0.0132,
+      "covariate": "hour_cos",
+      "hazard_ratio": 1.0133,
+      "hr_lower_95": 1.0018,
+      "hr_upper_95": 1.0249,
+      "interpretation": "time-averaged only: the effect changes over the wait",
+      "n": 55973,
+      "n_events": 53974,
+      "p_value": 0.023091112122485206,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "abandoned",
+      "coef": 0.1521,
+      "covariate": "triage_level",
+      "hazard_ratio": 1.1643,
+      "hr_lower_95": 1.135,
+      "hr_upper_95": 1.1943,
+      "interpretation": "time-averaged only: the effect changes over the wait",
+      "n": 55973,
+      "n_events": 1998,
+      "p_value": 1.2570490047333424e-31,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "abandoned",
+      "coef": -0.0001,
+      "covariate": "age",
+      "hazard_ratio": 0.9999,
+      "hr_lower_95": 0.9989,
+      "hr_upper_95": 1.0008,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 1998,
+      "p_value": 0.7990299232815141,
+      "significant_at_5pct": false,
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "coef": -0.0665,
+      "covariate": "is_ambulance",
+      "hazard_ratio": 0.9356,
+      "hr_lower_95": 0.8784,
+      "hr_upper_95": 0.9965,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 1998,
+      "p_value": 0.03866907867325282,
+      "significant_at_5pct": true,
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "coef": -0.0015,
+      "covariate": "n_waiting",
+      "hazard_ratio": 0.9985,
+      "hr_lower_95": 0.9952,
+      "hr_upper_95": 1.0019,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 1998,
+      "p_value": 0.3881136210926296,
+      "significant_at_5pct": false,
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "coef": -0.0055,
+      "covariate": "hour_sin",
+      "hazard_ratio": 0.9945,
+      "hr_lower_95": 0.9586,
+      "hr_upper_95": 1.0317,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 1998,
+      "p_value": 0.7680706066154146,
+      "significant_at_5pct": false,
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "coef": -0.0062,
+      "covariate": "hour_cos",
+      "hazard_ratio": 0.9938,
+      "hr_lower_95": 0.9613,
+      "hr_upper_95": 1.0274,
+      "interpretation": "constant-effect reading is supported by the test",
+      "n": 55973,
+      "n_events": 1998,
+      "p_value": 0.7145682813958601,
+      "significant_at_5pct": false,
+      "violates_proportional_hazards": false
+    }
+  ],
+  "cox_proportional_hazards": [
+    {
+      "cause": "seen",
+      "covariate": "age",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.22713466474793703,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 1.4587,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "seen",
+      "covariate": "hour_cos",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 5.227937959363634e-133,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 602.3239,
+      "verdict": "effect changes over the wait; the hazard ratio is a time-average only",
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "seen",
+      "covariate": "hour_sin",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 2.230905301808468e-158,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 718.9799,
+      "verdict": "effect changes over the wait; the hazard ratio is a time-average only",
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "seen",
+      "covariate": "is_ambulance",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.06003999229523866,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 3.5363,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "seen",
+      "covariate": "n_waiting",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 6.3003508115169e-299,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 1365.5923,
+      "verdict": "effect changes over the wait; the hazard ratio is a time-average only",
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "seen",
+      "covariate": "triage_level",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.0004306768150662267,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 12.3942,
+      "verdict": "effect changes over the wait; the hazard ratio is a time-average only",
+      "violates_proportional_hazards": true
+    },
+    {
+      "cause": "abandoned",
+      "covariate": "age",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.9846427195720877,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 0.0004,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "covariate": "hour_cos",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.9321663293744804,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 0.0072,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "covariate": "hour_sin",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.8119292413837547,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 0.0566,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "covariate": "is_ambulance",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.4114166191325386,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 0.6747,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "covariate": "n_waiting",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.6609252197170181,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 0.1924,
+      "verdict": "no evidence against proportional hazards",
+      "violates_proportional_hazards": false
+    },
+    {
+      "cause": "abandoned",
+      "covariate": "triage_level",
+      "diagnostic_subsampled": false,
+      "n_fitted": 55973,
+      "n_tested": 55973,
+      "p_value": 0.03197101273044502,
+      "test": "Schoenfeld residuals (rank time-transform)",
+      "test_statistic": 4.6001,
+      "verdict": "effect changes over the wait; the hazard ratio is a time-average only",
+      "violates_proportional_hazards": true
+    }
+  ],
+  "cox_proportional_hazards_summary": {
+    "all_assumptions_hold": false,
+    "alpha": 0.05,
+    "limitation_note": "A Cox hazard ratio is one number for the whole of the waiting period. That is only a complete description when the covariate's effect is constant over time, which is what the proportional-hazards assumption asserts. Where the test below rejects it, the reported hazard ratio is still a valid TIME-AVERAGED summary -- weighted towards the times when most patients are still waiting -- but it is not the effect at any particular minute, and it should not be read as one. A covariate whose effect strengthens or fades as the wait goes on will show a ratio somewhere between its early and late values.",
+    "n_covariate_tests": 12,
+    "n_untested": 0,
+    "n_violations": 5,
+    "ran": true,
+    "test": "Schoenfeld residuals (rank time-transform)",
+    "violations": [
+      {
+        "cause": "seen",
+        "covariate": "hour_cos",
+        "p_value": 5.227937959363634e-133
+      },
+      {
+        "cause": "seen",
+        "covariate": "hour_sin",
+        "p_value": 2.230905301808468e-158
+      },
+      {
+        "cause": "seen",
+        "covariate": "n_waiting",
+        "p_value": 6.3003508115169e-299
+      },
+      {
+        "cause": "seen",
+        "covariate": "triage_level",
+        "p_value": 0.0004306768150662267
+      },
+      {
+        "cause": "abandoned",
+        "covariate": "triage_level",
+        "p_value": 0.03197101273044502
+      }
+    ]
+  },
+  "cumulative_incidence": [
+    {
+      "cause": "seen",
+      "incidence_at_120min": 1.0,
+      "incidence_at_240min": 1.0,
+      "incidence_at_30min": 0.9965,
+      "incidence_at_60min": 1.0,
+      "incidence_at_720min": 1.0,
+      "n": 1139,
+      "n_events": 1139,
+      "triage_level": 1
+    },
+    {
+      "cause": "seen",
+      "incidence_at_120min": 1.0,
+      "incidence_at_240min": 1.0,
+      "incidence_at_30min": 0.9893,
+      "incidence_at_60min": 0.9997,
+      "incidence_at_720min": 1.0,
+      "n": 7304,
+      "n_events": 7304,
+      "triage_level": 2
+    },
+    {
+      "cause": "seen",
+      "incidence_at_120min": 0.8995,
+      "incidence_at_240min": 0.9781,
+      "incidence_at_30min": 0.595,
+      "incidence_at_60min": 0.7217,
+      "incidence_at_720min": 0.9835,
+      "n": 23201,
+      "n_events": 22817,
+      "triage_level": 3
+    },
+    {
+      "cause": "abandoned",
+      "incidence_at_120min": 0.0102,
+      "incidence_at_240min": 0.0162,
+      "incidence_at_30min": 0.0003,
+      "incidence_at_60min": 0.0023,
+      "incidence_at_720min": 0.0165,
+      "n": 23201,
+      "n_events": 383,
+      "triage_level": 3
+    },
+    {
+      "cause": "seen",
+      "incidence_at_120min": 0.8798,
+      "incidence_at_240min": 0.941,
+      "incidence_at_30min": 0.4777,
+      "incidence_at_60min": 0.6985,
+      "incidence_at_720min": 0.9443,
+      "n": 18467,
+      "n_events": 17438,
+      "triage_level": 4
+    },
+    {
+      "cause": "abandoned",
+      "incidence_at_120min": 0.0432,
+      "incidence_at_240min": 0.0556,
+      "incidence_at_30min": 0.0032,
+      "incidence_at_60min": 0.0171,
+      "incidence_at_720min": 0.0557,
+      "n": 18467,
+      "n_events": 1029,
+      "triage_level": 4
+    },
+    {
+      "cause": "seen",
+      "incidence_at_120min": 0.8554,
+      "incidence_at_240min": 0.9087,
+      "incidence_at_30min": 0.4173,
+      "incidence_at_60min": 0.5287,
+      "incidence_at_720min": 0.9103,
+      "n": 7068,
+      "n_events": 6434,
+      "triage_level": 5
+    },
+    {
+      "cause": "abandoned",
+      "incidence_at_120min": 0.0763,
+      "incidence_at_240min": 0.0893,
+      "incidence_at_30min": 0.0047,
+      "incidence_at_60min": 0.0349,
+      "incidence_at_720min": 0.0897,
+      "n": 7068,
+      "n_events": 634,
+      "triage_level": 5
+    }
+  ],
+  "event_counts": {
+    "abandoned": 2046,
+    "seen": 55132,
+    "still waiting at cutoff": 1
+  },
+  "figures": [
+    "C:\\dev\\ed-project\\artifacts\\figures\\survival_km_time_to_seen.png",
+    "C:\\dev\\ed-project\\artifacts\\figures\\survival_cumulative_incidence.png"
+  ],
+  "km_median_minutes": [
+    {
+      "median_minutes_to_seen": 3.0,
+      "n": 1139,
+      "n_seen": 1139,
+      "prob_unseen_at_120min": 0.0,
+      "prob_unseen_at_60min": 0.0,
+      "triage_level": 1
+    },
+    {
+      "median_minutes_to_seen": 3.0,
+      "n": 7304,
+      "n_seen": 7304,
+      "prob_unseen_at_120min": 0.0,
+      "prob_unseen_at_60min": 0.0004,
+      "triage_level": 2
+    },
+    {
+      "median_minutes_to_seen": 15.0,
+      "n": 23201,
+      "n_seen": 22817,
+      "prob_unseen_at_120min": 0.0949,
+      "prob_unseen_at_60min": 0.2757,
+      "triage_level": 3
+    },
+    {
+      "median_minutes_to_seen": 34.0,
+      "n": 18467,
+      "n_seen": 17438,
+      "prob_unseen_at_120min": 0.0949,
+      "prob_unseen_at_60min": 0.2943,
+      "triage_level": 4
+    },
+    {
+      "median_minutes_to_seen": 52.0,
+      "n": 7068,
+      "n_seen": 6434,
+      "prob_unseen_at_120min": 0.0947,
+      "prob_unseen_at_60min": 0.4653,
+      "triage_level": 5
+    }
+  ],
+  "km_vs_aalen_johansen": [
+    {
+      "aalen_johansen_prob_seen": 1.0,
+      "horizon_minutes": 60,
+      "km_overstatement": 0.0,
+      "km_overstatement_percent": 0.0,
+      "km_prob_seen": 1.0,
+      "triage_level": 1
+    },
+    {
+      "aalen_johansen_prob_seen": 0.9997,
+      "horizon_minutes": 60,
+      "km_overstatement": -0.0001,
+      "km_overstatement_percent": -0.01,
+      "km_prob_seen": 0.9996,
+      "triage_level": 2
+    },
+    {
+      "aalen_johansen_prob_seen": 0.7217,
+      "horizon_minutes": 60,
+      "km_overstatement": 0.0026,
+      "km_overstatement_percent": 0.36,
+      "km_prob_seen": 0.7243,
+      "triage_level": 3
+    },
+    {
+      "aalen_johansen_prob_seen": 0.6985,
+      "horizon_minutes": 60,
+      "km_overstatement": 0.0072,
+      "km_overstatement_percent": 1.03,
+      "km_prob_seen": 0.7057,
+      "triage_level": 4
+    },
+    {
+      "aalen_johansen_prob_seen": 0.5287,
+      "horizon_minutes": 60,
+      "km_overstatement": 0.006,
+      "km_overstatement_percent": 1.13,
+      "km_prob_seen": 0.5347,
+      "triage_level": 5
+    },
+    {
+      "aalen_johansen_prob_seen": 1.0,
+      "horizon_minutes": 120,
+      "km_overstatement": 0.0,
+      "km_overstatement_percent": 0.0,
+      "km_prob_seen": 1.0,
+      "triage_level": 1
+    },
+    {
+      "aalen_johansen_prob_seen": 1.0,
+      "horizon_minutes": 120,
+      "km_overstatement": 0.0,
+      "km_overstatement_percent": 0.0,
+      "km_prob_seen": 1.0,
+      "triage_level": 2
+    },
+    {
+      "aalen_johansen_prob_seen": 0.8995,
+      "horizon_minutes": 120,
+      "km_overstatement": 0.0056,
+      "km_overstatement_percent": 0.62,
+      "km_prob_seen": 0.9051,
+      "triage_level": 3
+    },
+    {
+      "aalen_johansen_prob_seen": 0.8798,
+      "horizon_minutes": 120,
+      "km_overstatement": 0.0253,
+      "km_overstatement_percent": 2.88,
+      "km_prob_seen": 0.9051,
+      "triage_level": 4
+    },
+    {
+      "aalen_johansen_prob_seen": 0.8554,
+      "horizon_minutes": 120,
+      "km_overstatement": 0.0499,
+      "km_overstatement_percent": 5.83,
+      "km_prob_seen": 0.9053,
+      "triage_level": 5
+    }
+  ],
+  "ran": true,
+  "reason": ""
+}

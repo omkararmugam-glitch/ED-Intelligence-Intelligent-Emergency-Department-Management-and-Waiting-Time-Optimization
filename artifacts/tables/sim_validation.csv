@@ -1,0 +1,15 @@
+metric,key,observed,simulated,absolute_error,relative_error,tolerance,absolute_floor,within_tolerance,passed_on,used_for_fitting
+mean wait,mean_wait_minutes,35.0116,32.5352,-2.4764,0.0707,0.2,3.0,True,relative,True
+p90 wait,p90_wait_minutes,100.0,89.2142,-10.7858,0.1079,0.25,3.0,True,relative,False
+mean LOS,mean_los_minutes,160.6365,152.038,-8.5985,0.0535,0.2,3.0,True,relative,False
+abandonment rate,abandonment_rate,0.0358,0.0298,-0.006,0.1668,0.5,0.01,True,relative,True
+mean wait ESI 1,mean_wait_esi1,4.547,5.2423,0.6954,0.1529,0.2,3.0,True,relative,False
+mean wait ESI 2,mean_wait_esi2,5.1407,5.6524,0.5117,0.0995,0.2,3.0,True,relative,False
+mean wait ESI 3,mean_wait_esi3,39.0797,34.9074,-4.1723,0.1068,0.2,3.0,True,relative,False
+mean wait ESI 4,mean_wait_esi4,40.5014,38.1037,-2.3977,0.0592,0.2,3.0,True,relative,False
+mean wait ESI 5,mean_wait_esi5,45.0089,44.1596,-0.8493,0.0189,0.2,3.0,True,relative,False
+abandonment rate ESI 1,abandonment_rate_esi1,0.0,0.0,0.0,,0.5,0.01,True,absolute floor,False
+abandonment rate ESI 2,abandonment_rate_esi2,0.0,0.0,0.0,,0.5,0.01,True,absolute floor,False
+abandonment rate ESI 3,abandonment_rate_esi3,0.0165,0.0184,0.0019,0.1159,0.5,0.01,True,relative,False
+abandonment rate ESI 4,abandonment_rate_esi4,0.0557,0.0384,-0.0174,0.3116,0.5,0.01,True,relative,False
+abandonment rate ESI 5,abandonment_rate_esi5,0.0897,0.0802,-0.0095,0.1058,0.5,0.01,True,relative,False

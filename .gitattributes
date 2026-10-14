@@ -1,0 +1,39 @@
+# Line endings.
+#
+# This repository is developed on Windows and its images are Linux. A CRLF that
+# reaches a container is not a cosmetic problem: a shell script with CRLF fails
+# with `no such file or directory` on its own shebang, and a Dockerfile heredoc
+# or an entrypoint behaves the same way. So every file a Linux container reads is
+# pinned to LF here, whatever the contributor's core.autocrlf is set to.
+#
+# The PowerShell scripts are deliberately left to Windows defaults: they run on
+# the host, never in a container.
+
+# Default: let Git decide for text, but never guess for the files below.
+* text=auto
+
+# --- files a Linux container reads or executes ---
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+Dockerfile.*    text eol=lf
+.dockerignore   text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+.env.example    text eol=lf
+requirements*.txt text eol=lf
+
+# --- Python: LF everywhere, so a file edited on Windows and read in a container
+#     hashes the same either side ---
+*.py            text eol=lf
+
+# --- host-only scripts: Windows line endings are correct for these ---
+*.ps1           text eol=crlf
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+
+# --- binary, never touched ---
+*.png           binary
+*.parquet       binary
+*.joblib        binary
+*.zip           binary
+*.pdf           binary

@@ -1,0 +1,56 @@
+{
+  "any_flagged": false,
+  "findings": [
+    {
+      "difference": 0.0003,
+      "flagged": false,
+      "message": "Arrivals peak at different times of day than the synthetic profile. Every calendar feature and the whole arrival forecaster were tuned on that shape.",
+      "name": "arrival-hour shape",
+      "observed": NaN,
+      "reference": NaN,
+      "statistic": "total variation distance",
+      "threshold": 0.1
+    },
+    {
+      "difference": 0.0001,
+      "flagged": false,
+      "message": "The ESI mix differs from the synthetic profile. The priority queue, every per-acuity result and the per-acuity conformal calibration all depend on it.",
+      "name": "acuity mix",
+      "observed": NaN,
+      "reference": NaN,
+      "statistic": "total variation distance",
+      "threshold": 0.05
+    },
+    {
+      "difference": 0.0,
+      "flagged": false,
+      "message": "Waits are on a different scale from the synthetic data. The 30-minute prolonged-wait threshold, the conformal interval widths and the simulation's fitted parameters were all chosen against that scale.",
+      "name": "median wait",
+      "observed": 20.0941,
+      "reference": 20.0941,
+      "statistic": "relative change",
+      "threshold": 0.25
+    },
+    {
+      "difference": 0.0,
+      "flagged": false,
+      "message": "Patients leave without being seen at a different rate. That is the competing risk the survival models describe and the quantity the simulation's patience parameter is fitted to.",
+      "name": "LWBS rate",
+      "observed": 0.0358,
+      "reference": 0.0358,
+      "statistic": "absolute change",
+      "threshold": 0.02
+    }
+  ],
+  "n_comparisons": 4,
+  "n_flagged": 0,
+  "proxy_wait": {
+    "active": false,
+    "dataset_name": "ed_v2_synthetic",
+    "notice": null,
+    "proxy": null
+  },
+  "reference": "synthetic (ed_v2)",
+  "retrain_notice": null,
+  "verdict": "This dataset looks like the synthetic data the models were tuned on, across all 4 comparisons. That is reassuring about the shape of the data and says nothing about whether the models are any good on it -- they have still never been validated on real data."
+}

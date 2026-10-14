@@ -1,0 +1,13 @@
+scope,rule,threshold,n,n_positive,recall,fnr,precision,pr_auc,recall_ci_low,recall_ci_high,fnr_ci_low,fnr_ci_high,precision_ci_low,precision_ci_high,threshold_source
+overall,pooled,0.6982,8198,3695,0.8755,0.1245,0.9577,0.9823,0.864,0.8862,0.1143,0.1361,0.9513,0.9643,pooled
+overall,per_triage,,8198,3695,0.8747,0.1253,0.9573,0.9823,0.864,0.8856,0.1151,0.1377,0.9505,0.9644,mixed
+ESI 1,pooled,0.6982,188,1,0.0,1.0,,0.0133,0.0,0.0,1.0,1.0,,,too few positives; using the pooled threshold
+ESI 1,per_triage,0.6982,188,1,0.0,1.0,,0.0133,0.0,0.0,1.0,1.0,,,too few positives; using the pooled threshold
+ESI 2,pooled,0.6982,1171,29,0.0,1.0,,0.3243,0.0,0.0,1.0,1.0,,,too few positives; using the pooled threshold
+ESI 2,per_triage,0.6982,1171,29,0.0,1.0,,0.3243,0.0,0.0,1.0,1.0,,,too few positives; using the pooled threshold
+ESI 3,pooled,0.6982,3345,1620,0.8932,0.1068,0.9513,0.9823,0.879,0.9077,0.0929,0.1226,0.9398,0.9617,fitted on the validation block
+ESI 3,per_triage,0.7143,3345,1620,0.8846,0.1154,0.9528,0.9823,0.8681,0.8987,0.1022,0.1325,0.9419,0.9628,fitted on the validation block
+ESI 4,pooled,0.6982,2555,1465,0.8655,0.1345,0.965,0.9853,0.8468,0.8818,0.117,0.1531,0.9555,0.9744,fitted on the validation block
+ESI 4,per_triage,0.6677,2555,1465,0.8765,0.1235,0.9625,0.9853,0.8593,0.893,0.1068,0.1427,0.9522,0.9722,fitted on the validation block
+ESI 5,pooled,0.6982,939,580,0.8966,0.1034,0.9576,0.9878,0.8699,0.9202,0.0791,0.1283,0.9402,0.9744,fitted on the validation block
+ESI 5,per_triage,0.7175,939,580,0.8879,0.1121,0.9572,0.9878,0.8628,0.9124,0.0865,0.1378,0.9409,0.9732,fitted on the validation block

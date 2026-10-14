@@ -1,0 +1,89 @@
+# ED Intelligence data contract.
+# This file is the single source of truth for column names, types and allowed values.
+# src/data/schema.py reads it; nothing else should hard-code column names.
+
+version: 1
+
+required:
+  patient_id:
+    dtype: string
+    description: Unique identifier for the ED visit (one row == one visit).
+  arrival_time:
+    dtype: datetime
+    description: Timestamp the patient arrived / was registered in the ED.
+  triage_level:
+    dtype: int
+    description: ESI acuity, 1 = most urgent ... 5 = least urgent.
+    min: 1
+    max: 5
+  seen_time:
+    dtype: datetime
+    description: >
+      Timestamp of first clinician contact. May be null for LWBS patients
+      (left without being seen); such rows are flagged, not silently dropped.
+    nullable: true
+  departure_time:
+    dtype: datetime
+    description: Timestamp the patient physically left the ED.
+    nullable: true
+  disposition:
+    dtype: category
+    description: Outcome of the visit.
+    allowed: [discharged, admitted, lwbs, transferred, other]
+
+optional:
+  age:
+    dtype: int
+    description: Age in years at arrival.
+    min: 0
+    max: 120
+  sex:
+    dtype: category
+    description: Recorded sex. Free-form values are mapped to 'other'.
+    allowed: [female, male, other, unknown]
+  arrival_mode:
+    dtype: category
+    description: How the patient reached the ED.
+    allowed: [ambulance, walk_in, other]
+  chief_complaint:
+    dtype: string
+    description: Free-text presenting complaint.
+
+# Computed by the loader from the columns above. NEVER accepted as input,
+# and never usable as a model feature (see leakage rules in CLAUDE.md).
+derived:
+  wait_minutes:
+    dtype: float
+    formula: (seen_time - arrival_time) in minutes
+    description: Target for the wait-time regressor. Null when seen_time is null.
+  los_minutes:
+    dtype: float
+    formula: (departure_time - arrival_time) in minutes
+    description: >
+      Length of stay. Used for simulation calibration only, never a feature. Null when
+      the patient had not left by the end of the data window.
+  is_lwbs:
+    dtype: bool
+    formula: disposition == 'lwbs', or (no seen_time and a departure_time is present)
+    description: >
+      Patient left without being seen: they gave up and departed before any clinician
+      contact. An observed event for the survival model.
+  still_waiting_at_cutoff:
+    dtype: bool
+    formula: no seen_time and no departure_time
+    description: >
+      Patient was still in the waiting room when the data window closed. Right-censored
+      by the extract, NOT an abandonment -- the two must never be pooled, because
+      treating censoring as an event biases any time-to-event estimate downwards.
+
+# Columns that must never appear in a wait-time feature matrix, because they
+# are only knowable after the patient's arrival moment.
+leakage_blocklist:
+  - seen_time
+  - departure_time
+  - wait_minutes
+  - los_minutes
+  - disposition
+  - is_lwbs
+  - still_waiting_at_cutoff
+  - prolonged_wait

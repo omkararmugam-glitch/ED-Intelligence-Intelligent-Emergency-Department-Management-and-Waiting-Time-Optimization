@@ -1,0 +1,101 @@
+# Mapping from a REAL dataset's column names to the schema in schema.yaml.
+#
+# All real-dataset-specific logic lives here and in src/data/adapter.py -- nowhere else.
+# See README.md ("Adding a real dataset") for the full procedure.
+#
+# This map targets `data/raw/ed_v2.csv`, a synthetic ED dataset calibrated to published
+# benchmarks (57,500 visits, 2024-01-01 to 2024-12-30). It is NOT real patient data.
+# Its columns already carry the schema's own names, so every mapping below is an
+# identity mapping on the column name; only the coded *values* need translating.
+
+dataset_name: ed_v2_synthetic
+
+# Pandas read_csv overrides for the raw file.
+read_options:
+  sep: ","
+  encoding: utf-8
+  na_values: ["", "NA", "N/A", "NULL", "null", "-", "unknown", "Unknown", "nan"]
+
+# schema_column: {source: <raw column name>, ...}
+columns:
+  patient_id:
+    source: patient_id
+
+  arrival_time:
+    source: arrival_time
+    # Timestamps are rounded to the minute and ISO-formatted; stating the format makes
+    # parsing fast and removes any day/month ambiguity.
+    datetime_format: "%Y-%m-%d %H:%M:%S"
+
+  triage_level:
+    source: triage_level
+    # No value_map: this column is already numeric. The adapter coerces numerically
+    # when no value_map is given, which accepts 1, 1.0, "1" and "1.0" alike. Anything
+    # outside 1-5, or missing, is rejected by the validator and counted there --
+    # roughly 0.4% of rows in this extract.
+
+  seen_time:
+    source: seen_time
+    datetime_format: "%Y-%m-%d %H:%M:%S"
+
+  departure_time:
+    source: departure_time
+    datetime_format: "%Y-%m-%d %H:%M:%S"
+
+  disposition:
+    source: disposition
+    # Identity map for the five values this extract uses. Written out rather than
+    # omitted so an unexpected sixth value is visible as a fallback to `other`.
+    value_map:
+      discharged: discharged
+      admitted: admitted
+      transferred: transferred
+      lwbs: lwbs
+      other: other
+    default: other
+
+  # ---- optional columns: delete the block entirely if your dataset lacks it ----
+  age:
+    source: age
+
+  sex:
+    source: sex
+    # schema.yaml allows [female, male, other, unknown], and
+    # src/features/build.py derives `is_female` from the literal string "female",
+    # so F/M must become female/male for the feature and the fairness report to agree.
+    value_map:
+      F: female
+      M: male
+      female: female
+      male: male
+    default: unknown
+
+  arrival_mode:
+    source: arrival_mode
+    value_map:
+      ambulance: ambulance
+      walk_in: walk_in
+      other: other
+    default: other
+
+  chief_complaint:
+    source: chief_complaint
+
+# Units for columns that arrive as durations rather than timestamps.
+# If your dataset gives wait/LOS directly instead of seen/departure timestamps,
+# set these and the adapter will reconstruct the timestamps from arrival_time.
+duration_fallback:
+  enabled: false
+  wait_minutes_source: null
+  los_minutes_source: null
+  units: minutes
+
+# Guardrails. These exist because a mapping can fail silently and look like a data
+# problem: a value_map written for a different extract matches nothing, every value
+# falls through to `default`, and the column becomes a constant nobody notices.
+validation:
+  # Warn if a value_map matches fewer than this share of non-null rows.
+  min_value_map_match_rate: 0.05
+  # Fail if a schema column is reported "not sourced" while the raw file contains a
+  # column of that exact name -- that is a typo in this file, not a missing column.
+  fail_on_unsourced_present_column: true

@@ -1,0 +1,249 @@
+{
+  "config_used": {
+    "horizon_hours": 72,
+    "lags": [
+      1,
+      2,
+      24,
+      48,
+      168
+    ],
+    "model": {
+      "early_stopping_rounds": 100,
+      "learning_rate": 0.05,
+      "min_child_samples": 30,
+      "n_estimators": 1500,
+      "num_leaves": 31,
+      "objective": "poisson"
+    },
+    "note": "Read from configs/default.yaml and not modified for this run.",
+    "rolling_origin": {
+      "n_folds": 4,
+      "step_hours": 168
+    },
+    "rolling_windows": [
+      3,
+      24,
+      168
+    ],
+    "seasonal_lag_hours": 168
+  },
+  "data_checks": {
+    "all_counts_integral": true,
+    "dst_note": "A spring-forward shows up as a missing local hour and an autumn fall-back as a duplicate. Any gap or duplicate listed here that is not at 02:00 on a DST changeover is missing data rather than a clock artefact.",
+    "duplicate_hours": 0,
+    "event_hours": {
+      "game_day": 840,
+      "ind": 120,
+      "nyd": 120,
+      "nye": 120,
+      "thx": 120,
+      "thx1": 120,
+      "xmas": 120,
+      "xmas2": 120
+    },
+    "expected_hours_in_range": 41640,
+    "first_hour": "2013-07-01 00:00:00",
+    "gap_timestamps": [],
+    "last_hour": "2018-03-31 23:00:00",
+    "max_arrivals_in_an_hour": 24,
+    "mean_arrivals_per_hour": 6.628,
+    "missing_counts": 0,
+    "missing_hours": 0,
+    "negative_counts": 0,
+    "rows": 41640,
+    "temperature_present": true,
+    "zero_hours": 918
+  },
+  "dataset": "uihc_ed_arrivals (fastTS, GPL >= 3)",
+  "lagged_temperature_experiment": {
+    "correlation_with_arrivals": 0.1491,
+    "correlation_with_residual": 0.0225,
+    "label": "LAGGED temperature, not the same hour's. Same-hour temperature is not known when a forecast is issued, so it is not a usable feature; this is the value from the moment the forecast was made.",
+    "lag_hours": 72,
+    "n": 1872,
+    "ran": true
+  },
+  "metrics": {
+    "by_hour_band": {
+      "afternoon": {
+        "four_week_mean": {
+          "mae": 2.8152,
+          "n": 468,
+          "rmse": 3.5475,
+          "smape_pct": 31.031,
+          "wape_pct": 30.611
+        },
+        "model": {
+          "mae": 2.5807,
+          "n": 468,
+          "rmse": 3.233,
+          "smape_pct": 28.616,
+          "wape_pct": 28.061
+        },
+        "seasonal_naive": {
+          "mae": 3.4231,
+          "n": 468,
+          "rmse": 4.3853,
+          "smape_pct": 37.232,
+          "wape_pct": 37.221
+        }
+      },
+      "evening": {
+        "four_week_mean": {
+          "mae": 2.3376,
+          "n": 468,
+          "rmse": 2.972,
+          "smape_pct": 34.031,
+          "wape_pct": 31.923
+        },
+        "model": {
+          "mae": 2.1227,
+          "n": 468,
+          "rmse": 2.6615,
+          "smape_pct": 31.082,
+          "wape_pct": 28.988
+        },
+        "seasonal_naive": {
+          "mae": 2.8782,
+          "n": 468,
+          "rmse": 3.6646,
+          "smape_pct": 41.726,
+          "wape_pct": 39.306
+        }
+      },
+      "morning": {
+        "four_week_mean": {
+          "mae": 2.2078,
+          "n": 468,
+          "rmse": 2.8259,
+          "smape_pct": 44.348,
+          "wape_pct": 36.705
+        },
+        "model": {
+          "mae": 2.063,
+          "n": 468,
+          "rmse": 2.6044,
+          "smape_pct": 41.913,
+          "wape_pct": 34.298
+        },
+        "seasonal_naive": {
+          "mae": 2.8291,
+          "n": 468,
+          "rmse": 3.645,
+          "smape_pct": 57.019,
+          "wape_pct": 47.034
+        }
+      },
+      "night": {
+        "four_week_mean": {
+          "mae": 1.5005,
+          "n": 468,
+          "rmse": 1.9141,
+          "smape_pct": 54.292,
+          "wape_pct": 47.805
+        },
+        "model": {
+          "mae": 1.3332,
+          "n": 468,
+          "rmse": 1.72,
+          "smape_pct": 49.257,
+          "wape_pct": 42.474
+        },
+        "seasonal_naive": {
+          "mae": 1.8718,
+          "n": 468,
+          "rmse": 2.4408,
+          "smape_pct": 69.793,
+          "wape_pct": 59.632
+        }
+      }
+    },
+    "conformal_coverage": {
+      "by_hour_band": {
+        "afternoon": 0.9038,
+        "evening": 0.9081,
+        "morning": 0.8825,
+        "night": 0.8974
+      },
+      "overall": 0.898
+    },
+    "off_peak": {
+      "four_week_mean": {
+        "mae": 1.9483,
+        "n": 1485,
+        "rmse": 2.4986,
+        "smape_pct": 43.426,
+        "wape_pct": 39.14
+      },
+      "model": {
+        "mae": 1.76,
+        "n": 1485,
+        "rmse": 2.2215,
+        "smape_pct": 40.113,
+        "wape_pct": 35.357
+      },
+      "seasonal_naive": {
+        "mae": 2.4377,
+        "n": 1485,
+        "rmse": 3.1922,
+        "smape_pct": 54.363,
+        "wape_pct": 48.972
+      }
+    },
+    "overall": {
+      "four_week_mean": {
+        "mae": 2.2153,
+        "n": 1872,
+        "rmse": 2.8752,
+        "smape_pct": 40.925,
+        "wape_pct": 34.515
+      },
+      "model": {
+        "mae": 2.0249,
+        "n": 1872,
+        "rmse": 2.6114,
+        "smape_pct": 37.717,
+        "wape_pct": 31.549
+      },
+      "seasonal_naive": {
+        "mae": 2.7505,
+        "n": 1872,
+        "rmse": 3.6022,
+        "smape_pct": 51.427,
+        "wape_pct": 42.855
+      }
+    },
+    "peak": {
+      "four_week_mean": {
+        "mae": 3.2397,
+        "n": 387,
+        "rmse": 4.004,
+        "smape_pct": 31.331,
+        "wape_pct": 27.12
+      },
+      "model": {
+        "mae": 3.0414,
+        "n": 387,
+        "rmse": 3.7482,
+        "smape_pct": 28.521,
+        "wape_pct": 25.46
+      },
+      "seasonal_naive": {
+        "mae": 3.9509,
+        "n": 387,
+        "rmse": 4.8648,
+        "smape_pct": 40.184,
+        "wape_pct": 33.074
+      }
+    },
+    "peak_threshold_arrivals": 10.0
+  },
+  "synthetic_comparison": {
+    "note": "The synthetic figures are the project's headline numbers on data/raw/ed_v2.csv. They are not comparable in absolute terms -- a different department with a different arrival rate -- so only the direction and the size of the gap to the baseline are comparable.",
+    "synthetic_forecast_mae": 2.3557,
+    "synthetic_seasonal_naive_mae": 2.9792
+  },
+  "what_this_can_show": "Whether this project's arrival forecaster, unchanged, beats its baselines on a real hourly series.",
+  "what_this_cannot_show": "Anything about the wait model, the simulation or the staffing search: those need per-patient records and this is a count series. It is also one department over one period."
+}

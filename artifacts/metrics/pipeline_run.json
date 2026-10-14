@@ -1,0 +1,42 @@
+{
+  "config": "C:\\dev\\ed-project\\configs\\default.yaml",
+  "data_source": "real",
+  "stage_seconds": {
+    "ablation": 13.296442999970168,
+    "calibrate_sim": 119.66217849985696,
+    "competing_risks": 5.090131500037387,
+    "explain": 1.598659500014037,
+    "fairness": 2.1185862999409437,
+    "features": 0.34674639999866486,
+    "forecast": 33.277462100144476,
+    "load": 0.26494430005550385,
+    "report": 0.09160279994830489,
+    "scenarios": 21.97776160016656,
+    "sensitivity": 204.84860689984635,
+    "split": 0.14348229998722672,
+    "staffing_search": 73.73252870002761,
+    "survival": 36.82976029999554,
+    "train_wait": 15.632376999827102,
+    "validate": 0.36376600014045835
+  },
+  "stages_not_yet_implemented": {},
+  "stages_run": [
+    "load",
+    "validate",
+    "split",
+    "features",
+    "train_wait",
+    "ablation",
+    "explain",
+    "fairness",
+    "forecast",
+    "survival",
+    "competing_risks",
+    "calibrate_sim",
+    "scenarios",
+    "sensitivity",
+    "staffing_search",
+    "report"
+  ],
+  "total_seconds": 529.2750371999573
+}

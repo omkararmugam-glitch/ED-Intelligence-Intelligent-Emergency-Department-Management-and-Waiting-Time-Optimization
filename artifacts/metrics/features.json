@@ -1,0 +1,84 @@
+{
+  "feature_sets": {
+    "base": {
+      "columns": [
+        "hour",
+        "day_of_week",
+        "month",
+        "day_of_year",
+        "week_of_year",
+        "is_weekend",
+        "is_holiday",
+        "minutes_since_midnight",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "month_sin",
+        "month_cos",
+        "triage_level",
+        "age",
+        "is_ambulance",
+        "is_female"
+      ],
+      "n_columns": 18
+    },
+    "base+queue": {
+      "columns": [
+        "hour",
+        "day_of_week",
+        "month",
+        "day_of_year",
+        "week_of_year",
+        "is_weekend",
+        "is_holiday",
+        "minutes_since_midnight",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "month_sin",
+        "month_cos",
+        "triage_level",
+        "age",
+        "is_ambulance",
+        "is_female",
+        "n_waiting",
+        "n_waiting_higher_priority",
+        "n_waiting_same_priority",
+        "n_in_treatment",
+        "arrivals_last_1h",
+        "arrivals_last_3h",
+        "mean_wait_last_10_seen",
+        "n_seen_last_10_available"
+      ],
+      "n_columns": 26
+    }
+  },
+  "splits": {
+    "calib": {
+      "n_rows": 5783,
+      "positive_label_rate": 0.3422,
+      "rows_per_second": 295260,
+      "seconds": 0.02
+    },
+    "test": {
+      "n_rows": 8620,
+      "positive_label_rate": 0.4502,
+      "rows_per_second": 368975,
+      "seconds": 0.023
+    },
+    "train": {
+      "n_rows": 34269,
+      "positive_label_rate": 0.3841,
+      "rows_per_second": 476060,
+      "seconds": 0.072
+    },
+    "val": {
+      "n_rows": 8507,
+      "positive_label_rate": 0.3341,
+      "rows_per_second": 317912,
+      "seconds": 0.027
+    }
+  }
+}

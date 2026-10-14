@@ -1,0 +1,19 @@
+horizon_minutes,scope,n,n_positive,positive_rate,reportable,auc,brier_raw,brier_calibrated,ece_raw,ece_calibrated,unreportable_reason,brier_improvement
+30,overall,8619,23,0.002669,True,0.825,0.002662,0.00266,0.001369,7.1e-05,,2e-06
+30,ESI 3,3434,0,0.0,False,,1e-06,6e-06,0.001216,0.002481,0 positive case(s) < 20: a calibration curve over this many events is not an estimate,-5e-06
+30,ESI 4,2786,18,0.006461,False,0.7209,0.006443,0.00643,0.005066,0.003732,18 positive case(s) < 20: a calibration curve over this many events is not an estimate,1.3e-05
+30,ESI 5,1039,5,0.004812,False,0.5614,0.0048,0.004793,0.003353,0.001994,5 positive case(s) < 20: a calibration curve over this many events is not an estimate,7e-06
+30,ESI 1,188,0,0.0,False,,,,,,"excluded by design: high-acuity patients effectively never leave without being seen, so there is no incidence to calibrate against",
+30,ESI 2,1172,0,0.0,False,,,,,,"excluded by design: high-acuity patients effectively never leave without being seen, so there is no incidence to calibrate against",
+60,overall,8619,136,0.015779,True,0.8269,0.015442,0.015311,0.009465,0.003365,,0.000131
+60,ESI 3,3434,15,0.004368,False,0.6941,0.004346,0.00436,0.00085,0.001407,15 positive case(s) < 20: a calibration curve over this many events is not an estimate,-1.4e-05
+60,ESI 4,2786,76,0.027279,True,0.711,0.026676,0.026325,0.017923,0.006918,,0.000351
+60,ESI 5,1039,45,0.043311,True,0.6284,0.042198,0.042,0.030674,0.01859,,0.000198
+60,ESI 1,188,0,0.0,False,,,,,,"excluded by design: high-acuity patients effectively never leave without being seen, so there is no incidence to calibrate against",
+60,ESI 2,1172,0,0.0,False,,,,,,"excluded by design: high-acuity patients effectively never leave without being seen, so there is no incidence to calibrate against",
+120,overall,8619,319,0.037011,True,0.8619,0.033426,0.033117,0.01305,0.007068,,0.000309
+120,ESI 3,3434,59,0.017181,True,0.8176,0.016685,0.016724,0.00673,0.007028,,-3.9e-05
+120,ESI 4,2786,178,0.063891,True,0.8143,0.056561,0.055481,0.025333,0.013665,,0.00108
+120,ESI 5,1039,82,0.078922,True,0.7274,0.070461,0.070669,0.022496,0.027379,,-0.000208
+120,ESI 1,188,0,0.0,False,,,,,,"excluded by design: high-acuity patients effectively never leave without being seen, so there is no incidence to calibrate against",
+120,ESI 2,1172,0,0.0,False,,,,,,"excluded by design: high-acuity patients effectively never leave without being seen, so there is no incidence to calibrate against",

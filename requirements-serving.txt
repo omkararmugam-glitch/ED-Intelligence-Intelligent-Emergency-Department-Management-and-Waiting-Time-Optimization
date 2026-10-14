@@ -1,0 +1,38 @@
+# Runtime dependencies for the API and the dashboard only.
+#
+# Deliberately excludes the training stack. The service loads saved models and the
+# dashboard draws pictures; neither fits anything, so pytest, and the heavier
+# training-only libraries are not needed here.
+#
+# lightgbm IS required: the saved regressor and classifier are LightGBM boosters, and
+# the explanation path uses LightGBM's own TreeSHAP (predict(pred_contrib=True)).
+# simpy IS required: /simulate runs the discrete-event model.
+# lifelines is NOT required: survival analysis is a pipeline-only stage.
+
+# --- core numerics and artifact IO ---
+numpy==1.26.4
+pandas==2.2.3
+# Bumped from 17.0.0 for CVE-2026-25087 (use-after-free, HIGH), fixed in 23.0.1.
+pyarrow==23.0.1
+joblib==1.4.2
+PyYAML==6.0.2
+
+# --- models loaded at startup ---
+lightgbm==4.5.0
+scikit-learn==1.5.2
+
+# --- simulation, for /simulate ---
+simpy==4.1.1
+
+# --- API ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.9.2
+# Required by POST /jobs, which takes the uploaded file as multipart form data.
+# FastAPI raises at import time without it, so the whole API depends on it.
+# Bumped from 0.0.20 for three HIGH issues fixed by 0.0.30 (see requirements.txt).
+python-multipart==0.0.30
+
+# --- dashboard ---
+streamlit==1.41.1
+requests==2.32.3

@@ -1,0 +1,106 @@
+{
+  "base_value": 32.93821908990918,
+  "feature_set": "base+queue",
+  "figures": [
+    "C:\\dev\\ed-project\\artifacts\\figures\\shap_importance.png",
+    "C:\\dev\\ed-project\\artifacts\\figures\\shap_summary.png",
+    "C:\\dev\\ed-project\\artifacts\\figures\\shap_local_examples.png"
+  ],
+  "n_explained": 4000,
+  "n_local_examples": 4,
+  "shap_backend": "lightgbm native TreeSHAP (pred_contrib=True)",
+  "shap_units": "minutes",
+  "target_transform": "raw",
+  "top_features": [
+    {
+      "feature": "n_waiting_same_priority",
+      "is_queue_feature": true,
+      "max_abs_shap": 95.4635,
+      "mean_abs_shap": 20.3045,
+      "mean_shap": 5.2143,
+      "rank": 1,
+      "share_of_attribution": 0.4215
+    },
+    {
+      "feature": "n_waiting",
+      "is_queue_feature": true,
+      "max_abs_shap": 89.559,
+      "mean_abs_shap": 14.0593,
+      "mean_shap": -0.4379,
+      "rank": 2,
+      "share_of_attribution": 0.2919
+    },
+    {
+      "feature": "n_waiting_higher_priority",
+      "is_queue_feature": true,
+      "max_abs_shap": 46.3192,
+      "mean_abs_shap": 5.2436,
+      "mean_shap": 0.7345,
+      "rank": 3,
+      "share_of_attribution": 0.1089
+    },
+    {
+      "feature": "triage_level",
+      "is_queue_feature": false,
+      "max_abs_shap": 49.3811,
+      "mean_abs_shap": 3.6523,
+      "mean_shap": -0.7153,
+      "rank": 4,
+      "share_of_attribution": 0.0758
+    },
+    {
+      "feature": "day_of_year",
+      "is_queue_feature": false,
+      "max_abs_shap": 4.8741,
+      "mean_abs_shap": 0.8971,
+      "mean_shap": 0.8095,
+      "rank": 5,
+      "share_of_attribution": 0.0186
+    },
+    {
+      "feature": "hour_cos",
+      "is_queue_feature": false,
+      "max_abs_shap": 10.6803,
+      "mean_abs_shap": 0.7356,
+      "mean_shap": 0.0138,
+      "rank": 6,
+      "share_of_attribution": 0.0153
+    },
+    {
+      "feature": "minutes_since_midnight",
+      "is_queue_feature": false,
+      "max_abs_shap": 6.4457,
+      "mean_abs_shap": 0.7301,
+      "mean_shap": 0.0483,
+      "rank": 7,
+      "share_of_attribution": 0.0152
+    },
+    {
+      "feature": "day_of_week",
+      "is_queue_feature": false,
+      "max_abs_shap": 4.1198,
+      "mean_abs_shap": 0.4423,
+      "mean_shap": 0.0083,
+      "rank": 8,
+      "share_of_attribution": 0.0092
+    },
+    {
+      "feature": "hour_sin",
+      "is_queue_feature": false,
+      "max_abs_shap": 1.9151,
+      "mean_abs_shap": 0.3555,
+      "mean_shap": 0.0484,
+      "rank": 9,
+      "share_of_attribution": 0.0074
+    },
+    {
+      "feature": "mean_wait_last_10_seen",
+      "is_queue_feature": true,
+      "max_abs_shap": 6.0446,
+      "mean_abs_shap": 0.3456,
+      "mean_shap": 0.1005,
+      "rank": 10,
+      "share_of_attribution": 0.0072
+    }
+  ]
+}

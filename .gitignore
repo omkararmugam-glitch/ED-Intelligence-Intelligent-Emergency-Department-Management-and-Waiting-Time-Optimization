@@ -1,0 +1,60 @@
+# Virtualenv
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated data. Real extracts must never be committed.
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/synthetic/*
+!data/synthetic/.gitkeep
+
+# Datasets from the older wrapper generator (scripts/generate_ed_data.py). The
+# directory was moved out of the project to C:\dev\ed-project-old-data\generated\
+# and nothing here reads it; the pattern stays so a stray re-run cannot put 53 MB
+# of superseded data back into a package. They are superseded because the seed
+# study now generates into runs/robustness/seed_<S>/ with the true generator at
+# scripts/original_generator/generate_ed_data.py, and the seed-7 gate failure once
+# taken from data/generated/ed_seed7_base.csv did not reproduce and is withdrawn.
+data/generated/*
+!data/generated/.gitkeep
+
+# Run outputs. Metrics are small and worth keeping; models and figures are not.
+artifacts/models/*
+!artifacts/models/.gitkeep
+artifacts/figures/*
+!artifacts/figures/.gitkeep
+artifacts/pipeline.log
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Uploaded files and their analysis runs. These hold data someone handed us,
+# so they must never reach the repository; the engine deletes them on a timer.
+runs/
+
+# Local environment for Docker. `.env.example` IS committed and is the
+# documentation; `.env` is one machine's copy of it and stays local. This stack
+# has no credentials, but a limit someone raised for their own laptop should not
+# arrive on everyone else's.
+.env
+.env.local
+
+# A developer who wants the dev overlay applied automatically copies
+# docker-compose.dev.yml to this name. That choice is personal, not shared --
+# an override file is loaded silently, and the demo stack must stay the default.
+docker-compose.override.yml
+
+.venv/
+data/external/
+data/generated/
+dist/
+__pycache__/
+.env
+*.pyc

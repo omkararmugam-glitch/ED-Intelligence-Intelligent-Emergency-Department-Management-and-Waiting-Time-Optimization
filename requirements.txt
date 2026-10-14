@@ -1,0 +1,31 @@
+# Pinned for Python 3.11 and 3.12. Every pin below ships prebuilt wheels for
+# cp311 and cp312 on win_amd64, so a clean install needs no compiler.
+#
+# `shap` is deliberately NOT a dependency: LightGBM computes exact TreeSHAP
+# itself via predict(pred_contrib=True), and shap would drag in numba, whose
+# compiled DLL is blocked by Windows Application Control on some machines.
+numpy==1.26.4
+pandas==2.2.3
+# Bumped from 17.0.0 for CVE-2026-25087 (use-after-free, HIGH), fixed in 23.0.1.
+# Safe for the reproduction: pyarrow only round-trips the intermediate parquet
+# files, and float64 survives that exactly, so no metric moves.
+pyarrow==23.0.1
+scikit-learn==1.5.2
+lightgbm==4.5.0
+simpy==4.1.1
+lifelines==0.29.0
+# Transitive, pinned deliberately: lifelines would otherwise resolve
+# autograd-gamma==0.5.0, which PyPI ships as an sdist only. 0.4.2 is the newest
+# release with a wheel, so the whole install stays build-free.
+autograd-gamma==0.4.2
+PyYAML==6.0.2
+pydantic==2.9.2
+joblib==1.4.2
+matplotlib==3.9.2
+pytest==8.3.3
+# Required by the upload endpoint (multipart form data); the API tests
+# import api.main, which needs it at import time.
+# Bumped from 0.0.20 for CVE-2026-24486, CVE-2026-42561 and CVE-2026-53539
+# (path traversal and two resource-exhaustion issues, all HIGH), fixed by 0.0.30.
+# It parses multipart uploads and touches no model code.
+python-multipart==0.0.30

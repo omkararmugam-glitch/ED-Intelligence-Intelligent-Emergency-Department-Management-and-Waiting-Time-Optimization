@@ -1,0 +1,13 @@
+cause,covariate,test,test_statistic,p_value,violates_proportional_hazards,n_tested,n_fitted,diagnostic_subsampled,verdict
+seen,age,Schoenfeld residuals (rank time-transform),1.4587,0.22713466474793703,False,55973,55973,False,no evidence against proportional hazards
+seen,hour_cos,Schoenfeld residuals (rank time-transform),602.3239,5.227937959363634e-133,True,55973,55973,False,effect changes over the wait; the hazard ratio is a time-average only
+seen,hour_sin,Schoenfeld residuals (rank time-transform),718.9799,2.230905301808468e-158,True,55973,55973,False,effect changes over the wait; the hazard ratio is a time-average only
+seen,is_ambulance,Schoenfeld residuals (rank time-transform),3.5363,0.06003999229523866,False,55973,55973,False,no evidence against proportional hazards
+seen,n_waiting,Schoenfeld residuals (rank time-transform),1365.5923,6.3003508115169e-299,True,55973,55973,False,effect changes over the wait; the hazard ratio is a time-average only
+seen,triage_level,Schoenfeld residuals (rank time-transform),12.3942,0.0004306768150662267,True,55973,55973,False,effect changes over the wait; the hazard ratio is a time-average only
+abandoned,age,Schoenfeld residuals (rank time-transform),0.0004,0.9846427195720877,False,55973,55973,False,no evidence against proportional hazards
+abandoned,hour_cos,Schoenfeld residuals (rank time-transform),0.0072,0.9321663293744804,False,55973,55973,False,no evidence against proportional hazards
+abandoned,hour_sin,Schoenfeld residuals (rank time-transform),0.0566,0.8119292413837547,False,55973,55973,False,no evidence against proportional hazards
+abandoned,is_ambulance,Schoenfeld residuals (rank time-transform),0.6747,0.4114166191325386,False,55973,55973,False,no evidence against proportional hazards
+abandoned,n_waiting,Schoenfeld residuals (rank time-transform),0.1924,0.6609252197170181,False,55973,55973,False,no evidence against proportional hazards
+abandoned,triage_level,Schoenfeld residuals (rank time-transform),4.6001,0.03197101273044502,True,55973,55973,False,effect changes over the wait; the hazard ratio is a time-average only

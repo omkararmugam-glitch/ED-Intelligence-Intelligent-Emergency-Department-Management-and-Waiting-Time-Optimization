@@ -1,0 +1,44 @@
+# Streamlit configuration for the ED Operations dashboard.
+#
+# The theme here sets the base; `app/theme.py` owns everything else and draws its
+# accent surfaces as semi-transparent washes over whatever this background is, so
+# the same components read correctly whether the base is light or dark.
+#
+# To preview the dark base, set base = "dark" below, or let Streamlit follow the
+# browser by commenting the whole [theme] block out. The palette below is chosen so
+# that either base works without touching app/theme.py.
+
+[theme]
+# Calm clinical light base: near-white rather than pure white, so large tables and
+# charts do not glare on a ward screen.
+base = "light"
+
+# The one blue. Same hue as the forecast series in every chart, which is what makes
+# "blue means the model's estimate" learnable.
+primaryColor = "#2a78d6"
+
+backgroundColor = "#fbfcfd"
+secondaryBackgroundColor = "#f1f4f8"
+textColor = "#1c2430"
+
+# A UI font stack that resolves locally on Windows, macOS and Linux, so the app
+# never waits on a web font to paint text.
+font = "sans serif"
+
+[server]
+# The dashboard holds no secrets and gathers no statistics about its reader.
+headless = true
+enableStaticServing = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+# A traceback on screen is a bug in this app, not information for the reader:
+# every API failure is supposed to be caught and shown as an error card.
+showErrorDetails = "none"
+toolbarMode = "minimal"
+
+[runner]
+# Fail loudly in development rather than silently rendering half a page.
+fastReruns = true

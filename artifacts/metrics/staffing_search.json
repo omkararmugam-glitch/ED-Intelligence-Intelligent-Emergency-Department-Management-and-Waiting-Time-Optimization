@@ -1,0 +1,28 @@
+{
+  "any_feasible": true,
+  "cheapest_feasible_plan": {
+    "abandonment_rate": 0.01829,
+    "abandonment_rate_ci_high": 0.02601,
+    "cost": 49280.0,
+    "doctor_utilisation": 0.7833,
+    "doctors_day": 3,
+    "doctors_evening": 3,
+    "doctors_night_early": 2,
+    "doctors_night_late": 2,
+    "feasible": true,
+    "load_source": "forecast (72 hours, repeated 5x to 336h)",
+    "mean_wait_minutes": 25.725,
+    "meets_abandonment_target": true,
+    "meets_wait_target": true,
+    "p90_wait_esi3": 77.23,
+    "p90_wait_esi3_ci_high": 88.789,
+    "plan": "day=3, evening=3, night_early=2, night_late=2",
+    "total_doctor_hours": 448.0
+  },
+  "cost_per_doctor_hour": 110.0,
+  "costing_horizon_hours": 168,
+  "n_feasible": 72,
+  "n_plans_evaluated": 144,
+  "near_misses": [],
+  "target": "p90 wait for ESI 3 <= 90 min and mean abandonment <= 4.0%, judged on the upper 95% confidence bound"
+}

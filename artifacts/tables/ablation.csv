@@ -1,0 +1,8 @@
+# CAVEAT: on synthetic data this comparison overstates the value of queue-state features. The generator produces waits BY SIMULATING A QUEUE, so congestion at arrival is close to a sufficient statistic for the wait (measured congestion-to-wait correlation r = 0.75). A real ED has measurement error, unmodelled resource constraints and clinician discretion that weaken this link. Treat the direction of the effect as supported and the magnitude as an upper bound.
+feature_set,target,prediction_kind,estimates,n_test,mae_minutes,rmse_minutes,bias_minutes,best_iteration
+base,raw,raw,conditional median (L1 objective on the minute scale),8198,33.93,53.073,-24.549,29
+base,log1p,log1p_median,"conditional median (expm1 back-transform, no spread correction)",8198,33.845,53.468,-21.702,71
+base,log1p,log1p_smearing,conditional mean (Duan smearing over empirical residuals),8198,53.58,93.802,26.8,71
+base+queue,raw,raw,conditional median (L1 objective on the minute scale),8198,11.524,19.743,-2.793,104
+base+queue,log1p,log1p_median,"conditional median (expm1 back-transform, no spread correction)",8198,11.712,19.821,-1.172,180
+base+queue,log1p,log1p_smearing,conditional mean (Duan smearing over empirical residuals),8198,15.436,24.856,8.51,180

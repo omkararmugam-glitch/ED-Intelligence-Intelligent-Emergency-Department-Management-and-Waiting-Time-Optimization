@@ -1,0 +1,1615 @@
+{
+  "ablation": {
+    "best_by_test_mae": {
+      "feature_set": "base+queue",
+      "mae_minutes": 11.524,
+      "prediction_kind": "raw",
+      "rmse_minutes": 19.743,
+      "target": "raw"
+    },
+    "caveat": "CAVEAT: on synthetic data this comparison overstates the value of queue-state features. The generator produces waits BY SIMULATING A QUEUE, so congestion at arrival is close to a sufficient statistic for the wait (measured congestion-to-wait correlation r = 0.75). A real ED has measurement error, unmodelled resource constraints and clinician discretion that weaken this link. Treat the direction of the effect as supported and the magnitude as an upper bound.",
+    "rows": [
+      {
+        "best_iteration": 29,
+        "bias_minutes": -24.549,
+        "estimates": "conditional median (L1 objective on the minute scale)",
+        "feature_set": "base",
+        "mae_minutes": 33.93,
+        "n_test": 8198,
+        "prediction_kind": "raw",
+        "rmse_minutes": 53.073,
+        "target": "raw"
+      },
+      {
+        "best_iteration": 71,
+        "bias_minutes": -21.702,
+        "estimates": "conditional median (expm1 back-transform, no spread correction)",
+        "feature_set": "base",
+        "mae_minutes": 33.845,
+        "n_test": 8198,
+        "prediction_kind": "log1p_median",
+        "rmse_minutes": 53.468,
+        "target": "log1p"
+      },
+      {
+        "best_iteration": 71,
+        "bias_minutes": 26.8,
+        "estimates": "conditional mean (Duan smearing over empirical residuals)",
+        "feature_set": "base",
+        "mae_minutes": 53.58,
+        "n_test": 8198,
+        "prediction_kind": "log1p_smearing",
+        "rmse_minutes": 93.802,
+        "target": "log1p"
+      },
+      {
+        "best_iteration": 104,
+        "bias_minutes": -2.793,
+        "estimates": "conditional median (L1 objective on the minute scale)",
+        "feature_set": "base+queue",
+        "mae_minutes": 11.524,
+        "n_test": 8198,
+        "prediction_kind": "raw",
+        "rmse_minutes": 19.743,
+        "target": "raw"
+      },
+      {
+        "best_iteration": 180,
+        "bias_minutes": -1.172,
+        "estimates": "conditional median (expm1 back-transform, no spread correction)",
+        "feature_set": "base+queue",
+        "mae_minutes": 11.712,
+        "n_test": 8198,
+        "prediction_kind": "log1p_median",
+        "rmse_minutes": 19.821,
+        "target": "log1p"
+      },
+      {
+        "best_iteration": 180,
+        "bias_minutes": 8.51,
+        "estimates": "conditional mean (Duan smearing over empirical residuals)",
+        "feature_set": "base+queue",
+        "mae_minutes": 15.436,
+        "n_test": 8198,
+        "prediction_kind": "log1p_smearing",
+        "rmse_minutes": 24.856,
+        "target": "log1p"
+      }
+    ]
+  },
+  "baseline": {
+    "blocks": {
+      "calib": {
+        "classification": {
+          "accuracy": 0.6783874977801456,
+          "average_precision": 0.5239667853069125,
+          "f1": 0.5119913769873349,
+          "fn": 977,
+          "fnr": 0.5070057083549558,
+          "fp": 834,
+          "fpr": 0.2251619870410367,
+          "n": 5631,
+          "positive_rate": 0.3422127508435447,
+          "precision": 0.5325112107623319,
+          "recall": 0.4929942916450441,
+          "roc_auc": 0.7175200711498867,
+          "specificity": 0.7748380129589633,
+          "threshold": 0.5,
+          "tn": 2870,
+          "tp": 950
+        },
+        "regression": {
+          "bias": -2.6357840525661516,
+          "mae": 26.34501864677677,
+          "n": 5631,
+          "rmse": 38.14982355753617
+        }
+      },
+      "test": {
+        "classification": {
+          "accuracy": 0.6785801414979263,
+          "average_precision": 0.6499433857093604,
+          "f1": 0.649554462029525,
+          "fn": 1253,
+          "fnr": 0.33910690121786197,
+          "fp": 1382,
+          "fpr": 0.30690650677326226,
+          "n": 8198,
+          "positive_rate": 0.45071968772871435,
+          "precision": 0.6385983263598326,
+          "recall": 0.660893098782138,
+          "roc_auc": 0.7453320099034865,
+          "specificity": 0.6930934932267377,
+          "threshold": 0.5,
+          "tn": 3121,
+          "tp": 2442
+        },
+        "regression": {
+          "bias": -4.646865089046109,
+          "mae": 34.232666504025374,
+          "n": 8198,
+          "rmse": 48.898534952916485
+        }
+      },
+      "val": {
+        "classification": {
+          "accuracy": 0.6838865419432709,
+          "average_precision": 0.5166500193752699,
+          "f1": 0.5138295897531093,
+          "fn": 1384,
+          "fnr": 0.5,
+          "fp": 1235,
+          "fpr": 0.22385354359253218,
+          "n": 8285,
+          "positive_rate": 0.3340977670488835,
+          "precision": 0.5284459717449408,
+          "recall": 0.5,
+          "roc_auc": 0.719323175817049,
+          "specificity": 0.7761464564074678,
+          "threshold": 0.5,
+          "tn": 4282,
+          "tp": 1384
+        },
+        "regression": {
+          "bias": -3.1658418829209416,
+          "mae": 27.642703681351843,
+          "n": 8285,
+          "rmse": 40.81535803368905
+        }
+      }
+    },
+    "description": "mean of the last 20 observed waits at the same ESI level, using only patients seen before the arrival instant",
+    "k": 20
+  },
+  "blocks": {
+    "calib": {
+      "cohort": {
+        "excluded_by_reason": {
+          "departure censored by the data window": 0,
+          "left without being seen": 152,
+          "still waiting at the data cutoff": 0,
+          "wait_minutes missing": 0
+        },
+        "n_excluded": 152,
+        "n_input": 5783,
+        "n_kept": 5631
+      },
+      "n_featurised": 5783
+    },
+    "test": {
+      "cohort": {
+        "excluded_by_reason": {
+          "departure censored by the data window": 10,
+          "left without being seen": 411,
+          "still waiting at the data cutoff": 1,
+          "wait_minutes missing": 0
+        },
+        "n_excluded": 422,
+        "n_input": 8620,
+        "n_kept": 8198
+      },
+      "n_featurised": 8620
+    },
+    "train": {
+      "cohort": {
+        "excluded_by_reason": {
+          "departure censored by the data window": 0,
+          "left without being seen": 1261,
+          "still waiting at the data cutoff": 0,
+          "wait_minutes missing": 0
+        },
+        "n_excluded": 1261,
+        "n_input": 34269,
+        "n_kept": 33008
+      },
+      "n_featurised": 34269
+    },
+    "val": {
+      "cohort": {
+        "excluded_by_reason": {
+          "departure censored by the data window": 0,
+          "left without being seen": 222,
+          "still waiting at the data cutoff": 0,
+          "wait_minutes missing": 0
+        },
+        "n_excluded": 222,
+        "n_input": 8507,
+        "n_kept": 8285
+      },
+      "n_featurised": 8507
+    }
+  },
+  "classifiers": [
+    {
+      "feature_set": "base",
+      "fnr": 0.279,
+      "fpr": 0.2447,
+      "n_test": 8198,
+      "positive_rate": 0.4507,
+      "pr_auc": 0.7109,
+      "precision": 0.7074,
+      "recall": 0.721,
+      "roc_auc": 0.8177,
+      "threshold": 0.4471,
+      "threshold_rule": "highest threshold with recall >= 0.80 (achieved 0.802)",
+      "threshold_source": "val"
+    },
+    {
+      "feature_set": "base+queue",
+      "fnr": 0.1245,
+      "fpr": 0.0318,
+      "n_test": 8198,
+      "positive_rate": 0.4507,
+      "pr_auc": 0.9823,
+      "precision": 0.9577,
+      "recall": 0.8755,
+      "roc_auc": 0.9846,
+      "threshold": 0.6982,
+      "threshold_rule": "highest threshold with recall >= 0.80 (achieved 0.801)",
+      "threshold_source": "val"
+    }
+  ],
+  "conformal": {
+    "by_group": {
+      "1": {
+        "coverage": 0.8404255319148937,
+        "coverage_gap": -0.05957446808510636,
+        "mean_width": 10.64516518404793,
+        "median_width": 11.347099450841469,
+        "n": 188,
+        "nominal_coverage": 0.9
+      },
+      "2": {
+        "coverage": 0.852263023057216,
+        "coverage_gap": -0.047736976942784004,
+        "mean_width": 10.495585442219362,
+        "median_width": 11.111905513739071,
+        "n": 1171,
+        "nominal_coverage": 0.9
+      },
+      "3": {
+        "coverage": 0.8508221225710015,
+        "coverage_gap": -0.049177877428998484,
+        "mean_width": 44.958063458495424,
+        "median_width": 55.95511734115928,
+        "n": 3345,
+        "nominal_coverage": 0.9
+      },
+      "4": {
+        "coverage": 0.8328767123287671,
+        "coverage_gap": -0.06712328767123288,
+        "mean_width": 41.779742996057195,
+        "median_width": 50.42226952484634,
+        "n": 2555,
+        "nominal_coverage": 0.9
+      },
+      "5": {
+        "coverage": 0.8839190628328009,
+        "coverage_gap": -0.01608093716719916,
+        "mean_width": 51.81404469454614,
+        "median_width": 61.61001435466941,
+        "n": 939,
+        "nominal_coverage": 0.9
+      }
+    },
+    "calibration_block": "calib",
+    "calibrator": {
+      "coverage": 0.9,
+      "global_quantile": 24.973106534126323,
+      "group_calibration_counts": {
+        "1": 119,
+        "2": 708,
+        "3": 2302,
+        "4": 1863,
+        "5": 639
+      },
+      "group_quantiles": {
+        "1": 7.235801268825485,
+        "2": 6.829362296257706,
+        "3": 27.977558670579654,
+        "4": 25.21113476242317,
+        "5": 30.80500717733471
+      },
+      "groups_using_global_fallback": [],
+      "lower_bound": 0.0,
+      "min_group_size": 100,
+      "mondrian": true
+    },
+    "model": {
+      "feature_set": "base+queue",
+      "mae_minutes": 11.524,
+      "prediction_kind": "raw",
+      "rmse_minutes": 19.743,
+      "target": "raw"
+    },
+    "n_calibration_rows": 5631,
+    "overall": {
+      "coverage": 0.8489875579409613,
+      "coverage_gap": -0.051012442059038765,
+      "mean_width": 39.04330021946963,
+      "median_width": 43.8048254850835,
+      "n": 8198,
+      "nominal_coverage": 0.9
+    },
+    "rolling": {
+      "calibration_source_counts": {
+        "same triage level, primary window": 8062,
+        "same triage level, widened window": 136
+      },
+      "comparison": [
+        {
+          "coverage_gap": -0.051,
+          "empirical_coverage": 0.849,
+          "mean_width_minutes": 39.04,
+          "median_width_minutes": 43.8,
+          "method": "static",
+          "n": 8198,
+          "nominal_coverage": 0.9,
+          "scope": "overall"
+        },
+        {
+          "coverage_gap": -0.0125,
+          "empirical_coverage": 0.8875,
+          "mean_width_minutes": 46.49,
+          "median_width_minutes": 50.26,
+          "method": "rolling",
+          "n": 8198,
+          "nominal_coverage": 0.9,
+          "scope": "overall"
+        },
+        {
+          "coverage_gap": -0.0596,
+          "empirical_coverage": 0.8404,
+          "mean_width_minutes": 10.65,
+          "median_width_minutes": 11.35,
+          "method": "static",
+          "n": 188,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 1"
+        },
+        {
+          "coverage_gap": -0.0223,
+          "empirical_coverage": 0.8777,
+          "mean_width_minutes": 11.84,
+          "median_width_minutes": 12.34,
+          "method": "rolling",
+          "n": 188,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 1"
+        },
+        {
+          "coverage_gap": -0.0477,
+          "empirical_coverage": 0.8523,
+          "mean_width_minutes": 10.5,
+          "median_width_minutes": 11.11,
+          "method": "static",
+          "n": 1171,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 2"
+        },
+        {
+          "coverage_gap": -0.0102,
+          "empirical_coverage": 0.8898,
+          "mean_width_minutes": 13.24,
+          "median_width_minutes": 13.64,
+          "method": "rolling",
+          "n": 1171,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 2"
+        },
+        {
+          "coverage_gap": -0.0492,
+          "empirical_coverage": 0.8508,
+          "mean_width_minutes": 44.96,
+          "median_width_minutes": 55.96,
+          "method": "static",
+          "n": 3345,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 3"
+        },
+        {
+          "coverage_gap": -0.0124,
+          "empirical_coverage": 0.8876,
+          "mean_width_minutes": 53.23,
+          "median_width_minutes": 55.47,
+          "method": "rolling",
+          "n": 3345,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 3"
+        },
+        {
+          "coverage_gap": -0.0671,
+          "empirical_coverage": 0.8329,
+          "mean_width_minutes": 41.78,
+          "median_width_minutes": 50.42,
+          "method": "static",
+          "n": 2555,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 4"
+        },
+        {
+          "coverage_gap": -0.0166,
+          "empirical_coverage": 0.8834,
+          "mean_width_minutes": 52.45,
+          "median_width_minutes": 56.25,
+          "method": "rolling",
+          "n": 2555,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 4"
+        },
+        {
+          "coverage_gap": -0.0161,
+          "empirical_coverage": 0.8839,
+          "mean_width_minutes": 51.81,
+          "median_width_minutes": 61.61,
+          "method": "static",
+          "n": 939,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 5"
+        },
+        {
+          "coverage_gap": -0.0022,
+          "empirical_coverage": 0.8978,
+          "mean_width_minutes": 54.66,
+          "median_width_minutes": 62.74,
+          "method": "rolling",
+          "n": 939,
+          "nominal_coverage": 0.9,
+          "scope": "ESI 5"
+        }
+      ],
+      "fallback_window_days": 90.0,
+      "median_calibration_size": 1361,
+      "min_calibration": 100,
+      "rolling_coverage": 0.8875,
+      "rolling_mean_width": 46.49,
+      "static_coverage": 0.849,
+      "static_mean_width": 39.04,
+      "window_days": 28.0
+    }
+  },
+  "high_acuity": {
+    "acuity_target_minutes": {
+      "1": 5.0,
+      "2": 15.0,
+      "3": 30.0,
+      "4": 60.0,
+      "5": 120.0
+    },
+    "approaches": {
+      "acuity_target": {
+        "description": "a different target: did this patient exceed the target wait set for their own acuity",
+        "fitted": true,
+        "label_definition": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "notes": [
+          "The per-acuity target waits are ASSUMED ILLUSTRATIVE VALUES set in features.acuity_target_wait_minutes, chosen to be plausible and editable. They are NOT clinical standards and carry no endorsement. Changing them changes which patients count as positive and therefore every number in this table."
+        ],
+        "scope": "all acuities",
+        "thresholds": {
+          "achieved_recall_on_source_block": {
+            "1": 0.814,
+            "2": 0.8675,
+            "3": 0.8303,
+            "4": 0.8145,
+            "5": 0.871
+          },
+          "levels_using_pooled_fallback": [],
+          "min_positives": 25,
+          "per_level": {
+            "1": 0.2917,
+            "2": 0.1,
+            "3": 0.3751,
+            "4": 0.2003,
+            "5": 0.0891
+          },
+          "pooled_threshold": 0.2092,
+          "positives_on_source_block": {
+            "1": 43,
+            "2": 83,
+            "3": 1149,
+            "4": 566,
+            "5": 31
+          },
+          "reasons": {
+            "1": "fitted on the validation block",
+            "2": "fitted on the validation block",
+            "3": "fitted on the validation block",
+            "4": "fitted on the validation block",
+            "5": "fitted on the validation block"
+          },
+          "source_block": "val",
+          "target_recall": 0.8
+        }
+      },
+      "acuity_weighted": {
+        "description": "the same model and the same target, with LightGBM sample weights up-weighting high-acuity rows",
+        "fitted": true,
+        "label_definition": "wait > 30 min, same for every acuity",
+        "notes": [
+          "training weights by acuity: {'1': 19.9971, '2': 3.1123, '3': 1.0, '4': 1.3049, '5': 3.5377}"
+        ],
+        "scope": "all acuities",
+        "thresholds": {
+          "achieved_recall_on_source_block": {
+            "1": null,
+            "2": 0.0,
+            "3": 0.8024,
+            "4": 0.8007,
+            "5": 0.8
+          },
+          "levels_using_pooled_fallback": [
+            "1",
+            "2"
+          ],
+          "min_positives": 25,
+          "per_level": {
+            "3": 0.425,
+            "4": 0.4498,
+            "5": 0.4775
+          },
+          "pooled_threshold": 0.429344990734776,
+          "positives_on_source_block": {
+            "1": 0,
+            "2": 10,
+            "3": 1149,
+            "4": 1124,
+            "5": 485
+          },
+          "reasons": {
+            "1": "too few positives; using the pooled threshold",
+            "2": "too few positives; using the pooled threshold",
+            "3": "fitted on the validation block",
+            "4": "fitted on the validation block",
+            "5": "fitted on the validation block"
+          },
+          "source_block": "val",
+          "target_recall": 0.8
+        }
+      },
+      "high_acuity_only": {
+        "description": "a separate classifier fitted on ESI 1-2 rows only",
+        "fitted": false,
+        "label_definition": "wait > 30 min, same for every acuity",
+        "notes": [
+          "NOT FITTED: 40 positive case(s) in train and 10 in val, against a minimum of 20. A model fitted on that many positives cannot be evaluated, and a threshold chosen from them would be noise."
+        ],
+        "scope": "ESI 1-2 only",
+        "thresholds": {}
+      },
+      "pooled": {
+        "description": "the shipped classifier: one model, one target, with a per-acuity threshold wherever enough positives exist to fit one",
+        "fitted": true,
+        "label_definition": "wait > 30 min, same for every acuity",
+        "notes": [],
+        "scope": "all acuities",
+        "thresholds": {
+          "achieved_recall_on_source_block": {
+            "1": null,
+            "2": 0.0,
+            "3": 0.8207,
+            "4": 0.8034,
+            "5": 0.8
+          },
+          "levels_using_pooled_fallback": [
+            "1",
+            "2"
+          ],
+          "min_positives": 25,
+          "per_level": {
+            "3": 0.4413,
+            "4": 0.4507,
+            "5": 0.4693
+          },
+          "pooled_threshold": 0.4471,
+          "positives_on_source_block": {
+            "1": 0,
+            "2": 10,
+            "3": 1149,
+            "4": 1124,
+            "5": 485
+          },
+          "reasons": {
+            "1": "too few positives; using the pooled threshold",
+            "2": "too few positives; using the pooled threshold",
+            "3": "fitted on the validation block",
+            "4": "fitted on the validation block",
+            "5": "fitted on the validation block"
+          },
+          "source_block": "val",
+          "target_recall": 0.8
+        }
+      }
+    },
+    "caveat": "The per-acuity target waits are ASSUMED ILLUSTRATIVE VALUES set in features.acuity_target_wait_minutes, chosen to be plausible and editable. They are NOT clinical standards and carry no endorsement. Changing them changes which patients count as positive and therefore every number in this table.",
+    "feature_set": "base",
+    "min_positives_to_report": 20,
+    "pooled_threshold_minutes": 30.0,
+    "ran": true,
+    "rows": [
+      {
+        "approach": "pooled",
+        "fn": 1,
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "fp": 0,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 188,
+        "n_positive": 1,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "reportable": false,
+        "scope": "ESI 1",
+        "threshold": 0.4471,
+        "threshold_source": "too few positives; using the pooled threshold",
+        "tp": 0,
+        "unreportable_reason": "1 positive case(s) < 20: the interval is too wide for the point estimate to mean anything",
+        "val_positives": 0.0
+      },
+      {
+        "approach": "pooled",
+        "fn": 30,
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "fp": 0,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 1359,
+        "n_positive": 30,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "reportable": true,
+        "scope": "ESI 1-2 pooled",
+        "threshold": NaN,
+        "threshold_source": "mixed",
+        "tp": 0,
+        "unreportable_reason": null,
+        "val_positives": 10.0
+      },
+      {
+        "approach": "pooled",
+        "fn": 29,
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "fp": 0,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 1171,
+        "n_positive": 29,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "reportable": true,
+        "scope": "ESI 2",
+        "threshold": 0.4471,
+        "threshold_source": "too few positives; using the pooled threshold",
+        "tp": 0,
+        "unreportable_reason": null,
+        "val_positives": 10.0
+      },
+      {
+        "approach": "pooled",
+        "fn": 387,
+        "fnr": 0.2389,
+        "fnr_ci_high": 0.2607,
+        "fnr_ci_low": 0.2182,
+        "fp": 641,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 3345,
+        "n_positive": 1620,
+        "precision": 0.658,
+        "precision_ci_high": 0.6792,
+        "precision_ci_low": 0.6381,
+        "recall": 0.7611,
+        "recall_ci_high": 0.7792,
+        "recall_ci_low": 0.7396,
+        "reportable": true,
+        "scope": "ESI 3",
+        "threshold": 0.4413,
+        "threshold_source": "fitted on the validation block",
+        "tp": 1233,
+        "unreportable_reason": null,
+        "val_positives": 1149.0
+      },
+      {
+        "approach": "pooled",
+        "fn": 419,
+        "fnr": 0.286,
+        "fnr_ci_high": 0.3066,
+        "fnr_ci_low": 0.2639,
+        "fp": 336,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 2555,
+        "n_positive": 1465,
+        "precision": 0.7569,
+        "precision_ci_high": 0.7783,
+        "precision_ci_low": 0.7356,
+        "recall": 0.714,
+        "recall_ci_high": 0.7364,
+        "recall_ci_low": 0.6891,
+        "reportable": true,
+        "scope": "ESI 4",
+        "threshold": 0.4507,
+        "threshold_source": "fitted on the validation block",
+        "tp": 1046,
+        "unreportable_reason": null,
+        "val_positives": 1124.0
+      },
+      {
+        "approach": "pooled",
+        "fn": 165,
+        "fnr": 0.2845,
+        "fnr_ci_high": 0.3229,
+        "fnr_ci_low": 0.2503,
+        "fp": 110,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 939,
+        "n_positive": 580,
+        "precision": 0.7905,
+        "precision_ci_high": 0.8241,
+        "precision_ci_low": 0.7538,
+        "recall": 0.7155,
+        "recall_ci_high": 0.7553,
+        "recall_ci_low": 0.6837,
+        "reportable": true,
+        "scope": "ESI 5",
+        "threshold": 0.4693,
+        "threshold_source": "fitted on the validation block",
+        "tp": 415,
+        "unreportable_reason": null,
+        "val_positives": 485.0
+      },
+      {
+        "approach": "pooled",
+        "fn": 1001,
+        "fnr": 0.2709,
+        "fnr_ci_high": 0.2842,
+        "fnr_ci_low": 0.2575,
+        "fp": 1087,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 8198,
+        "n_positive": 3695,
+        "precision": 0.7125,
+        "precision_ci_high": 0.7279,
+        "precision_ci_low": 0.6969,
+        "recall": 0.7291,
+        "recall_ci_high": 0.7418,
+        "recall_ci_low": 0.7158,
+        "reportable": true,
+        "scope": "overall",
+        "threshold": NaN,
+        "threshold_source": "mixed",
+        "tp": 2694,
+        "unreportable_reason": null,
+        "val_positives": NaN
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 1,
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "fp": 0,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 188,
+        "n_positive": 1,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "reportable": false,
+        "scope": "ESI 1",
+        "threshold": 0.4293,
+        "threshold_source": "too few positives; using the pooled threshold",
+        "tp": 0,
+        "unreportable_reason": "1 positive case(s) < 20: the interval is too wide for the point estimate to mean anything",
+        "val_positives": 0.0
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 30,
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "fp": 0,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 1359,
+        "n_positive": 30,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "reportable": true,
+        "scope": "ESI 1-2 pooled",
+        "threshold": NaN,
+        "threshold_source": "mixed",
+        "tp": 0,
+        "unreportable_reason": null,
+        "val_positives": 10.0
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 29,
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "fp": 0,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 1171,
+        "n_positive": 29,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "reportable": true,
+        "scope": "ESI 2",
+        "threshold": 0.4293,
+        "threshold_source": "too few positives; using the pooled threshold",
+        "tp": 0,
+        "unreportable_reason": null,
+        "val_positives": 10.0
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 429,
+        "fnr": 0.2648,
+        "fnr_ci_high": 0.2864,
+        "fnr_ci_low": 0.2425,
+        "fp": 600,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 3345,
+        "n_positive": 1620,
+        "precision": 0.665,
+        "precision_ci_high": 0.6864,
+        "precision_ci_low": 0.6428,
+        "recall": 0.7352,
+        "recall_ci_high": 0.7554,
+        "recall_ci_low": 0.7135,
+        "reportable": true,
+        "scope": "ESI 3",
+        "threshold": 0.425,
+        "threshold_source": "fitted on the validation block",
+        "tp": 1191,
+        "unreportable_reason": null,
+        "val_positives": 1149.0
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 422,
+        "fnr": 0.2881,
+        "fnr_ci_high": 0.3129,
+        "fnr_ci_low": 0.2627,
+        "fp": 365,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 2555,
+        "n_positive": 1465,
+        "precision": 0.7408,
+        "precision_ci_high": 0.7614,
+        "precision_ci_low": 0.7176,
+        "recall": 0.7119,
+        "recall_ci_high": 0.7317,
+        "recall_ci_low": 0.6909,
+        "reportable": true,
+        "scope": "ESI 4",
+        "threshold": 0.4498,
+        "threshold_source": "fitted on the validation block",
+        "tp": 1043,
+        "unreportable_reason": null,
+        "val_positives": 1124.0
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 164,
+        "fnr": 0.2828,
+        "fnr_ci_high": 0.3162,
+        "fnr_ci_low": 0.2467,
+        "fp": 114,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 939,
+        "n_positive": 580,
+        "precision": 0.7849,
+        "precision_ci_high": 0.8167,
+        "precision_ci_low": 0.7452,
+        "recall": 0.7172,
+        "recall_ci_high": 0.7518,
+        "recall_ci_low": 0.6846,
+        "reportable": true,
+        "scope": "ESI 5",
+        "threshold": 0.4775,
+        "threshold_source": "fitted on the validation block",
+        "tp": 416,
+        "unreportable_reason": null,
+        "val_positives": 485.0
+      },
+      {
+        "approach": "acuity_weighted",
+        "fn": 1045,
+        "fnr": 0.2828,
+        "fnr_ci_high": 0.2972,
+        "fnr_ci_low": 0.2668,
+        "fp": 1079,
+        "label": "wait > 30 min, same for every acuity",
+        "model_scope": "all acuities",
+        "n": 8198,
+        "n_positive": 3695,
+        "precision": 0.7106,
+        "precision_ci_high": 0.724,
+        "precision_ci_low": 0.6971,
+        "recall": 0.7172,
+        "recall_ci_high": 0.7319,
+        "recall_ci_low": 0.7043,
+        "reportable": true,
+        "scope": "overall",
+        "threshold": NaN,
+        "threshold_source": "mixed",
+        "tp": 2650,
+        "unreportable_reason": null,
+        "val_positives": NaN
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 19,
+        "fnr": 0.25,
+        "fnr_ci_high": 0.3626,
+        "fnr_ci_low": 0.1448,
+        "fp": 73,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 188,
+        "n_positive": 76,
+        "precision": 0.4385,
+        "precision_ci_high": 0.5272,
+        "precision_ci_low": 0.3511,
+        "recall": 0.75,
+        "recall_ci_high": 0.8442,
+        "recall_ci_low": 0.6363,
+        "reportable": true,
+        "scope": "ESI 1",
+        "threshold": 0.2917,
+        "threshold_source": "fitted on the validation block",
+        "tp": 57,
+        "unreportable_reason": null,
+        "val_positives": 43.0
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 30,
+        "fnr": 0.1587,
+        "fnr_ci_high": 0.2086,
+        "fnr_ci_low": 0.1081,
+        "fp": 880,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 1359,
+        "n_positive": 189,
+        "precision": 0.153,
+        "precision_ci_high": 0.1735,
+        "precision_ci_low": 0.132,
+        "recall": 0.8413,
+        "recall_ci_high": 0.894,
+        "recall_ci_low": 0.7873,
+        "reportable": true,
+        "scope": "ESI 1-2 pooled",
+        "threshold": NaN,
+        "threshold_source": "mixed",
+        "tp": 159,
+        "unreportable_reason": null,
+        "val_positives": 126.0
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 11,
+        "fnr": 0.0973,
+        "fnr_ci_high": 0.1532,
+        "fnr_ci_low": 0.0438,
+        "fp": 807,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 1171,
+        "n_positive": 113,
+        "precision": 0.1122,
+        "precision_ci_high": 0.134,
+        "precision_ci_low": 0.0907,
+        "recall": 0.9027,
+        "recall_ci_high": 0.9485,
+        "recall_ci_low": 0.8468,
+        "reportable": true,
+        "scope": "ESI 2",
+        "threshold": 0.1,
+        "threshold_source": "fitted on the validation block",
+        "tp": 102,
+        "unreportable_reason": null,
+        "val_positives": 83.0
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 379,
+        "fnr": 0.234,
+        "fnr_ci_high": 0.253,
+        "fnr_ci_low": 0.2119,
+        "fp": 616,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 3345,
+        "n_positive": 1620,
+        "precision": 0.6683,
+        "precision_ci_high": 0.6895,
+        "precision_ci_low": 0.6441,
+        "recall": 0.766,
+        "recall_ci_high": 0.7848,
+        "recall_ci_low": 0.7456,
+        "reportable": true,
+        "scope": "ESI 3",
+        "threshold": 0.3751,
+        "threshold_source": "fitted on the validation block",
+        "tp": 1241,
+        "unreportable_reason": null,
+        "val_positives": 1149.0
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 299,
+        "fnr": 0.3437,
+        "fnr_ci_high": 0.376,
+        "fnr_ci_low": 0.3126,
+        "fp": 507,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 2555,
+        "n_positive": 870,
+        "precision": 0.5297,
+        "precision_ci_high": 0.5633,
+        "precision_ci_low": 0.5,
+        "recall": 0.6563,
+        "recall_ci_high": 0.6846,
+        "recall_ci_low": 0.6232,
+        "reportable": true,
+        "scope": "ESI 4",
+        "threshold": 0.2003,
+        "threshold_source": "fitted on the validation block",
+        "tp": 571,
+        "unreportable_reason": null,
+        "val_positives": 566.0
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 9,
+        "fnr": 0.1216,
+        "fnr_ci_high": 0.2097,
+        "fnr_ci_low": 0.0526,
+        "fp": 475,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 939,
+        "n_positive": 74,
+        "precision": 0.1204,
+        "precision_ci_high": 0.1496,
+        "precision_ci_low": 0.0938,
+        "recall": 0.8784,
+        "recall_ci_high": 0.9494,
+        "recall_ci_low": 0.8025,
+        "reportable": true,
+        "scope": "ESI 5",
+        "threshold": 0.0891,
+        "threshold_source": "fitted on the validation block",
+        "tp": 65,
+        "unreportable_reason": null,
+        "val_positives": 31.0
+      },
+      {
+        "approach": "acuity_target",
+        "fn": 717,
+        "fnr": 0.2604,
+        "fnr_ci_high": 0.2773,
+        "fnr_ci_low": 0.2443,
+        "fp": 2478,
+        "label": "wait > per-acuity target (ESI 1: 5 min, ESI 2: 15 min, ESI 3: 30 min, ESI 4: 60 min, ESI 5: 120 min) -- ASSUMED illustrative values, not clinical standards",
+        "model_scope": "all acuities",
+        "n": 8198,
+        "n_positive": 2753,
+        "precision": 0.451,
+        "precision_ci_high": 0.4649,
+        "precision_ci_low": 0.4372,
+        "recall": 0.7396,
+        "recall_ci_high": 0.756,
+        "recall_ci_low": 0.7229,
+        "reportable": true,
+        "scope": "overall",
+        "threshold": NaN,
+        "threshold_source": "mixed",
+        "tp": 2036,
+        "unreportable_reason": null,
+        "val_positives": NaN
+      }
+    ],
+    "verdict": {
+      "ESI 1": {
+        "any_reportable": true,
+        "approaches": [
+          {
+            "approach": "pooled",
+            "fnr": 1.0,
+            "fnr_ci": [
+              1.0,
+              1.0
+            ],
+            "n_positive": 1,
+            "recall": 0.0,
+            "reportable": false,
+            "unreportable_reason": "1 positive case(s) < 20: the interval is too wide for the point estimate to mean anything"
+          },
+          {
+            "approach": "acuity_weighted",
+            "fnr": 1.0,
+            "fnr_ci": [
+              1.0,
+              1.0
+            ],
+            "n_positive": 1,
+            "recall": 0.0,
+            "reportable": false,
+            "unreportable_reason": "1 positive case(s) < 20: the interval is too wide for the point estimate to mean anything"
+          },
+          {
+            "approach": "acuity_target",
+            "fnr": 0.25,
+            "fnr_ci": [
+              0.1448,
+              0.3626
+            ],
+            "n_positive": 76,
+            "recall": 0.75,
+            "reportable": true,
+            "unreportable_reason": null
+          }
+        ],
+        "reportable_approaches": [
+          "acuity_target"
+        ]
+      },
+      "ESI 1-2 pooled": {
+        "any_reportable": true,
+        "approaches": [
+          {
+            "approach": "pooled",
+            "fnr": 1.0,
+            "fnr_ci": [
+              1.0,
+              1.0
+            ],
+            "n_positive": 30,
+            "recall": 0.0,
+            "reportable": true,
+            "unreportable_reason": null
+          },
+          {
+            "approach": "acuity_weighted",
+            "fnr": 1.0,
+            "fnr_ci": [
+              1.0,
+              1.0
+            ],
+            "n_positive": 30,
+            "recall": 0.0,
+            "reportable": true,
+            "unreportable_reason": null
+          },
+          {
+            "approach": "acuity_target",
+            "fnr": 0.1587,
+            "fnr_ci": [
+              0.1081,
+              0.2086
+            ],
+            "n_positive": 189,
+            "recall": 0.8413,
+            "reportable": true,
+            "unreportable_reason": null
+          }
+        ],
+        "reportable_approaches": [
+          "pooled",
+          "acuity_weighted",
+          "acuity_target"
+        ]
+      },
+      "ESI 2": {
+        "any_reportable": true,
+        "approaches": [
+          {
+            "approach": "pooled",
+            "fnr": 1.0,
+            "fnr_ci": [
+              1.0,
+              1.0
+            ],
+            "n_positive": 29,
+            "recall": 0.0,
+            "reportable": true,
+            "unreportable_reason": null
+          },
+          {
+            "approach": "acuity_weighted",
+            "fnr": 1.0,
+            "fnr_ci": [
+              1.0,
+              1.0
+            ],
+            "n_positive": 29,
+            "recall": 0.0,
+            "reportable": true,
+            "unreportable_reason": null
+          },
+          {
+            "approach": "acuity_target",
+            "fnr": 0.0973,
+            "fnr_ci": [
+              0.0438,
+              0.1532
+            ],
+            "n_positive": 113,
+            "recall": 0.9027,
+            "reportable": true,
+            "unreportable_reason": null
+          }
+        ],
+        "reportable_approaches": [
+          "pooled",
+          "acuity_weighted",
+          "acuity_target"
+        ]
+      }
+    }
+  },
+  "seen_only_bias": {
+    "by_triage_level": [
+      {
+        "abandoned_share": 0.0,
+        "bias_minutes": 0.0,
+        "bias_percent": 0.0,
+        "mean_wait_seen_only": 4.55,
+        "mean_wait_with_abandon_lower_bound": 4.55,
+        "n_abandoned": 0,
+        "n_seen": 1139,
+        "triage_level": 1
+      },
+      {
+        "abandoned_share": 0.0,
+        "bias_minutes": 0.0,
+        "bias_percent": 0.0,
+        "mean_wait_seen_only": 5.14,
+        "mean_wait_with_abandon_lower_bound": 5.14,
+        "n_abandoned": 0,
+        "n_seen": 7304,
+        "triage_level": 2
+      },
+      {
+        "abandoned_share": 0.0165,
+        "bias_minutes": 1.24,
+        "bias_percent": 3.17,
+        "mean_wait_seen_only": 39.08,
+        "mean_wait_with_abandon_lower_bound": 40.32,
+        "n_abandoned": 383,
+        "n_seen": 22817,
+        "triage_level": 3
+      },
+      {
+        "abandoned_share": 0.0557,
+        "bias_minutes": 2.67,
+        "bias_percent": 6.6,
+        "mean_wait_seen_only": 40.5,
+        "mean_wait_with_abandon_lower_bound": 43.18,
+        "n_abandoned": 1029,
+        "n_seen": 17438,
+        "triage_level": 4
+      },
+      {
+        "abandoned_share": 0.0897,
+        "bias_minutes": 3.04,
+        "bias_percent": 6.74,
+        "mean_wait_seen_only": 45.01,
+        "mean_wait_with_abandon_lower_bound": 48.04,
+        "n_abandoned": 634,
+        "n_seen": 6434,
+        "triage_level": 5
+      }
+    ],
+    "direction": "downward -- excluding abandoners understates the wait",
+    "interpretation": "Patients who left without being seen waited longer than average, so a model trained only on seen patients under-predicts. Their true waits are unobservable; time-to-abandon is a lower bound, so the figures below are the MINIMUM size of the bias, not an estimate of it.",
+    "overall": {
+      "bias_minutes_at_least": 1.98,
+      "bias_percent_at_least": 5.65,
+      "mean_wait_seen_only": 35.01,
+      "mean_wait_with_abandon_lower_bound": 36.99,
+      "n_abandoned": 2046,
+      "n_seen": 55132
+    }
+  },
+  "triage_thresholds": {
+    "comparison": [
+      {
+        "fnr": 0.1245,
+        "fnr_ci_high": 0.1361,
+        "fnr_ci_low": 0.1143,
+        "n": 8198,
+        "n_positive": 3695,
+        "pr_auc": 0.9823,
+        "precision": 0.9577,
+        "precision_ci_high": 0.9643,
+        "precision_ci_low": 0.9513,
+        "recall": 0.8755,
+        "recall_ci_high": 0.8862,
+        "recall_ci_low": 0.864,
+        "rule": "pooled",
+        "scope": "overall",
+        "threshold": 0.6982,
+        "threshold_source": "pooled"
+      },
+      {
+        "fnr": 0.1253,
+        "fnr_ci_high": 0.1377,
+        "fnr_ci_low": 0.1151,
+        "n": 8198,
+        "n_positive": 3695,
+        "pr_auc": 0.9823,
+        "precision": 0.9573,
+        "precision_ci_high": 0.9644,
+        "precision_ci_low": 0.9505,
+        "recall": 0.8747,
+        "recall_ci_high": 0.8856,
+        "recall_ci_low": 0.864,
+        "rule": "per_triage",
+        "scope": "overall",
+        "threshold": NaN,
+        "threshold_source": "mixed"
+      },
+      {
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "n": 188,
+        "n_positive": 1,
+        "pr_auc": 0.0133,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "rule": "pooled",
+        "scope": "ESI 1",
+        "threshold": 0.6982,
+        "threshold_source": "too few positives; using the pooled threshold"
+      },
+      {
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "n": 188,
+        "n_positive": 1,
+        "pr_auc": 0.0133,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "rule": "per_triage",
+        "scope": "ESI 1",
+        "threshold": 0.6982,
+        "threshold_source": "too few positives; using the pooled threshold"
+      },
+      {
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "n": 1171,
+        "n_positive": 29,
+        "pr_auc": 0.3243,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "rule": "pooled",
+        "scope": "ESI 2",
+        "threshold": 0.6982,
+        "threshold_source": "too few positives; using the pooled threshold"
+      },
+      {
+        "fnr": 1.0,
+        "fnr_ci_high": 1.0,
+        "fnr_ci_low": 1.0,
+        "n": 1171,
+        "n_positive": 29,
+        "pr_auc": 0.3243,
+        "precision": NaN,
+        "precision_ci_high": NaN,
+        "precision_ci_low": NaN,
+        "recall": 0.0,
+        "recall_ci_high": 0.0,
+        "recall_ci_low": 0.0,
+        "rule": "per_triage",
+        "scope": "ESI 2",
+        "threshold": 0.6982,
+        "threshold_source": "too few positives; using the pooled threshold"
+      },
+      {
+        "fnr": 0.1068,
+        "fnr_ci_high": 0.1226,
+        "fnr_ci_low": 0.0929,
+        "n": 3345,
+        "n_positive": 1620,
+        "pr_auc": 0.9823,
+        "precision": 0.9513,
+        "precision_ci_high": 0.9617,
+        "precision_ci_low": 0.9398,
+        "recall": 0.8932,
+        "recall_ci_high": 0.9077,
+        "recall_ci_low": 0.879,
+        "rule": "pooled",
+        "scope": "ESI 3",
+        "threshold": 0.6982,
+        "threshold_source": "fitted on the validation block"
+      },
+      {
+        "fnr": 0.1154,
+        "fnr_ci_high": 0.1325,
+        "fnr_ci_low": 0.1022,
+        "n": 3345,
+        "n_positive": 1620,
+        "pr_auc": 0.9823,
+        "precision": 0.9528,
+        "precision_ci_high": 0.9628,
+        "precision_ci_low": 0.9419,
+        "recall": 0.8846,
+        "recall_ci_high": 0.8987,
+        "recall_ci_low": 0.8681,
+        "rule": "per_triage",
+        "scope": "ESI 3",
+        "threshold": 0.7143,
+        "threshold_source": "fitted on the validation block"
+      },
+      {
+        "fnr": 0.1345,
+        "fnr_ci_high": 0.1531,
+        "fnr_ci_low": 0.117,
+        "n": 2555,
+        "n_positive": 1465,
+        "pr_auc": 0.9853,
+        "precision": 0.965,
+        "precision_ci_high": 0.9744,
+        "precision_ci_low": 0.9555,
+        "recall": 0.8655,
+        "recall_ci_high": 0.8818,
+        "recall_ci_low": 0.8468,
+        "rule": "pooled",
+        "scope": "ESI 4",
+        "threshold": 0.6982,
+        "threshold_source": "fitted on the validation block"
+      },
+      {
+        "fnr": 0.1235,
+        "fnr_ci_high": 0.1427,
+        "fnr_ci_low": 0.1068,
+        "n": 2555,
+        "n_positive": 1465,
+        "pr_auc": 0.9853,
+        "precision": 0.9625,
+        "precision_ci_high": 0.9722,
+        "precision_ci_low": 0.9522,
+        "recall": 0.8765,
+        "recall_ci_high": 0.893,
+        "recall_ci_low": 0.8593,
+        "rule": "per_triage",
+        "scope": "ESI 4",
+        "threshold": 0.6677,
+        "threshold_source": "fitted on the validation block"
+      },
+      {
+        "fnr": 0.1034,
+        "fnr_ci_high": 0.1283,
+        "fnr_ci_low": 0.0791,
+        "n": 939,
+        "n_positive": 580,
+        "pr_auc": 0.9878,
+        "precision": 0.9576,
+        "precision_ci_high": 0.9744,
+        "precision_ci_low": 0.9402,
+        "recall": 0.8966,
+        "recall_ci_high": 0.9202,
+        "recall_ci_low": 0.8699,
+        "rule": "pooled",
+        "scope": "ESI 5",
+        "threshold": 0.6982,
+        "threshold_source": "fitted on the validation block"
+      },
+      {
+        "fnr": 0.1121,
+        "fnr_ci_high": 0.1378,
+        "fnr_ci_low": 0.0865,
+        "n": 939,
+        "n_positive": 580,
+        "pr_auc": 0.9878,
+        "precision": 0.9572,
+        "precision_ci_high": 0.9732,
+        "precision_ci_low": 0.9409,
+        "recall": 0.8879,
+        "recall_ci_high": 0.9124,
+        "recall_ci_low": 0.8628,
+        "rule": "per_triage",
+        "scope": "ESI 5",
+        "threshold": 0.7175,
+        "threshold_source": "fitted on the validation block"
+      }
+    ],
+    "feature_set": "base+queue",
+    "thresholds": {
+      "achieved_recall_on_source_block": {
+        "1": null,
+        "2": 0.0,
+        "3": 0.8016,
+        "4": 0.8007,
+        "5": 0.8
+      },
+      "levels_using_pooled_fallback": [
+        "1",
+        "2"
+      ],
+      "min_positives": 25,
+      "per_level": {
+        "3": 0.7143,
+        "4": 0.6677,
+        "5": 0.7175
+      },
+      "pooled_threshold": 0.6982037178500714,
+      "positives_on_source_block": {
+        "1": 0,
+        "2": 10,
+        "3": 1149,
+        "4": 1124,
+        "5": 485
+      },
+      "reasons": {
+        "1": "too few positives; using the pooled threshold",
+        "2": "too few positives; using the pooled threshold",
+        "3": "fitted on the validation block",
+        "4": "fitted on the validation block",
+        "5": "fitted on the validation block"
+      },
+      "source_block": "val",
+      "target_recall": 0.8
+    }
+  }
+}

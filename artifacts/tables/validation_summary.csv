@@ -1,0 +1,18 @@
+category,detail,count,share_of_input
+input,rows read from source,57500,1.0
+outcome,rows valid after checks,57179,0.994417
+outcome,rows dropped,321,0.005583
+outcome,usable for the wait-time model,55132,0.958817
+censoring,never seen: left without being seen,2046,0.035583
+censoring,never seen: still waiting at the data cutoff,1,1.7e-05
+dropped,triage_level missing or outside 1-5,206,0.003583
+dropped,seen_time before arrival_time (negative wait),115,0.002
+dropped,missing patient_id,0,0.0
+dropped,missing or unparseable arrival_time,0,0.0
+dropped,departure_time before arrival_time (negative LOS),0,0.0
+dropped,seen_time after departure_time,0,0.0
+dropped,duplicate patient_id,0,0.0
+optional column,age: present,1,1.7e-05
+optional column,sex: present,1,1.7e-05
+optional column,arrival_mode: present,1,1.7e-05
+optional column,chief_complaint: present,1,1.7e-05

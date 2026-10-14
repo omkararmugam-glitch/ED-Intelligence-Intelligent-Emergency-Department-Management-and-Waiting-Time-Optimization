@@ -1,0 +1,186 @@
+# Column map TEMPLATE for MIMIC-IV-ED.
+#
+# ============================== READ THIS FIRST ==============================
+# VERIFIED AGAINST THE OPEN DEMO, NOT AGAINST THE FULL DATASET.
+#
+# This file was first written from the published schema of MIMIC-IV-ED v2.2 without
+# any data in hand. It has since been run against the open MIMIC-IV-ED **demo**
+# (222 stays, ODbL): see scripts/external_validation_mimic.py and
+# artifacts/external_validation/mimic_demo/. Every column name below was confirmed
+# to exist, and one mapping was found to be wrong and corrected -- "left against
+# medical advice" was mapped to lwbs and is not lwbs.
+#
+# What that does and does not establish: the column names and the value maps are
+# real, and the adapter reads the tables. The demo is a patient sample rather than a
+# window of operation, so it cannot confirm anything about volumes, queue state or
+# the simulation. docs/real_data_readiness.md still sets out what has to happen
+# before any number produced from the full dataset is quoted anywhere.
+# =============================================================================
+#
+# MIMIC-IV-ED is distributed as several tables, not one file. The pipeline's adapter
+# reads ONE table, so the tables must be joined into a single row-per-visit frame
+# first, keyed on `stay_id`. The join is NOT done here -- it is a data-engineering step
+# the user performs, and `docs/real_data_readiness.md` sets out what it has to produce.
+#
+#   edstays    one row per ED stay: subject_id, hadm_id, stay_id, intime, outtime,
+#              gender, race, arrival_transport, disposition
+#   triage     one row per stay at triage: temperature, heartrate, resprate, o2sat,
+#              sbp, dbp, pain, acuity, chiefcomplaint
+#   vitalsign  repeated observations during the stay, with charttime
+#   pyxis      medication dispenses, with charttime
+#   medrecon   medication reconciliation on arrival (no useful timestamp for us)
+#
+# The adapter expects the joined frame to carry, per stay, the columns named in
+# `source:` below.
+
+dataset_name: mimic_iv_ed_demo_verified_schema
+
+read_options:
+  sep: ","
+  encoding: utf-8
+  # "UNKNOWN" is deliberately NOT treated as missing. In MIMIC-IV-ED it is a real
+  # category value of `arrival_transport` -- "we do not know how they arrived" is a
+  # recorded answer, not an absent one -- and it is mapped explicitly below. Listing it
+  # here as well would blank the value before the map could see it, and the column
+  # would silently lose a category.
+  na_values: ["", "NA", "N/A", "NULL", "null", "___"]
+
+columns:
+  # ---------------------------------------------------------------- identifiers
+  patient_id:
+    # `stay_id` is the ED stay, which is what one row of our schema means. NOT
+    # `subject_id`, which is the patient and may appear many times.
+    source: stay_id
+
+  # ---------------------------------------------------------------- timestamps
+  arrival_time:
+    # edstays.intime. The closest thing MIMIC has to "door", and it is the ED
+    # registration time rather than physical arrival.
+    source: intime
+    datetime_format: "%Y-%m-%d %H:%M:%S"
+
+  seen_time:
+    # ****** THE CENTRAL PROBLEM ******
+    # MIMIC-IV-ED HAS NO FIRST-PROVIDER-CONTACT TIMESTAMP. There is no column that
+    # records when a clinician first saw the patient. `seen_time` therefore cannot be
+    # mapped directly, and is left pointing at a column that does not exist so that the
+    # adapter fails loudly rather than inventing one.
+    #
+    # To use this dataset at all, enable `proxy_wait` below and accept that every wait
+    # the pipeline then reports is a different quantity. See the discussion there.
+    source: first_provider_contact_time_DOES_NOT_EXIST_IN_MIMIC
+    datetime_format: "%Y-%m-%d %H:%M:%S"
+
+  departure_time:
+    source: outtime
+    datetime_format: "%Y-%m-%d %H:%M:%S"
+
+  # ---------------------------------------------------------------- outcome
+  disposition:
+    # edstays.disposition. The values below are the ones MIMIC-IV-ED documents; an
+    # unmapped value is counted and surfaced, never guessed.
+    #
+    # NOTE: "ELOPED" and "LEFT WITHOUT BEING SEEN" are NOT the same thing and MIMIC
+    # distinguishes them. Both are mapped to `lwbs` here because the project's schema
+    # has one category for leaving before care is complete -- which loses a real
+    # distinction, and is a modelling choice to revisit against the data.
+    source: disposition
+    value_map:
+      HOME: discharged
+      ADMITTED: admitted
+      TRANSFER: transferred
+      "LEFT WITHOUT BEING SEEN": lwbs
+      ELOPED: lwbs
+      # Corrected after running against the real demo extract: this template had
+      # "left against medical advice" as lwbs, which is wrong. Leaving against
+      # advice means a clinician saw the patient and advised them -- the patient was
+      # seen. Mapping it to lwbs would have inflated the abandonment rate with
+      # patients who had already been assessed, which is the quantity the simulation
+      # is validated against.
+      "LEFT AGAINST MEDICAL ADVICE": other
+      EXPIRED: other
+      OTHER: other
+    default: other
+
+  # ---------------------------------------------------------------- acuity
+  triage_level:
+    # triage.acuity. MIMIC records ESI 1-5, with nulls where triage was not completed.
+    # Our schema rejects anything outside 1-5, which the validator counts.
+    source: acuity
+
+  # ---------------------------------------------------------------- demographics
+  age:
+    # NOT in edstays. MIMIC-IV-ED carries no age column; age comes from the hosp
+    # module's `patients.anchor_age` and must be joined in. Ages over 89 are shifted
+    # in MIMIC for de-identification, so the oldest band is not a true age.
+    source: anchor_age
+
+  sex:
+    source: gender
+    value_map:
+      F: female
+      M: male
+    default: unknown
+
+  arrival_mode:
+    # edstays.arrival_transport. Richer than our three categories, so this mapping
+    # LOSES information: WALK IN and UNKNOWN both become walk_in/other.
+    source: arrival_transport
+    value_map:
+      AMBULANCE: ambulance
+      "WALK IN": walk_in
+      HELICOPTER: ambulance
+      "OTHER": other
+      UNKNOWN: other
+    default: other
+
+  chief_complaint:
+    # triage.chiefcomplaint. FREE TEXT, and free text in a real extract is a
+    # re-identification surface. It is mapped because our schema has the column; it is
+    # not used as a model feature anywhere, and it should be dropped entirely unless
+    # there is a specific reason to keep it.
+    source: chiefcomplaint
+
+# ---------------------------------------------------------------- the proxy wait
+#
+# Enabling this is the only way to use MIMIC-IV-ED with this pipeline, and it changes
+# what every wait-related number means. It is off here; turning it on is a deliberate
+# act with a documented consequence.
+#
+# The two candidate proxies, and why neither is door-to-provider:
+#
+#   first_vitalsign_charttime
+#       The earliest vitalsign.charttime for the stay. Usually recorded AT TRIAGE, by a
+#       nurse, often before any clinician is involved -- so it systematically
+#       UNDER-estimates the wait, and for a fast-triaged patient it may be minutes
+#       after arrival regardless of how long they then waited.
+#
+#   first_pyxis_charttime
+#       The earliest pyxis.charttime (a medication dispense) for the stay. It happens
+#       only after a clinician has decided something, so it OVER-estimates the wait --
+#       and it exists only for patients who were given a medication at all, which is a
+#       biased subset correlated with acuity. Patients with no dispense would have no
+#       wait, and dropping them is not a neutral act.
+#
+# Neither is the interval the models were built on. Whichever is chosen, every result
+# must be labelled "proxy wait (not true door-to-provider)" -- the adapter emits that
+# label automatically and the report and dashboard are required to show it.
+proxy_wait:
+  enabled: false
+  source: first_vitalsign_charttime
+  proxy_name: "first vitalsign charttime (usually recorded at triage, before a clinician)"
+  datetime_format: "%Y-%m-%d %H:%M:%S"
+  only_when_missing: true
+
+duration_fallback:
+  enabled: false
+  wait_minutes_source: null
+  los_minutes_source: null
+  units: minutes
+
+validation:
+  min_value_map_match_rate: 0.05
+  # Left ON deliberately: a typo in this file must fail rather than silently produce a
+  # column of defaults, which is the failure mode that would be hardest to notice on a
+  # dataset nobody here has seen.
+  fail_on_unsourced_present_column: true

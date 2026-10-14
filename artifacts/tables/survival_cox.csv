@@ -1,0 +1,13 @@
+cause,covariate,coef,hazard_ratio,hr_lower_95,hr_upper_95,p_value,significant_at_5pct,violates_proportional_hazards,interpretation,n,n_events
+seen,triage_level,-0.3169,0.7284,0.7212,0.7357,0.0,True,True,time-averaged only: the effect changes over the wait,55973,53974
+seen,age,0.0001,1.0001,0.9998,1.0005,0.40893938931181495,False,False,constant-effect reading is supported by the test,55973,53974
+seen,is_ambulance,0.0586,1.0604,1.037,1.0843,2.5305570302964546e-07,True,False,constant-effect reading is supported by the test,55973,53974
+seen,n_waiting,-0.1763,0.8384,0.8367,0.84,0.0,True,True,time-averaged only: the effect changes over the wait,55973,53974
+seen,hour_sin,0.2377,1.2683,1.2507,1.2862,2.637919856473731e-244,True,True,time-averaged only: the effect changes over the wait,55973,53974
+seen,hour_cos,0.0132,1.0133,1.0018,1.0249,0.023091112122485206,True,True,time-averaged only: the effect changes over the wait,55973,53974
+abandoned,triage_level,0.1521,1.1643,1.135,1.1943,1.2570490047333424e-31,True,True,time-averaged only: the effect changes over the wait,55973,1998
+abandoned,age,-0.0001,0.9999,0.9989,1.0008,0.7990299232815141,False,False,constant-effect reading is supported by the test,55973,1998
+abandoned,is_ambulance,-0.0665,0.9356,0.8784,0.9965,0.03866907867325282,True,False,constant-effect reading is supported by the test,55973,1998
+abandoned,n_waiting,-0.0015,0.9985,0.9952,1.0019,0.3881136210926296,False,False,constant-effect reading is supported by the test,55973,1998
+abandoned,hour_sin,-0.0055,0.9945,0.9586,1.0317,0.7680706066154146,False,False,constant-effect reading is supported by the test,55973,1998
+abandoned,hour_cos,-0.0062,0.9938,0.9613,1.0274,0.7145682813958601,False,False,constant-effect reading is supported by the test,55973,1998

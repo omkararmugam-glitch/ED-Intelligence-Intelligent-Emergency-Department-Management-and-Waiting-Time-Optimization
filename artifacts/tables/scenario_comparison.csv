@@ -1,0 +1,6 @@
+scenario,kpi,difference_vs_baseline,ci_low,ci_high,method,significant,direction
+plus_one_doctor_peak,mean_wait_minutes,-13.0985,-13.9767,-12.2203,paired (common random numbers),True,better
+plus_one_nurse_peak,mean_wait_minutes,-7.0153,-7.4516,-6.5789,paired (common random numbers),True,better
+fast_track_esi45,mean_wait_minutes,-25.7439,-26.8441,-24.6438,paired (common random numbers),True,better
+surge_10pct,mean_wait_minutes,13.8706,11.8362,15.905,unpaired (scenario changes demand),True,worse
+surge_20pct,mean_wait_minutes,26.8897,24.6376,29.1418,unpaired (scenario changes demand),True,worse

@@ -1,0 +1,60 @@
+# Development overlay. NOT part of the demo stack.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# A note on the filename. The spec for this work asked for
+# `docker-compose.override.yml`, and that name would have been wrong here:
+# Compose loads an override file *automatically and silently*, so simply having
+# it in the repository would turn every `docker compose up` -- including the one
+# on demo day -- into a bind-mounted, auto-reloading development stack. This file
+# therefore has an explicit name and has to be asked for with `-f`. If you prefer
+# the automatic behaviour on your own machine, copy it:
+#
+#   Copy-Item docker-compose.dev.yml docker-compose.override.yml
+#
+# `.gitignore` excludes `docker-compose.override.yml`, so that stays local to you.
+#
+# What this changes, and why each one is unsafe for a demo:
+#
+#   * Source is bind-mounted over the image, so the code that runs is the code on
+#     disk. It also means a Windows line-ending or a stray .pyc can break a
+#     container that built cleanly.
+#   * The root filesystem is writable, because reload writes .pyc files and
+#     Streamlit's file watcher needs to walk the tree.
+#   * uvicorn runs with --reload and Streamlit watches files, which costs CPU and
+#     restarts the service mid-request when you save.
+#   * artifacts/ is writable, so experiments can overwrite the baseline models.
+
+services:
+  api:
+    volumes:
+      - ./src:/app/src
+      - ./api:/app/api
+      - ./configs:/app/configs
+      - ./schema.yaml:/app/schema.yaml
+      # Writable here, read-only in the demo stack: a dev run may retrain.
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data
+      - ed-runs:/app/runs
+    read_only: false
+    environment:
+      ED_LOG_LEVEL: DEBUG
+    command:
+      - sh
+      - -c
+      - exec uvicorn api.main:app --host "${ED_API_HOST:-0.0.0.0}" --port "${ED_API_PORT:-8000}" --reload --reload-dir /app/api --reload-dir /app/src
+    # Reload makes the first health probe later than usual.
+    healthcheck:
+      start_period: 60s
+
+  app:
+    volumes:
+      - ./app:/app/app
+      - ./.streamlit:/app/.streamlit
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data
+    read_only: false
+    environment:
+      # Watch files so an edit to a view reloads the page.
+      STREAMLIT_SERVER_FILE_WATCHER_TYPE: auto
+      STREAMLIT_SERVER_RUN_ON_SAVE: "true"

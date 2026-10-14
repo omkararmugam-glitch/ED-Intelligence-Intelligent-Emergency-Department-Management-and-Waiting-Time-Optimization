@@ -1,0 +1,4 @@
+horizon_minutes,n,n_positive,cox_auc,lightgbm_auc,auc_difference,better,note
+30,8428,23,0.7701,0.8272,0.0571,lightgbm,"AUC only. The Cox model ranks risk; it does not estimate the cumulative incidence of leaving by this horizon, so it has no Brier score or calibration curve to compare."
+60,8428,135,0.7293,0.8286,0.0994,lightgbm,"AUC only. The Cox model ranks risk; it does not estimate the cumulative incidence of leaving by this horizon, so it has no Brier score or calibration curve to compare."
+120,8428,314,0.6703,0.8621,0.1918,lightgbm,"AUC only. The Cox model ranks risk; it does not estimate the cumulative incidence of leaving by this horizon, so it has no Brier score or calibration curve to compare."

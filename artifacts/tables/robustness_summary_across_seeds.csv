@@ -1,0 +1,33 @@
+metric,kind,n_seeds,mean,sd,relative_spread,spread_is_large,values,holds_on_every_seed
+sim_validation_passed,conclusion,3,,,,True,"True, False, True",False
+forecast_beats_naive_overall,conclusion,3,,,,False,"True, True, True",True
+forecast_beats_naive_at_peak,conclusion,3,,,,False,"True, True, True",True
+rolling_beats_static_overall,conclusion,3,,,,True,"False, True, True",False
+sim_worst_relative_error,quantity,3,0.358,0.1602,0.4475,True,"0.281, 0.5421, 0.2508",
+n_feasible_plans,quantity,2,68.5,14.8492,0.2168,True,"79, 58",
+forecast_mae_peak_seasonal_naive,quantity,3,3.5697,0.4107,0.115,True,"3.96721, 3.14706, 3.59494",
+conformal_static_esi1,quantity,3,0.9096,0.0901,0.0991,False,"1, 0.8198, 0.9091",
+forecast_mae_seasonal_naive,quantity,3,2.7222,0.263,0.0966,False,"2.99653, 2.47222, 2.69792",
+cheapest_feasible_cost,quantity,2,47355.0,3811.3056,0.0805,False,"44660, 50050",
+ablation_gap_minutes,quantity,3,17.0627,1.318,0.0772,False,"17.455, 18.14, 15.593",
+forecast_mae_peak,quantity,3,2.9109,0.2096,0.072,False,"3.06594, 2.67235, 2.99429",
+ablation_mae_base,quantity,3,32.988,2.0967,0.0636,False,"33.025, 35.066, 30.873",
+wait_mae_model,quantity,3,15.9253,0.8786,0.0552,False,"15.57, 16.926, 15.28",
+ablation_mae_base_plus_queue,quantity,3,15.9253,0.8786,0.0552,False,"15.57, 16.926, 15.28",
+conformal_rolling_esi1,quantity,3,0.8896,0.0374,0.042,False,"0.927, 0.8895, 0.8523",
+wait_mae_baseline,quantity,3,45.9181,1.9012,0.0414,False,"43.8222, 47.5315, 46.4008",
+forecast_mae,quantity,3,2.061,0.0757,0.0367,False,"2.12341, 1.97686, 2.08286",
+conformal_static_esi3,quantity,3,0.8924,0.0326,0.0366,False,"0.9014, 0.8562, 0.9196",
+classifier_recall,quantity,3,0.8658,0.0239,0.0276,False,"0.8771, 0.8819, 0.8383",
+conformal_static_overall,quantity,3,0.8958,0.0213,0.0237,False,"0.9031, 0.8719, 0.9125",
+conformal_static_esi4,quantity,3,0.9002,0.0152,0.0168,False,"0.9008, 0.8848, 0.9151",
+conformal_static_esi2,quantity,3,0.9024,0.0128,0.0141,False,"0.9158, 0.8904, 0.901",
+conformal_static_esi5,quantity,3,0.8859,0.0082,0.0093,False,"0.8851, 0.8781, 0.8945",
+conformal_rolling_esi3,quantity,3,0.8937,0.0069,0.0077,False,"0.8891, 0.8904, 0.9016",
+conformal_rolling_esi4,quantity,3,0.8953,0.0059,0.0066,False,"0.892, 0.8917, 0.9021",
+conformal_rolling_esi2,quantity,3,0.8923,0.0049,0.0054,False,"0.8972, 0.8923, 0.8875",
+conformal_rolling_overall,quantity,3,0.894,0.0034,0.0038,False,"0.8924, 0.8916, 0.8979",
+classifier_pr_auc,quantity,3,0.9588,0.0022,0.0022,False,"0.9566, 0.9609, 0.9588",
+conformal_rolling_esi5,quantity,3,0.8941,0.0006,0.0006,False,"0.8941, 0.8946, 0.8935",
+scenario_ranking_stable_under_perturbation,quantity,2,1.0,0.0,0.0,False,"1, 1",
+n_plans_evaluated,quantity,2,144.0,0.0,0.0,False,"144, 144",

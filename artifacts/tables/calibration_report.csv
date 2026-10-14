@@ -1,0 +1,7 @@
+target,unit,target_low,target_high,target_description,achieved,status,why_this_target
+median_wait_minutes_seen,minutes,25.0,30.0,25 to 30,25.85,PASS,"door-to-doctor for patients who were seen; ed_v2 sits at 11, published national figures are nearer 25-30"
+lwbs_rate_overall,rate,0.02,0.04,0.02 to 0.04,0.0242,PASS,longer waits must not be bought with a walkout rate no department would accept
+lwbs_rate_esi5,rate,0.0,0.08,0 to 0.08,0.0523,PASS,the least urgent patients abandon most; this caps how far that may go
+lwbs_rate_esi1_esi2,rate,0.0,0.0,0,0.0,PASS,"a high-acuity patient leaving without being seen is a never event, so the generator must produce none at all"
+median_wait_minutes_esi1,minutes,0.0,12.0,0 to 12,3.8667,PASS,ESI 1 is a resuscitation case; the priority queue has to keep their wait short even under the heavier load
+median_post_contact_minutes,minutes,80.0,100.0,80 to 100,90.1,PASS,"treatment plus boarding, targeted at about 90 minutes; ed_v2 sits at 99"

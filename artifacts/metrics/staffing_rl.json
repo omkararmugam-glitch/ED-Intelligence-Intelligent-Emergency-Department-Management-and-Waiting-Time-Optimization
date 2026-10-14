@@ -1,0 +1,89 @@
+{
+  "ran": true,
+  "experimental": true,
+  "notice": "EXPERIMENTAL. This policy was learned against the project's own simulator, which was calibrated to synthetic data. A win here shows the method runs end to end; it is not evidence that the policy would help a real emergency department, where the dynamics are unknown and cannot be played against millions of times.",
+  "verdict": "The learned policy does NOT beat the fixed roster: it costs 17832 more per episode (95% CI 14663 to 21002). Reported as it stands; it has not been tuned until it won.",
+  "n_states": 600,
+  "n_actions": 3,
+  "training_episodes": 60,
+  "evaluation_episodes": 20,
+  "hours_per_episode": 168,
+  "train_seed_prefix": "rl::train",
+  "eval_seed_prefix": "rl::eval",
+  "policies": [
+    {
+      "name": "fixed_roster",
+      "description": "hold the rostered level (the cheapest feasible plan)"
+    },
+    {
+      "name": "reactive_rule",
+      "description": "add a doctor when more than 8 are waiting, drop one below 3"
+    },
+    {
+      "name": "random",
+      "description": "uniformly random action each hour"
+    },
+    {
+      "name": "q_learning",
+      "description": "tabular Q-learning over (queue by acuity, doctors, hour band)"
+    }
+  ],
+  "comparison": [
+    {
+      "policy": "reactive_rule",
+      "n_episodes": 20,
+      "mean_total_cost": 48441.33,
+      "mean_staffing_cost": 37526.5,
+      "mean_breaches": 17.55,
+      "cost_difference": -1438.23,
+      "ci_low": -3174.54,
+      "ci_high": 298.07,
+      "beats_baseline": true,
+      "significant": false,
+      "breach_difference": 7.55,
+      "notice": "EXPERIMENTAL. This policy was learned against the project's own simulator, which was calibrated to synthetic data. A win here shows the method runs end to end; it is not evidence that the policy would help a real emergency department, where the dynamics are unknown and cannot be played against millions of times."
+    },
+    {
+      "policy": "fixed_roster",
+      "n_episodes": 20,
+      "mean_total_cost": 49879.56,
+      "mean_staffing_cost": 42240.0,
+      "mean_breaches": 10.0,
+      "cost_difference": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "beats_baseline": NaN,
+      "significant": NaN,
+      "breach_difference": NaN,
+      "notice": "EXPERIMENTAL. This policy was learned against the project's own simulator, which was calibrated to synthetic data. A win here shows the method runs end to end; it is not evidence that the policy would help a real emergency department, where the dynamics are unknown and cannot be played against millions of times."
+    },
+    {
+      "policy": "q_learning",
+      "n_episodes": 20,
+      "mean_total_cost": 67711.87,
+      "mean_staffing_cost": 44583.0,
+      "mean_breaches": 25.7,
+      "cost_difference": 17832.31,
+      "ci_low": 14663.04,
+      "ci_high": 21001.58,
+      "beats_baseline": false,
+      "significant": true,
+      "breach_difference": 15.7,
+      "notice": "EXPERIMENTAL. This policy was learned against the project's own simulator, which was calibrated to synthetic data. A win here shows the method runs end to end; it is not evidence that the policy would help a real emergency department, where the dynamics are unknown and cannot be played against millions of times."
+    },
+    {
+      "policy": "random",
+      "n_episodes": 20,
+      "mean_total_cost": 71951.23,
+      "mean_staffing_cost": 54978.0,
+      "mean_breaches": 16.6,
+      "cost_difference": 22071.67,
+      "ci_low": 19468.3,
+      "ci_high": 24675.03,
+      "beats_baseline": false,
+      "significant": true,
+      "breach_difference": 6.6,
+      "notice": "EXPERIMENTAL. This policy was learned against the project's own simulator, which was calibrated to synthetic data. A win here shows the method runs end to end; it is not evidence that the policy would help a real emergency department, where the dynamics are unknown and cannot be played against millions of times."
+    }
+  ]
+}

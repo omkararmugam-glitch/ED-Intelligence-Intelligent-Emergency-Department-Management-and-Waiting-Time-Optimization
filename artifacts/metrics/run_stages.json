@@ -1,0 +1,22 @@
+{
+  "run_type": "pipeline run",
+  "stages_not_performed": {},
+  "stages_performed": [
+    "load",
+    "validate",
+    "split",
+    "features",
+    "train_wait",
+    "ablation",
+    "explain",
+    "fairness",
+    "forecast",
+    "survival",
+    "competing_risks",
+    "calibrate_sim",
+    "scenarios",
+    "sensitivity",
+    "staffing_search",
+    "report"
+  ]
+}

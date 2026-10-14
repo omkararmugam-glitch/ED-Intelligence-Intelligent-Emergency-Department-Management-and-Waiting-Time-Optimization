@@ -1,0 +1,755 @@
+/* ===========================================================================
+   Northfield General Hospital - Emergency Department
+   The whole design system, in one file, injected once by theme.inject_css().
+
+   Why a .css file rather than a string in theme.py: this is the single
+   stylesheet, and a page that wants a card should reach for a component, not
+   append more CSS. One file also means one place to audit contrast in.
+
+   Two rules this file keeps:
+
+   1. Colour is never the only signal. Every status surface here is paired with
+      a text label or an icon in the component that uses it; the colour only
+      reinforces what the words already say.
+   2. Nothing is fetched at runtime. No @import, no webfont URL. The type stack
+      resolves locally on Windows, macOS and Linux, so text paints immediately
+      and the app works with no network at all.
+
+   Streamlit's own class names are generated and change between versions, so
+   the only Streamlit hooks used here are the stable data-testid attributes.
+   Everything else targets class names this project emits itself.
+   =========================================================================== */
+
+:root {
+  /* --- surfaces ------------------------------------------------------------
+     A cool light-grey page with white cards. The page is never pure white:
+     large tables and charts glare on a ward screen under hospital lighting. */
+  --ed-page: #f4f6f9;
+  --ed-surface: #ffffff;
+  --ed-surface-sunken: #eef2f7;
+  --ed-border: #d8dfe8;
+  --ed-border-strong: #b9c4d2;
+
+  /* Deep navy for the shell: sidebar and top bar. Dark enough that white text
+     on it clears WCAG AA comfortably (contrast ~13:1). */
+  --ed-navy: #14243a;
+  --ed-navy-raised: #1e3350;
+  --ed-navy-line: #2c4259;
+
+  /* --- ink ---------------------------------------------------------------- */
+  --ed-ink: #16202c;
+  --ed-ink-muted: #4a5665;
+  --ed-ink-faint: #6b7686;
+  --ed-ink-on-navy: #f2f6fb;
+  --ed-ink-on-navy-muted: #a9bace;
+
+  /* --- accent -------------------------------------------------------------
+     Teal is the interface accent: focus rings, active nav, primary buttons.
+     It is deliberately NOT one of the semantic colours below, so "teal" never
+     means "good" or "bad" -- it only means "this is the thing you asked for". */
+  --ed-accent: #0f7a7a;
+  --ed-accent-strong: #0b5f5f;
+  --ed-accent-wash: rgba(15, 122, 122, 0.10);
+
+  /* --- semantic -----------------------------------------------------------
+     Separate from the accent, and each used for exactly one meaning. */
+  --ed-critical: #b3261e;
+  --ed-critical-wash: rgba(179, 38, 30, 0.10);
+  --ed-warning: #a15c00;
+  --ed-warning-wash: rgba(161, 92, 0, 0.12);
+  --ed-ok: #1b7a4b;
+  --ed-ok-wash: rgba(27, 122, 75, 0.12);
+  --ed-info: #1f5fa9;
+  --ed-info-wash: rgba(31, 95, 169, 0.10);
+
+  /* --- ESI triage ---------------------------------------------------------
+     The standard five-level convention: 1 red, 2 orange, 3 yellow, 4 green,
+     5 blue. Yellow on white cannot reach AA as text, so ESI 3 (and only ESI 3)
+     uses dark ink on its chip while the others use white. The chip always
+     carries the number and the word, so the colour is decoration. */
+  --ed-esi-1: #9b1c1c;
+  --ed-esi-2: #c2410c;
+  --ed-esi-3: #e3b505;
+  --ed-esi-4: #15803d;
+  --ed-esi-5: #1d4ed8;
+  --ed-esi-3-ink: #332a00;
+
+  /* --- geometry ----------------------------------------------------------- */
+  --ed-radius: 10px;
+  --ed-radius-sm: 6px;
+  --ed-radius-pill: 999px;
+  --ed-shadow: 0 1px 2px rgba(16, 32, 54, 0.06), 0 2px 8px rgba(16, 32, 54, 0.05);
+  --ed-shadow-raised: 0 2px 4px rgba(16, 32, 54, 0.08), 0 8px 24px rgba(16, 32, 54, 0.07);
+
+  /* --- type scale --------------------------------------------------------
+     Five steps, each with a job. Anything that does not fit one of these is
+     almost always a sign the page is saying two things at once. */
+  --ed-font: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
+             "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --ed-font-mono: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+
+  --ed-size-page-title: 1.6rem;   /* one per page, at the top */
+  --ed-size-section: 1.075rem;    /* a band of related content */
+  --ed-size-card-label: 0.72rem;  /* above a number, uppercased */
+  --ed-size-big-number: 2.0rem;   /* the figure itself */
+  --ed-size-body: 0.94rem;
+  --ed-size-caption: 0.8rem;      /* under a chart or a number */
+
+  --ed-weight-number: 650;
+}
+
+/* Dark base. Streamlit sets its own background from .streamlit/config.toml, so
+   this block only re-tunes the tokens; every component below reads them and
+   needs no dark-specific rules of its own. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-ed-theme="light"]) {
+    --ed-page: #0f1620;
+    --ed-surface: #18212e;
+    --ed-surface-sunken: #121a24;
+    --ed-border: #2a3646;
+    --ed-border-strong: #3b4a5e;
+    --ed-ink: #e8eef6;
+    --ed-ink-muted: #aab7c6;
+    --ed-ink-faint: #8995a6;
+    --ed-accent: #2fa3a3;
+    --ed-accent-strong: #44bcbc;
+    --ed-accent-wash: rgba(47, 163, 163, 0.16);
+    --ed-critical: #f0756b;
+    --ed-critical-wash: rgba(240, 117, 107, 0.16);
+    --ed-warning: #e0a44a;
+    --ed-warning-wash: rgba(224, 164, 74, 0.16);
+    --ed-ok: #54c18a;
+    --ed-ok-wash: rgba(84, 193, 138, 0.16);
+    --ed-info: #74a9e8;
+    --ed-info-wash: rgba(116, 169, 232, 0.16);
+    --ed-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --ed-shadow-raised: 0 4px 18px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* =========================================================================
+   layout
+   ========================================================================= */
+
+/* Keep the main column from stretching to absurd widths on a wide monitor, and
+   keep a real gutter at tablet width. 1366x768 is the stated floor. */
+.block-container {
+  padding-top: 1.4rem !important;
+  padding-bottom: 3rem !important;
+  max-width: 1500px;
+}
+
+html, body, [class*="st-"] {
+  font-family: var(--ed-font);
+}
+
+/* Tabular numerals everywhere a figure appears. Without this, a column of
+   numbers in a proportional font will not line up and a changing KPI jitters
+   as its digits change width. */
+.ed-num, .ed-kpi-value, .ed-table td, .ed-chip-num,
+[data-testid="stMetricValue"], [data-testid="stMetricDelta"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* =========================================================================
+   the shell: top bar and sidebar
+   ========================================================================= */
+
+.ed-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  background: var(--ed-navy);
+  color: var(--ed-ink-on-navy);
+  border-radius: var(--ed-radius);
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.6rem;
+  box-shadow: var(--ed-shadow);
+}
+.ed-topbar-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+.ed-topbar-mark svg { flex: 0 0 auto; }
+.ed-topbar-name {
+  font-size: 1.02rem;
+  font-weight: 640;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+}
+.ed-topbar-dept {
+  font-size: var(--ed-size-caption);
+  color: var(--ed-ink-on-navy-muted);
+  line-height: 1.2;
+}
+.ed-topbar-spacer { flex: 1 1 auto; }
+.ed-topbar-chips { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+
+.ed-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ed-radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ed-ink-on-navy);
+  white-space: nowrap;
+}
+.ed-chip-env {
+  background: var(--ed-warning-wash);
+  border-color: var(--ed-warning);
+  color: #ffd9a0;
+}
+.ed-chip-clock .ed-chip-label {
+  color: var(--ed-ink-on-navy-muted);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* The standing disclaimer. Slim, on every page, and not dismissible: a reader
+   who scrolled past it once should still meet it on the next page. */
+.ed-disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--ed-size-caption);
+  font-weight: 560;
+  color: var(--ed-warning);
+  background: var(--ed-warning-wash);
+  border: 1px solid var(--ed-warning);
+  border-radius: var(--ed-radius-sm);
+  padding: 0.35rem 0.7rem;
+  margin-bottom: 1rem;
+}
+
+/* --- sidebar ------------------------------------------------------------- */
+
+[data-testid="stSidebar"] {
+  background: var(--ed-navy);
+}
+[data-testid="stSidebar"] * { color: var(--ed-ink-on-navy); }
+[data-testid="stSidebar"] hr {
+  border-color: rgba(255, 255, 255, 0.14);
+  margin: 0.6rem 0;
+}
+
+.ed-side-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.1rem 0 0.5rem 0;
+}
+.ed-side-brand-name {
+  font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.15;
+}
+.ed-side-brand-sub {
+  font-size: 0.72rem;
+  color: var(--ed-ink-on-navy-muted);
+}
+
+/* Group captions in the navigation: OPERATIONS, PLANNING, ... */
+.ed-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--ed-ink-on-navy-muted);
+  margin: 0.85rem 0 0.1rem 0;
+}
+
+/* The radio that carries each group's pages, dressed as a nav list. */
+[data-testid="stSidebar"] [role="radiogroup"] { gap: 0.1rem; }
+[data-testid="stSidebar"] [role="radiogroup"] label {
+  border-radius: var(--ed-radius-sm);
+  padding: 0.3rem 0.5rem;
+  margin: 0;
+  transition: background 120ms ease;
+}
+[data-testid="stSidebar"] [role="radiogroup"] label:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+/* The active page. A left bar plus a lift, so the current item is identifiable
+   without relying on the colour alone. */
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {
+  background: var(--ed-accent-wash);
+  box-shadow: inset 3px 0 0 0 var(--ed-accent-strong);
+}
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) p {
+  font-weight: 650;
+}
+/* The radio dot itself carries no information the label does not, and reads as
+   clutter in a navigation list. */
+[data-testid="stSidebar"] [role="radiogroup"] label > div:first-child {
+  display: none;
+}
+[data-testid="stSidebar"] [role="radiogroup"] label p {
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* =========================================================================
+   page furniture
+   ========================================================================= */
+
+.ed-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--ed-size-caption);
+  color: var(--ed-ink-faint);
+  margin-bottom: 0.15rem;
+}
+.ed-breadcrumb-sep { opacity: 0.55; }
+
+.ed-page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.2rem;
+}
+.ed-page-title {
+  font-size: var(--ed-size-page-title);
+  font-weight: 660;
+  line-height: 1.2;
+  color: var(--ed-ink);
+  margin: 0;
+}
+.ed-page-sub {
+  font-size: var(--ed-size-body);
+  color: var(--ed-ink-muted);
+  margin: 0.2rem 0 0 0;
+  max-width: 68ch;
+}
+.ed-page-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  font-size: var(--ed-size-caption);
+  color: var(--ed-ink-faint);
+  white-space: nowrap;
+}
+.ed-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ed-section {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0.2rem 0 0.5rem 0;
+}
+.ed-section-title {
+  font-size: var(--ed-size-section);
+  font-weight: 640;
+  color: var(--ed-ink);
+}
+.ed-section-sub {
+  font-size: var(--ed-size-caption);
+  color: var(--ed-ink-muted);
+}
+
+/* =========================================================================
+   cards and KPIs
+   ========================================================================= */
+
+.ed-card {
+  background: var(--ed-surface);
+  border: 1px solid var(--ed-border);
+  border-radius: var(--ed-radius);
+  padding: 0.85rem 0.95rem;
+  box-shadow: var(--ed-shadow);
+  height: 100%;
+}
+
+.ed-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-height: 118px;
+}
+.ed-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.ed-kpi-label {
+  font-size: var(--ed-size-card-label);
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint);
+  line-height: 1.25;
+}
+.ed-kpi-value {
+  font-size: var(--ed-size-big-number);
+  font-weight: var(--ed-weight-number);
+  line-height: 1.05;
+  color: var(--ed-ink);
+}
+.ed-kpi-unit {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ed-ink-muted);
+  margin-left: 0.2rem;
+}
+.ed-kpi-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--ed-size-caption);
+  color: var(--ed-ink-muted);
+  margin-top: auto;
+}
+.ed-kpi-delta { display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 600; }
+.ed-delta-up { color: var(--ed-critical); }
+.ed-delta-down { color: var(--ed-ok); }
+.ed-delta-flat { color: var(--ed-ink-faint); }
+
+/* A sparkline is context for the number above it, so it is drawn small, with
+   no axes, and never carries a value a reader is expected to read off. */
+.ed-spark { display: block; width: 100%; height: 26px; margin-top: 0.1rem; }
+.ed-spark path { fill: none; stroke: var(--ed-accent); stroke-width: 1.6; }
+.ed-spark .ed-spark-fill { fill: var(--ed-accent-wash); stroke: none; }
+
+/* =========================================================================
+   pills, chips, badges
+   ========================================================================= */
+
+.ed-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--ed-radius-pill);
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+.ed-pill-good { color: var(--ed-ok); background: var(--ed-ok-wash); }
+.ed-pill-watch { color: var(--ed-warning); background: var(--ed-warning-wash); }
+.ed-pill-act { color: var(--ed-critical); background: var(--ed-critical-wash); }
+.ed-pill-info { color: var(--ed-info); background: var(--ed-info-wash); }
+.ed-pill-none { color: var(--ed-ink-faint); background: var(--ed-surface-sunken); }
+
+/* --- ESI chips ----------------------------------------------------------- */
+.ed-esi {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 650;
+  padding: 0.12rem 0.5rem 0.12rem 0.3rem;
+  border-radius: var(--ed-radius-pill);
+  white-space: nowrap;
+  line-height: 1.55;
+  color: #ffffff;
+}
+.ed-esi-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.26);
+  font-size: 0.7rem;
+  font-weight: 750;
+}
+.ed-esi-word { letter-spacing: 0.2px; }
+.ed-esi-1 { background: var(--ed-esi-1); }
+.ed-esi-2 { background: var(--ed-esi-2); }
+.ed-esi-3 { background: var(--ed-esi-3); color: var(--ed-esi-3-ink); }
+.ed-esi-3 .ed-esi-num { background: rgba(0, 0, 0, 0.16); }
+.ed-esi-4 { background: var(--ed-esi-4); }
+.ed-esi-5 { background: var(--ed-esi-5); }
+.ed-esi-unknown { background: var(--ed-ink-faint); }
+
+/* =========================================================================
+   alerts
+   ========================================================================= */
+
+.ed-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border: 1px solid var(--ed-border);
+  border-left-width: 4px;
+  border-radius: var(--ed-radius-sm);
+  background: var(--ed-surface);
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.45rem;
+}
+.ed-alert-act { border-left-color: var(--ed-critical); background: var(--ed-critical-wash); }
+.ed-alert-watch { border-left-color: var(--ed-warning); background: var(--ed-warning-wash); }
+.ed-alert-good { border-left-color: var(--ed-ok); background: var(--ed-ok-wash); }
+.ed-alert-info { border-left-color: var(--ed-info); background: var(--ed-info-wash); }
+.ed-alert-body { flex: 1 1 auto; min-width: 0; }
+.ed-alert-title { font-size: var(--ed-size-body); font-weight: 640; color: var(--ed-ink); }
+.ed-alert-detail { font-size: var(--ed-size-caption); color: var(--ed-ink-muted); margin-top: 0.1rem; }
+.ed-alert-meta {
+  font-size: 0.72rem;
+  color: var(--ed-ink-faint);
+  margin-top: 0.25rem;
+  font-family: var(--ed-font-mono);
+}
+
+/* =========================================================================
+   tables
+   ========================================================================= */
+
+.ed-table-wrap {
+  border: 1px solid var(--ed-border);
+  border-radius: var(--ed-radius);
+  overflow: auto;
+  background: var(--ed-surface);
+  box-shadow: var(--ed-shadow);
+}
+.ed-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.ed-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--ed-surface-sunken);
+  color: var(--ed-ink-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--ed-border);
+  white-space: nowrap;
+}
+.ed-table td {
+  padding: 0.45rem 0.7rem;
+  border-bottom: 1px solid var(--ed-border);
+  color: var(--ed-ink);
+  vertical-align: middle;
+}
+.ed-table tbody tr:nth-child(even) { background: rgba(0, 0, 0, 0.015); }
+.ed-table tbody tr:hover { background: var(--ed-accent-wash); }
+.ed-table tbody tr:last-child td { border-bottom: none; }
+.ed-table td.ed-right { text-align: right; }
+.ed-table-id { font-family: var(--ed-font-mono); font-size: 0.8rem; color: var(--ed-ink-muted); }
+/* A row that needs attention gets a left bar as well as a tint, so the signal
+   survives greyscale and colour-vision deficiency. */
+.ed-row-act { box-shadow: inset 3px 0 0 0 var(--ed-critical); }
+.ed-row-watch { box-shadow: inset 3px 0 0 0 var(--ed-warning); }
+
+/* =========================================================================
+   empty and loading states
+   ========================================================================= */
+
+.ed-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  border: 1px dashed var(--ed-border-strong);
+  border-radius: var(--ed-radius);
+  background: var(--ed-surface);
+  padding: 1.6rem 1.2rem;
+  color: var(--ed-ink-muted);
+}
+.ed-empty-title { font-size: var(--ed-size-body); font-weight: 640; color: var(--ed-ink); }
+.ed-empty-body { font-size: var(--ed-size-caption); max-width: 52ch; }
+
+.ed-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ed-surface-sunken) 25%,
+    var(--ed-border) 37%,
+    var(--ed-surface-sunken) 63%
+  );
+  background-size: 400% 100%;
+  animation: ed-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--ed-radius-sm);
+}
+@keyframes ed-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+/* Respect the reader's setting: a shimmer is decoration, and for some people it
+   is a trigger. */
+@media (prefers-reduced-motion: reduce) {
+  .ed-skeleton { animation: none; }
+}
+
+/* =========================================================================
+   focus and keyboard
+   ========================================================================= */
+
+/* Every focusable control gets the same visible ring. Streamlit's default is
+   easy to lose against a tinted card, and a keyboard user who cannot see where
+   they are cannot use the page at all. */
+:is(button, [role="button"], a, input, select, textarea, summary,
+    [role="radio"], [role="tab"], [tabindex]):focus-visible {
+  outline: 3px solid var(--ed-accent-strong) !important;
+  outline-offset: 2px !important;
+  border-radius: var(--ed-radius-sm);
+}
+[data-testid="stSidebar"] :focus-visible {
+  outline-color: #7fe3e3 !important;
+}
+
+/* =========================================================================
+   small screens: 1366x768 is the floor, but a tablet should still work
+   ========================================================================= */
+
+@media (max-width: 1100px) {
+  :root { --ed-size-big-number: 1.7rem; --ed-size-page-title: 1.4rem; }
+  .ed-topbar { gap: 0.5rem; }
+  .ed-page-meta { align-items: flex-start; }
+}
+
+/* =========================================================================
+   native Streamlit widgets, dressed to match
+   -------------------------------------------------------------------------
+   st.metric is kept rather than replaced by hand-built HTML: it carries
+   Streamlit's own screen-reader behaviour, and the dashboard tests count
+   metrics to check the Command center still leads with its numbers. So the
+   widget stays and the styling comes to it.
+   ========================================================================= */
+
+[data-testid="stMetric"] {
+  background: var(--ed-surface);
+  border: 1px solid var(--ed-border) !important;
+  border-radius: var(--ed-radius) !important;
+  padding: 0.75rem 0.9rem !important;
+  box-shadow: var(--ed-shadow);
+}
+[data-testid="stMetricLabel"] p {
+  font-size: var(--ed-size-card-label) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint) !important;
+  line-height: 1.3;
+}
+[data-testid="stMetricValue"] {
+  font-size: var(--ed-size-big-number) !important;
+  font-weight: var(--ed-weight-number) !important;
+  color: var(--ed-ink) !important;
+  line-height: 1.1;
+}
+[data-testid="stMetricDelta"] { font-size: var(--ed-size-caption) !important; }
+
+/* Tables scroll rather than squash on a narrow screen. */
+[data-testid="stDataFrame"] { overflow-x: auto; }
+[data-testid="stDataFrame"] { border-radius: var(--ed-radius); }
+
+/* Tabs read as a segmented control rather than browser chrome. */
+[data-testid="stTabs"] [role="tab"] {
+  font-size: 0.88rem;
+  font-weight: 560;
+  padding: 0.35rem 0.8rem;
+}
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+  color: var(--ed-accent-strong);
+  font-weight: 680;
+}
+
+/* Primary buttons take the accent; everything else stays quiet. */
+.stButton button[kind="primary"] {
+  background: var(--ed-accent) !important;
+  border-color: var(--ed-accent) !important;
+}
+.stButton button[kind="primary"]:hover {
+  background: var(--ed-accent-strong) !important;
+  border-color: var(--ed-accent-strong) !important;
+}
+
+/* =========================================================================
+   components carried over from the first design system
+   -------------------------------------------------------------------------
+   These selectors are still emitted by app/theme.py, so they keep their
+   markup contract. Their colours now come from the tokens above instead of
+   being repeated as literals.
+   ========================================================================= */
+
+.ed-callout {
+  border-left: 3px solid var(--ed-accent);
+  background: var(--ed-accent-wash);
+  padding: 0.7rem 0.9rem;
+  border-radius: 0 var(--ed-radius-sm) var(--ed-radius-sm) 0;
+  margin: 0.5rem 0 0.9rem 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ed-ink);
+}
+.ed-callout strong { font-weight: 640; }
+.ed-pill-icon { font-size: 0.85em; }
+
+.ed-demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 620;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint);
+  padding: 0.1rem 0.5rem;
+  border: 1px dashed currentColor;
+  border-radius: var(--ed-radius-sm);
+}
+
+/* theme.section_header emits <div class="ed-section"><h3>..</h3><p>..</p></div>;
+   components.section_header emits the span form above. Both are styled. */
+.ed-section h3 {
+  margin: 0;
+  font-size: var(--ed-size-section);
+  font-weight: 640;
+  letter-spacing: -0.01em;
+  color: var(--ed-ink);
+}
+.ed-section p {
+  margin: 0.15rem 0 0 0;
+  font-size: var(--ed-size-caption);
+  color: var(--ed-ink-muted);
+}
+
+.ed-empty-icon { font-size: 1.6rem; opacity: 0.6; }
+
+.ed-steps { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.3rem 0 1rem 0; }
+.ed-step {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--ed-radius-pill);
+  font-size: 0.85rem;
+  border: 1px solid var(--ed-border-strong);
+  color: var(--ed-ink-muted);
+}
+.ed-step-on {
+  font-weight: 640;
+  color: var(--ed-accent-strong);
+  border-color: var(--ed-accent);
+  background: var(--ed-accent-wash);
+}
+.ed-step-done { color: var(--ed-ok); border-color: var(--ed-ok); }

@@ -1,0 +1,13 @@
+# Optional dependencies, for the external-validation work only.
+#
+# Deliberately NOT in requirements.txt. Nothing in the pipeline, the API or the
+# dashboard imports anything here: the demo, the tests and every published figure
+# run without it. A recipient who never touches external data never installs it.
+#
+#   .\.venv\Scripts\python.exe -m pip install -r requirements-extra.txt
+#
+# pyreadr reads R's serialisation formats. It is needed once, to lift
+# uihc_ed_arrivals out of the fastTS source tarball's .RData file, because this
+# machine has no R installation to export it with. After
+# data/external/uihc_ed_arrivals.csv exists, nothing reads .RData again.
+pyreadr==0.5.3

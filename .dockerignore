@@ -1,0 +1,63 @@
+# What never enters the build context.
+#
+# Two reasons, and the second one is the important one:
+#   1. Size and speed -- a smaller context is a faster build and a smaller image.
+#   2. Safety -- an uploaded extract, a run folder or a trained model must not be
+#      copied into an image, because an image gets shared and a bind mount does
+#      not. Everything the services read at runtime is mounted, never baked in.
+
+# --- virtualenvs: huge, and a Windows .venv is useless inside a Linux image
+.venv/
+.venv_*/
+venv/
+env/
+
+# --- Python noise
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+
+# --- version control and editor state
+.git/
+.github/
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+
+# --- data: mounted read-only at runtime, never carried in an image
+data/
+
+# --- uploaded files and their analysis runs: these hold data someone handed us
+runs/
+.run/
+logs/
+*.log
+
+# --- artifacts: mounted at runtime (read-only for the services, writable for the
+#     trainer profile), so the image must not contain a stale copy
+artifacts/
+
+# --- secrets and local environment. .env.example is documentation, not a secret,
+#     but it is not needed in an image either.
+.env
+.env.*
+
+# --- development-only
+tests/
+notebooks/
+docs/
+scripts/
+Makefile
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# --- documentation: README is the one a reader of an image might want, and it is
+#     small, so it is the single exception
+*.md
+!README.md

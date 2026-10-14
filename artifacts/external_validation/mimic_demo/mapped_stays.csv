@@ -1,0 +1,223 @@
+patient_id,arrival_time,departure_time,disposition,triage_level,age,sex,arrival_mode,chief_complaint,seen_time
+37887480,2125-03-19 12:36:00,2125-03-19 16:59:47,admitted,1.0,,female,walk_in,FEVER,2125-03-19 13:07:00
+34176810,2154-02-05 17:09:00,2154-02-05 22:54:00,admitted,2.0,,female,ambulance,"Syncope, Transfer",2154-02-05 17:11:00
+32103106,2154-08-03 15:31:00,2154-08-03 22:29:00,discharged,2.0,,female,ambulance,"N/V, Tinnitus",2154-08-03 15:34:00
+38797992,2153-02-12 21:59:00,2153-02-13 01:38:00,admitted,1.0,,female,ambulance,SOB/ABNL LABS,2153-02-12 22:32:00
+33473053,2137-06-12 16:54:00,2137-06-12 18:37:22,admitted,2.0,,female,ambulance,PE,2137-06-12 16:55:00
+35758326,2185-06-15 23:08:00,2185-06-16 02:16:00,admitted,2.0,,female,other,Abd pain,2185-06-15 23:46:00
+31824062,2185-07-08 11:55:00,2185-07-08 11:59:00,other,,,female,other,UNKNOWN-CC,
+32259573,2137-09-29 21:06:00,2137-09-29 22:54:00,discharged,3.0,,female,walk_in,"Neck pain, Med refill",2137-09-29 22:32:00
+33693488,2113-12-13 11:03:00,2113-12-13 15:07:00,discharged,3.0,,female,walk_in,Eye pain,2113-12-13 11:04:00
+39866888,2157-11-18 17:38:00,2157-11-19 01:24:00,admitted,3.0,,female,walk_in,LEFT HAND PAINS,2157-11-18 21:55:00
+39300221,2157-11-29 19:28:00,2157-11-29 21:22:00,discharged,3.0,,female,walk_in,PICC LINE INFECTION,2157-11-29 21:20:00
+30683757,2137-06-19 15:05:00,2137-06-19 19:09:00,admitted,1.0,,female,walk_in,"N/V, Hyperglycemia",2137-06-19 15:36:00
+35942924,2140-11-11 11:28:00,2140-11-11 17:18:00,discharged,3.0,,female,ambulance,"Presyncope, Weakness",2140-11-11 11:29:00
+37578680,2140-10-22 18:05:00,2140-10-23 17:01:00,discharged,3.0,,female,walk_in,Abnormal labs,2140-10-22 18:06:00
+36323598,2140-09-14 14:43:00,2140-09-14 20:02:00,discharged,3.0,,female,walk_in,"Dehydration, Nausea, Rash",2140-09-14 14:44:00
+31270431,2140-09-17 11:35:00,2140-09-17 15:00:00,discharged,3.0,,female,walk_in,"Back pain, Decreased PO intake, R Ear pain",2140-09-17 11:35:00
+39348852,2140-10-03 06:20:00,2140-10-03 09:07:56,admitted,2.0,,female,ambulance,"DKA, Transfer",2140-10-03 06:24:00
+36678718,2201-10-30 10:48:00,2201-10-30 12:25:00,admitted,,,female,ambulance,HEAD BLEED,
+30701739,2143-03-22 01:19:00,2143-03-22 06:42:00,admitted,,,female,ambulance,FACIAL DROOP,
+30689793,2169-01-14 23:26:00,2169-01-15 04:56:00,admitted,2.0,,female,ambulance,"Headache, SAH, Transfer",2169-01-14 23:28:00
+35766268,2169-08-31 20:57:00,2169-09-01 07:04:00,discharged,2.0,,female,walk_in,Facial numbness,2169-08-31 20:57:00
+35357090,2155-05-08 13:48:00,2155-05-08 18:16:00,admitted,2.0,,female,ambulance,"Weakness, Atrial fibrillation, Transfer",2155-05-08 13:50:00
+31660580,2155-12-02 16:00:00,2155-12-02 20:33:00,admitted,1.0,,female,other,s/p cardiac arrest,2155-12-02 16:00:00
+39661025,2129-04-05 21:18:00,2129-04-06 00:25:00,admitted,2.0,,female,walk_in,VOMITING BLOOD,2129-04-05 21:43:00
+38676365,2166-08-21 21:39:00,2166-08-22 00:36:00,admitted,,,female,ambulance,SEIZURE,
+32719751,2144-10-28 18:29:00,2144-10-29 00:10:00,admitted,2.0,,female,ambulance,L Leg DVT,2144-10-28 18:30:00
+34918384,2140-06-17 17:47:00,2140-06-18 01:41:00,admitted,3.0,,female,ambulance,Hypotension,2140-06-17 17:49:00
+32587478,2140-09-24 21:17:00,2140-09-25 05:57:00,admitted,1.0,,female,walk_in,"Abnormal labs, ETOH, Hypotension",2140-09-24 21:19:00
+31612436,2143-09-19 10:57:00,2143-09-19 18:37:50,admitted,3.0,,female,ambulance,Dyspnea,2143-09-19 10:58:00
+32991451,2142-05-15 10:47:00,2142-05-15 18:21:00,other,3.0,,female,ambulance,Hemodialysis,2142-05-15 10:47:00
+35168275,2143-09-26 08:16:00,2143-09-26 19:52:00,admitted,2.0,,female,ambulance,Lethargy,2143-09-26 08:18:00
+33563008,2138-10-30 17:27:00,2138-10-31 00:19:00,admitted,3.0,,female,walk_in,Dizziness,2138-10-30 20:03:00
+36474912,2142-07-06 07:21:00,2142-07-06 09:09:11,admitted,3.0,,female,ambulance,Wound eval,2142-07-06 07:23:00
+32345277,2142-03-25 22:22:00,2142-03-26 08:08:00,admitted,3.0,,female,ambulance,"Abd pain, Transfer",2142-03-25 22:23:00
+38488295,2144-01-18 11:53:00,2144-01-19 13:59:00,admitted,2.0,,female,ambulance,Altered mental status,2144-01-18 11:54:00
+34604678,2142-05-16 10:26:00,2142-05-16 16:19:00,discharged,3.0,,female,walk_in,Wound eval,2142-05-16 10:28:00
+39747335,2142-08-23 16:28:00,2142-08-23 23:34:00,discharged,3.0,,female,walk_in,L Knee pain,2142-08-23 16:28:00
+30915333,2140-01-23 12:35:00,2140-01-23 18:08:00,admitted,1.0,,female,walk_in,Hypotension,2140-01-23 12:35:00
+33258284,2180-05-06 19:17:00,2180-05-06 23:30:00,admitted,3.0,,female,ambulance,"Abd pain, Abdominal distention",2180-05-06 23:04:00
+39399961,2180-07-23 05:54:00,2180-07-23 14:00:00,admitted,2.0,,female,ambulance,"Abdominal distention, Abd pain, LETHAGIC",2180-07-23 07:19:00
+32952584,2180-07-22 16:24:00,2180-07-23 05:54:00,discharged,2.0,,female,ambulance,Hypotension,2180-07-22 16:36:00
+38112554,2180-06-26 15:54:00,2180-06-26 21:31:00,admitted,3.0,,female,ambulance,Abdominal distention,2180-06-26 18:42:00
+35968195,2180-08-05 20:58:00,2180-08-06 01:44:00,admitted,3.0,,female,ambulance,"n/v/d, Abd pain",2180-08-05 23:50:00
+32259566,2179-03-27 14:15:00,2179-03-27 19:48:00,admitted,2.0,,female,ambulance,ILI,2179-03-27 17:13:00
+32891808,2178-01-24 21:23:00,2178-01-24 23:59:00,discharged,2.0,,female,walk_in,S/P FALL,
+34992024,2183-11-28 17:19:00,2183-11-28 23:57:00,discharged,3.0,,female,ambulance,"Head injury, s/p Fall",2183-11-28 17:20:00
+37953392,2179-07-24 18:21:00,2179-07-25 01:17:00,admitted,3.0,,female,ambulance,Altered mental status,2179-07-24 20:21:00
+35156583,2183-08-03 19:27:00,2183-08-04 16:07:00,discharged,3.0,,female,ambulance,Back pain,2183-08-03 19:29:00
+38207210,2177-07-14 14:52:00,2177-07-14 20:38:00,admitted,2.0,,female,ambulance,HYPERGLYCEMIA,2177-07-14 15:20:00
+37483564,2182-04-28 17:25:00,2182-04-29 07:49:00,admitted,3.0,,female,walk_in,"Abd pain, n/v/d",2182-04-28 17:25:00
+32443787,2178-12-21 03:17:00,2178-12-21 05:30:41,admitted,2.0,,female,ambulance,UNKNOWN-CC,2178-12-21 04:21:00
+39740242,2177-12-21 16:49:00,2177-12-21 22:26:00,admitted,3.0,,female,walk_in,"Cough, Dyspnea",2177-12-21 18:13:00
+34478228,2178-09-28 20:29:00,2178-09-29 00:43:00,admitted,2.0,,female,walk_in,RIGHT EAR PAIN/DRAINAGE,2178-09-28 23:00:00
+37036523,2177-09-04 06:29:00,2177-09-04 12:06:40,admitted,1.0,,female,ambulance,HYPOTHERMIA,2177-09-04 06:36:00
+38687872,2175-04-26 11:38:00,2175-04-26 15:01:00,discharged,3.0,,female,ambulance,Hypertension,2175-04-26 14:07:00
+32039794,2176-11-25 18:34:00,2176-11-25 23:51:00,admitted,2.0,,female,walk_in,"DVT, Transfer",2176-11-25 18:37:00
+33256413,2176-08-11 08:36:00,2176-08-11 17:35:00,discharged,3.0,,female,walk_in,Hematuria,2176-08-11 08:36:00
+35933027,2176-10-06 00:32:00,2176-10-06 06:10:00,discharged,3.0,,female,walk_in,Abd pain,2176-10-06 00:34:00
+35547415,2175-05-29 07:49:00,2175-05-29 12:49:00,discharged,3.0,,female,walk_in,"Urinary retention, Lower abdominal pain",2175-05-29 12:45:00
+39968716,2176-06-06 13:33:00,2176-06-06 20:18:00,admitted,2.0,,female,walk_in,"Dizziness, Weakness",2176-06-06 15:43:00
+36185653,2175-04-05 06:22:00,2175-04-05 17:10:00,admitted,,,female,ambulance,SOB,2175-04-05 06:05:00
+38074673,2177-07-11 00:39:00,2177-07-11 10:19:00,discharged,4.0,,female,walk_in,Clogged foley,2177-07-11 00:40:00
+39028384,2176-09-09 08:03:00,2176-09-09 13:02:00,discharged,3.0,,female,walk_in,Suprapubic pain,2176-09-09 08:03:00
+38260469,2153-04-12 13:03:00,2153-04-12 21:40:00,admitted,2.0,,female,walk_in,"Weakness, GI bleed",2153-04-12 13:03:00
+31254712,2153-03-27 21:28:00,2153-03-28 02:21:00,admitted,2.0,,female,ambulance,"Weakness, Hypotension",2153-03-27 21:31:00
+38020791,2155-05-17 21:03:00,2155-05-18 00:03:15,admitted,2.0,,female,walk_in,"Abnormal CT, LUQ abd pain",2155-05-17 21:06:00
+35568186,2155-06-10 20:37:00,2155-06-10 23:10:36,admitted,2.0,,female,ambulance,Anemia,2155-06-10 20:37:00
+36686656,2155-07-10 12:46:00,2155-07-10 17:48:57,admitted,2.0,,female,ambulance,"Anemia, Neutropenia, Transfer",2155-07-10 12:49:00
+31764136,2135-11-06 21:44:00,2135-11-07 06:27:00,discharged,3.0,,female,walk_in,"Depression, Anxiety",2135-11-06 21:45:00
+34951841,2137-03-15 15:27:00,2137-03-15 22:08:46,admitted,3.0,,female,walk_in,"L Weakness, Unable to ambulate",2137-03-15 15:27:00
+34387871,2134-09-26 12:39:00,2134-09-26 16:06:00,discharged,2.0,,female,ambulance,"Leg weakness, Abnormal CT",2134-09-26 12:58:00
+34922474,2137-02-07 13:06:00,2137-02-07 21:44:00,admitted,3.0,,female,ambulance,Rectal pain,2137-02-07 15:21:00
+33678912,2136-12-09 13:16:00,2136-12-09 14:45:10,admitted,1.0,,female,ambulance,"Tachycardia, Hypoxia",2136-12-09 13:36:00
+36976997,2136-12-31 13:41:00,2137-01-01 00:35:00,admitted,2.0,,female,ambulance,Altered mental status,2136-12-31 17:02:00
+33347721,2134-06-05 21:42:00,2134-06-06 03:44:00,admitted,2.0,,female,other,ELEVATED INR,2134-06-05 22:20:00
+34948767,2136-11-04 16:08:00,2136-11-04 22:12:00,admitted,3.0,,female,walk_in,"Hematuria, Dysuria",2136-11-04 16:28:00
+37965024,2133-05-04 20:52:00,2133-05-05 15:37:00,discharged,2.0,,female,walk_in,"Cough, Dyspnea",2133-05-04 20:52:00
+37206743,2132-07-25 11:06:00,2132-07-25 18:09:00,other,3.0,,female,walk_in,L Eye pain,2132-07-25 11:10:00
+36021274,2135-01-15 16:12:00,2135-01-15 22:38:00,admitted,2.0,,female,walk_in,"Dehydration, Fatigue",2135-01-15 16:12:00
+37321464,2134-10-26 15:12:00,2134-10-26 22:13:00,discharged,4.0,,female,walk_in,"Lower back pain, s/p Fall",2134-10-26 15:13:00
+36132883,2147-08-07 19:16:00,2147-08-08 01:01:00,lwbs,3.0,,female,walk_in,"L Foot swelling, L Foot pain",2147-08-07 19:16:00
+39760810,2145-02-24 12:37:00,2145-02-24 14:25:00,discharged,2.0,,female,walk_in,EYE EVAL,
+31320010,2146-09-28 09:58:00,2146-09-28 15:02:00,discharged,3.0,,female,ambulance,Dyspnea,2146-09-28 10:00:00
+37401157,2145-10-19 19:23:00,2145-10-20 00:54:00,admitted,3.0,,female,ambulance,"Dyspnea, Foot swelling",2145-10-19 23:57:00
+39054681,2147-06-16 18:58:00,2147-06-16 23:06:00,admitted,2.0,,female,walk_in,"Dyspnea, Productive cough",2147-06-16 18:59:00
+31945330,2145-08-06 11:12:00,2145-08-06 17:33:00,discharged,2.0,,female,walk_in,Allergic reaction,2145-08-06 14:19:00
+32095131,2147-12-04 13:11:00,2147-12-05 02:28:00,admitted,3.0,,female,walk_in,L Foot pain,2147-12-04 13:13:00
+36041505,2148-01-22 14:47:00,2148-01-23 12:18:49,admitted,2.0,,female,ambulance,"Leg pain, Wound eval",2148-01-22 14:47:00
+32034003,2143-03-10 18:51:00,2143-03-10 23:47:00,discharged,3.0,,female,ambulance,HYPERTENSION,2143-03-10 22:11:00
+32579239,2147-08-02 18:14:00,2147-08-03 03:01:07,admitted,3.0,,female,ambulance,Urinary retention,2147-08-02 18:14:00
+30836087,2145-07-03 20:02:00,2145-07-03 23:46:44,admitted,3.0,,female,walk_in,"LEFT EYE SWELLING, REDNESS",2145-07-04 00:39:00
+35353291,2147-12-01 10:15:00,2147-12-01 13:23:00,discharged,3.0,,female,walk_in,"L Foot pain, Wound eval",2147-12-01 10:15:00
+37196722,2147-11-09 04:17:00,2147-11-09 08:02:52,admitted,3.0,,female,ambulance,BRBPR,2147-11-09 04:19:00
+32840887,2147-08-25 14:21:00,2147-08-25 18:42:00,discharged,3.0,,female,ambulance,B Leg swelling,2147-08-25 14:22:00
+33922323,2145-07-24 11:30:00,2145-07-24 20:32:00,admitted,2.0,,female,ambulance,Palpitations,2145-07-24 11:59:00
+31226423,2147-07-02 12:47:00,2147-07-02 21:40:00,discharged,3.0,,female,ambulance,N/V,2147-07-02 12:49:00
+36180820,2178-07-03 17:39:00,2178-07-03 22:45:00,admitted,1.0,,female,ambulance,"Transfer, Dyspnea",2178-07-03 17:39:00
+33211001,2178-07-17 16:58:00,2178-07-18 02:27:00,discharged,,,female,ambulance,PICC EVAL,
+33065303,2178-07-13 04:37:00,2178-07-13 08:16:00,admitted,2.0,,female,ambulance,"Transfer, Abnormal EKG",2178-07-13 04:37:00
+33335871,2178-07-22 05:41:00,2178-07-22 08:19:00,admitted,2.0,,female,other,"Dyspnea, Transfer",2178-07-22 05:43:00
+39297781,2123-02-19 23:57:00,2123-02-20 04:13:00,admitted,1.0,,female,other,"Transfer, PE",2123-02-19 23:57:00
+36381328,2120-01-30 19:44:00,2120-01-30 22:51:00,admitted,2.0,,female,ambulance,"Transfer, s/p Fall",
+32272346,2200-06-04 16:38:00,2200-06-05 10:26:00,discharged,2.0,,female,ambulance,Hypoglycemia,2200-06-04 16:39:00
+31579293,2196-04-14 05:55:00,2196-04-14 13:40:00,admitted,3.0,,female,other,"ETOH, Hypoglycemia",2196-04-14 08:05:00
+39266792,2201-03-23 12:04:00,2201-03-26 14:24:00,transferred,3.0,,female,ambulance,"Head injury, Neck pain, s/p Fall",2201-03-23 12:04:00
+30193781,2198-04-17 11:42:00,2198-04-17 21:24:00,admitted,3.0,,female,walk_in,"ETOH, Hallucinations",2198-04-17 11:42:00
+38615683,2197-04-07 03:20:00,2197-04-07 06:56:40,admitted,2.0,,female,ambulance,Psychiatric hold,2197-04-07 06:11:00
+35540249,2197-04-16 22:57:00,2197-04-17 09:48:00,discharged,2.0,,female,walk_in,SI,2197-04-17 02:34:00
+35114287,2199-02-17 14:32:00,2199-02-19 13:38:00,transferred,2.0,,female,ambulance,SI,2199-02-17 14:33:00
+39910144,2201-02-12 15:11:00,2201-02-13 11:11:00,discharged,2.0,,female,ambulance,SI,2201-02-12 15:12:00
+39441314,2136-08-04 16:26:00,2136-08-05 00:17:00,admitted,3.0,,female,walk_in,?INFECTION,2136-08-04 22:21:00
+34807453,2136-09-22 17:07:00,2136-09-22 22:30:00,admitted,3.0,,female,ambulance,"Abd pain, Back pain",2136-09-22 19:08:00
+34646141,2148-03-07 18:21:00,2148-03-08 00:50:00,admitted,2.0,,female,ambulance,"Dyspnea, Transfer",2148-03-07 18:26:00
+30115213,2147-12-30 06:45:00,2147-12-30 09:33:00,admitted,,,female,ambulance,MVC/INTUBATED TRAUMA,2147-12-30 08:40:00
+30667562,2148-01-25 18:46:00,2148-01-26 01:27:00,admitted,2.0,,female,ambulance,T-SPINE FX DISPLACEMENT,2148-01-25 18:49:00
+34982171,2157-07-16 01:50:00,2157-07-16 04:11:33,admitted,3.0,,female,ambulance,LEFT HIP FX,2157-07-16 07:52:00
+32007337,2156-04-12 09:56:00,2156-04-12 14:17:27,admitted,2.0,,female,walk_in,"DIARRHEA,FEVER",2156-04-12 10:30:00
+33978784,2156-05-11 11:29:00,2156-05-11 14:49:34,admitted,,,female,ambulance,RESP ARREST,2156-05-11 14:26:00
+33227245,2155-12-04 18:34:00,2155-12-04 22:23:00,discharged,3.0,,female,walk_in,LARYNGITIS/SOB WITH TALKING,2155-12-04 21:31:00
+38216551,2160-07-15 17:34:00,2160-07-16 18:49:00,discharged,3.0,,female,ambulance,"s/p Fall, L Shoulder pain",2160-07-15 17:36:00
+37376268,2160-04-14 09:01:00,2160-04-14 14:28:00,admitted,2.0,,female,ambulance,BRBPR,2160-04-14 09:04:00
+32822973,2156-04-30 18:30:00,2156-04-30 21:53:00,admitted,2.0,,female,ambulance,LETHARGY/SOB,2156-04-30 18:47:00
+38926302,2196-02-24 12:15:00,2196-02-24 17:07:00,admitted,,,male,ambulance,S/P ARREST,
+37844627,2200-09-17 18:38:00,2200-09-18 00:57:00,admitted,2.0,,male,walk_in,R RIB PAIN,2200-09-17 19:40:00
+34236274,2201-07-07 12:31:00,2201-07-07 19:40:00,admitted,3.0,,male,ambulance,"R Leg pain, Weakness",2201-07-07 13:11:00
+38967799,2167-11-07 17:57:00,2167-11-07 20:22:00,admitted,2.0,,male,other,"Chest pain, Transfer",2167-11-07 17:58:00
+37323830,2184-10-07 22:35:00,2184-10-08 04:09:00,admitted,2.0,,male,ambulance,"s/p Fall, SDH",2184-10-07 23:05:00
+33007927,2134-08-17 16:24:00,2134-08-18 03:15:00,admitted,2.0,,male,ambulance,"Wound eval, Transfer",2134-08-17 17:51:00
+36836328,2134-09-05 16:14:00,2134-09-06 15:57:55,admitted,2.0,,male,ambulance,Dyspnea,2134-09-05 17:50:00
+37593892,2134-10-26 14:32:00,2134-10-27 01:30:00,discharged,3.0,,male,ambulance,DISLODGED ABD TUBE,2134-10-26 18:46:00
+38875576,2133-12-18 12:09:00,2133-12-18 17:10:00,admitted,2.0,,male,ambulance,"Abd pain, n/v/d",2133-12-18 12:45:00
+39430108,2172-03-12 20:52:00,2172-03-13 01:46:00,admitted,1.0,,male,ambulance,SDH/SAH,2172-03-12 21:08:00
+38449411,2181-09-02 19:21:00,2181-09-03 01:49:00,discharged,,,male,ambulance,Confusion,2181-09-02 19:34:00
+38890884,2181-10-12 20:17:00,2181-10-13 02:52:00,admitted,2.0,,male,ambulance,Tachycardia,2181-10-13 00:14:00
+32204198,2181-10-25 09:23:00,2181-10-25 11:35:00,admitted,2.0,,male,ambulance,Abd pain,2181-10-25 09:54:00
+30324772,2180-03-03 20:26:00,2180-03-04 02:24:00,admitted,2.0,,male,walk_in,"Chest pain, Jaw pain, L Arm pain",2180-03-03 20:28:00
+39738665,2131-02-27 13:16:00,2131-02-27 16:40:00,admitted,1.0,,male,other,Altered mental status,
+35224843,2117-03-14 15:19:00,2117-03-14 16:34:58,admitted,1.0,,male,other,ICH,2117-03-14 15:20:00
+30804580,2148-03-10 04:46:00,2148-03-10 16:18:48,admitted,2.0,,male,ambulance,"Abd pain, N/V",2148-03-10 04:46:00
+31806264,2149-09-12 15:31:00,2149-09-13 09:02:00,admitted,3.0,,male,walk_in,"Abd pain, Right sided abdominal pain",2149-09-12 15:31:00
+32537287,2149-02-11 08:52:00,2149-02-11 23:09:00,admitted,2.0,,male,walk_in,"Abd pain, Diarrhea, Vomiting",2149-02-11 08:53:00
+31023359,2149-09-28 01:53:00,2149-09-28 16:26:00,discharged,3.0,,male,walk_in,"Abd pain, N/V",2149-09-28 01:53:00
+30225689,2149-09-20 05:50:00,2149-09-20 15:53:00,admitted,3.0,,male,walk_in,Right sided abdominal pain,2149-09-20 05:50:00
+32281632,2148-06-13 08:36:00,2148-06-13 17:30:00,transferred,3.0,,male,ambulance,Abd pain,2148-06-13 08:37:00
+35681380,2149-06-20 10:20:00,2149-06-20 20:59:00,admitted,3.0,,male,walk_in,RLQ abdominal pain,2149-06-20 10:20:00
+34558830,2146-06-05 22:26:00,2146-06-06 01:45:00,admitted,2.0,,male,ambulance,"Abd pain, LEAKING ASCITES",2146-06-05 22:50:00
+31121963,2149-10-01 02:07:00,2149-10-01 18:56:59,admitted,2.0,,male,ambulance,"Chest pain, N/V",2149-10-01 02:09:00
+37714209,2117-10-25 15:49:00,2117-10-25 22:53:00,admitted,3.0,,male,walk_in,"ABDOMINAL MASS, FEVER",2117-10-25 18:26:00
+31960365,2117-01-27 18:19:00,2117-01-28 01:23:00,admitted,3.0,,male,walk_in,ABD PAIN,2117-01-27 19:43:00
+38319705,2116-12-02 22:57:00,2116-12-03 01:02:00,admitted,,,male,ambulance,CAR VS POLE,
+31200743,2119-10-26 06:00:00,2119-10-26 07:12:05,admitted,,,male,ambulance,SW,
+38566596,2188-08-05 20:36:00,2188-08-06 03:24:00,admitted,3.0,,male,walk_in,RIGHT FOOT INFECTION,2188-08-05 21:45:00
+39962121,2191-01-14 21:18:00,2191-01-15 03:20:00,discharged,3.0,,male,walk_in,R Foot pain,2191-01-14 21:20:00
+35958431,2192-07-31 11:00:00,2192-07-31 17:10:00,admitted,2.0,,male,ambulance,Abnormal labs,2192-07-31 11:03:00
+31626291,2192-05-11 16:26:00,2192-05-12 09:31:00,admitted,2.0,,male,ambulance,Coffee ground emesis,2192-05-11 16:27:00
+38133986,2190-05-14 17:11:00,2190-05-15 10:00:00,admitted,2.0,,male,ambulance,"Abnormal labs, Hyperglycemia",2190-05-14 17:13:00
+38000722,2187-12-14 12:49:00,2187-12-14 17:48:00,admitted,3.0,,male,ambulance,R LEG CELLULITIS,2187-12-14 16:01:00
+36316394,2189-09-28 14:56:00,2189-09-28 17:49:00,discharged,3.0,,male,walk_in,Foot laceration,2189-09-28 17:45:00
+31153288,2192-10-06 14:39:00,2192-10-06 21:15:00,discharged,3.0,,male,ambulance,"Diarrhea, Hypotension",2192-10-06 14:40:00
+33863177,2193-11-23 12:38:00,2193-11-23 19:16:36,admitted,3.0,,male,walk_in,"L Arm pain, L Arm swelling",2193-11-23 12:40:00
+30373795,2193-05-03 19:12:00,2193-05-05 02:13:00,discharged,2.0,,male,ambulance,"L Arm numbness, L Arm swelling",2193-05-03 19:13:00
+35958096,2186-09-15 12:56:00,2186-09-15 17:15:00,admitted,3.0,,male,ambulance,R FOOT ULCER/CELLULITIS,2186-09-15 13:31:00
+31970687,2187-09-15 14:14:00,2187-09-15 20:49:00,admitted,3.0,,male,walk_in,R FOOT PAIN,2187-09-15 18:26:00
+37977734,2189-05-22 23:18:00,2189-05-23 03:38:00,admitted,1.0,,male,ambulance,"N/V, Tachycardia",2189-05-23 00:10:00
+31353849,2192-09-23 22:43:00,2192-09-24 09:38:00,admitted,2.0,,male,ambulance,"L Leg pain, s/p Fall",2192-09-23 22:43:00
+38433139,2189-06-05 13:25:00,2189-06-05 18:06:00,discharged,1.0,,male,ambulance,Dizziness,2189-06-05 14:31:00
+39057874,2167-04-29 05:48:00,2167-04-29 16:53:00,discharged,2.0,,male,walk_in,Chest pain,2167-04-29 05:49:00
+33032677,2167-05-03 15:18:00,2167-05-03 22:50:00,admitted,2.0,,male,walk_in,"Chest pain, Dizziness",2167-05-03 15:19:00
+38233644,2151-01-25 11:39:00,2151-01-26 01:07:00,discharged,2.0,,male,ambulance,"Psychiatric hold, Altered mental status",2151-01-25 19:18:00
+37298974,2151-01-22 18:27:00,2151-01-23 03:33:00,transferred,2.0,,male,ambulance,Psychiatric hold,2151-01-22 22:39:00
+39169528,2151-01-15 11:47:00,2151-01-16 02:38:00,transferred,2.0,,male,walk_in,Psych eval,2151-01-15 14:43:00
+39930808,2150-09-15 09:31:00,2150-09-15 17:09:00,discharged,3.0,,male,walk_in,Insomnia,2150-09-15 13:37:00
+36200931,2150-06-13 13:31:00,2150-06-13 22:19:00,discharged,3.0,,male,ambulance,Abd pain,2150-06-13 15:54:00
+39346340,2125-06-16 20:32:00,2125-06-17 04:12:54,admitted,3.0,,male,walk_in,LOWER EXTREMITY PAIN,2125-06-16 20:31:00
+33222885,2150-04-30 14:26:00,2150-04-30 21:54:00,admitted,3.0,,male,ambulance,"L Leg pain, Weakness",2150-04-30 14:27:00
+35203396,2147-12-19 19:24:00,2147-12-20 01:03:00,discharged,3.0,,male,ambulance,Toe pain,2147-12-19 19:26:00
+34820898,2150-02-04 14:50:00,2150-02-04 20:13:49,admitted,2.0,,male,ambulance,"Dizziness, Diplopia",2150-02-04 14:53:00
+39140069,2148-12-01 23:00:00,2148-12-02 09:29:00,discharged,2.0,,male,ambulance,Epigastric pain,2148-12-01 23:01:00
+39394858,2148-06-24 09:22:00,2148-06-24 16:12:00,admitted,2.0,,male,ambulance,Chest pain,2148-06-24 09:22:00
+37145382,2149-03-13 21:20:00,2149-03-14 02:23:00,lwbs,3.0,,male,ambulance,"R Leg pain, R Leg swelling",2149-03-13 21:21:00
+39633384,2149-06-19 17:01:00,2149-06-20 13:48:00,discharged,2.0,,male,ambulance,"Hyperglycemia, Overdose",2149-06-19 17:02:00
+36428628,2146-10-08 21:27:00,2146-10-09 01:08:00,admitted,2.0,,male,ambulance,"Transfer, CVA",2146-10-08 21:30:00
+30390242,2149-09-19 16:20:00,2149-09-19 18:34:00,lwbs,3.0,,male,other,"Abd pain, Back pain",2149-09-19 16:20:00
+38801518,2148-08-14 16:32:00,2148-08-15 00:27:00,admitted,2.0,,male,ambulance,"Cough, Dyspnea",2148-08-14 16:34:00
+38849383,2148-07-17 20:36:00,2148-07-18 04:46:00,admitted,2.0,,male,ambulance,"Chest pain, Nausea",2148-07-17 20:37:00
+39105638,2149-03-04 20:24:00,2149-03-05 14:59:00,discharged,2.0,,male,ambulance,"Confusion, s/p Fall",2149-03-04 20:25:00
+37802225,2147-09-12 02:01:00,2147-09-12 06:37:00,admitted,2.0,,male,ambulance,"Chest pain, NSTEMI, Transfer",2147-09-12 02:01:00
+30279522,2149-09-17 09:08:00,2149-09-17 23:55:00,admitted,3.0,,male,ambulance,Weakness,2149-09-17 09:10:00
+36250263,2148-05-10 20:25:00,2148-05-11 01:22:00,admitted,2.0,,male,ambulance,BRBPR,2148-05-10 20:27:00
+31640785,2150-04-09 19:50:00,2150-04-10 03:46:00,admitted,3.0,,male,ambulance,Epigastric pain,2150-04-09 19:51:00
+34617920,2150-05-08 22:30:00,2150-05-09 19:09:00,admitted,3.0,,male,ambulance,"Abd pain, Dysuria",2150-05-08 22:31:00
+39621946,2147-11-25 19:39:00,2147-11-26 01:30:00,admitted,2.0,,male,ambulance,"Fever, Neutropenia",2147-11-25 19:40:00
+35452640,2146-11-08 21:24:00,2146-11-09 13:13:00,discharged,3.0,,male,ambulance,"Chest pain, Transfer",2146-11-08 21:24:00
+32287800,2147-06-03 22:39:00,2147-06-04 00:45:19,admitted,2.0,,male,ambulance,Chest pain,2147-06-03 22:41:00
+39202185,2150-07-02 15:50:00,2150-07-02 23:19:00,discharged,3.0,,male,ambulance,"R Leg pain, R Leg swelling",2150-07-02 15:50:00
+30094124,2147-11-14 18:22:00,2147-11-14 23:09:00,admitted,2.0,,male,ambulance,"Fatigue, s/p Fall",2147-11-14 18:23:00
+35205519,2148-06-29 21:06:00,2148-06-30 02:27:00,admitted,2.0,,male,ambulance,"Chest pain, Transfer",2148-06-29 21:06:00
+36715666,2187-05-18 14:59:00,2187-05-18 18:39:00,admitted,,,male,ambulance,SEIZURE,
+39571461,2129-11-25 19:02:00,2129-11-26 00:46:00,discharged,2.0,,male,walk_in,Lower back pain,2129-11-25 19:02:00
+37202404,2129-01-02 23:41:00,2129-01-03 18:33:00,admitted,3.0,,male,ambulance,Assault,2129-01-03 02:46:00
+38237602,2133-03-01 16:42:00,2133-03-04 17:05:00,discharged,3.0,,male,walk_in,"ETOH, SI",2133-03-01 16:42:00
+39252789,2160-11-07 19:15:00,2160-11-08 05:23:00,admitted,2.0,,male,ambulance,Syncope,2160-11-07 20:28:00
+37330786,2115-11-08 12:02:00,2115-11-08 15:43:00,admitted,2.0,,male,walk_in,"Abnormal labs, Weakness",2115-11-08 12:02:00
+32945506,2112-09-17 18:46:00,2112-09-17 19:50:00,admitted,3.0,,male,other,"Dyspnea, ABNORMAL LAB VALUES",
+39467106,2116-02-27 15:33:00,2116-02-27 22:03:00,admitted,1.0,,male,walk_in,"Dyspnea, Hypoxia",2116-02-27 15:33:00
+37196191,2176-12-16 18:24:00,2176-12-17 01:07:00,admitted,2.0,,male,ambulance,"Dyspnea, Transfer",2176-12-16 18:24:00
+39501852,2176-11-14 02:27:00,2176-11-14 19:51:00,admitted,2.0,,male,ambulance,Dyspnea,2176-11-14 02:28:00
+30952335,2187-02-10 15:11:00,2187-02-10 20:34:00,admitted,2.0,,male,ambulance,Hematemesis,2187-02-10 15:51:00
+31729614,2141-07-30 18:53:00,2141-07-31 00:01:00,admitted,2.0,,male,ambulance,"Transfer, MVC",
+31588683,2171-10-12 11:33:00,2171-10-12 14:33:00,discharged,2.0,,male,walk_in,SHORTNESS OF BREATH,2171-10-12 14:24:00
+35716124,2175-07-06 14:02:00,2175-07-06 17:41:00,admitted,2.0,,male,ambulance,Chest pain,2175-07-06 14:03:00
+35087345,2173-04-16 17:00:00,2173-04-16 23:18:00,admitted,3.0,,male,walk_in,Dyspnea on exertion,2173-04-16 21:49:00
+39898790,2174-06-07 16:24:00,2174-06-08 01:02:00,admitted,2.0,,male,ambulance,"Weakness, Abnormal labs",2174-06-07 19:58:00
+31283645,2171-11-07 17:40:00,2171-11-07 22:50:00,admitted,3.0,,male,ambulance,SHORTNESS OF BREATH,2171-11-07 20:52:00
+38213541,2116-06-26 14:29:00,2116-06-26 18:26:30,admitted,,,male,ambulance,HEAD BLEED,2116-06-26 15:01:00
+34205403,2132-05-17 19:56:00,2132-05-18 01:36:00,admitted,3.0,,male,ambulance,"s/p Fall, Transfer",2132-05-17 19:58:00
+30272878,2131-05-22 20:33:00,2131-05-22 21:50:33,admitted,1.0,,male,other,Transfer,2131-05-22 20:34:00
+31628990,2174-05-26 04:20:00,2174-05-26 09:18:00,admitted,3.0,,male,ambulance,Chest pain,2174-05-26 05:31:00
+32405286,2141-08-12 12:08:00,2141-08-12 17:20:00,admitted,2.0,,male,walk_in,? AORTIC DISECTION,2141-08-12 12:53:00
+34391979,2186-11-12 16:09:00,2186-11-12 19:55:00,admitted,1.0,,male,other,"Cardiac arrest, Transfer",2186-11-12 16:09:00
+34161260,2183-12-02 18:06:00,2183-12-03 00:30:00,discharged,3.0,,male,walk_in,"s/p Fall, R Wrist pain, R Wrist injury",2183-12-02 23:36:00
+35470228,2137-10-08 18:16:00,2137-10-08 21:20:50,other,,,male,ambulance,HEAD BLEED,

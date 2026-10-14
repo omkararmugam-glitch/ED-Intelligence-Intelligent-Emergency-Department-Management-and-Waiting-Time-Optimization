@@ -1,0 +1,7 @@
+scenario,rank_at_point_estimate,best_rank,worst_rank,rank_is_stable,max_rank_shift
+fast_track_esi45,1,1,1,True,0
+plus_one_doctor_peak,2,2,2,True,0
+plus_one_nurse_peak,3,3,3,True,0
+baseline,4,4,4,True,0
+surge_10pct,5,5,5,True,0
+surge_20pct,6,6,6,True,0

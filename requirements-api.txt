@@ -1,0 +1,49 @@
+# Runtime dependencies for the API image.
+#
+# This is NOT the serving subset. The API hosts the upload workflow, and an upload
+# job runs the *whole* pipeline in a worker subprocess inside this container:
+# training, fairness, forecasting, survival, simulation, staffing search and the
+# report. So this image needs the training stack as well as the serving stack.
+#
+# Every pin is identical to requirements.txt. `pytest` is the only development
+# dependency left out: tests do not run in the runtime image.
+#
+# What is deliberately absent:
+#   streamlit, requests  -- the dashboard talks to this service, it does not live here
+#   shap                 -- LightGBM computes exact TreeSHAP itself (see requirements.txt)
+
+# --- core numerics and artifact IO ---
+numpy==1.26.4
+pandas==2.2.3
+# Bumped from 17.0.0 for CVE-2026-25087 (use-after-free, HIGH), fixed in 23.0.1.
+# Safe for the reproduction: pyarrow only round-trips the intermediate parquet
+# files, and float64 survives that exactly, so no metric moves.
+pyarrow==23.0.1
+joblib==1.4.2
+PyYAML==6.0.2
+
+# --- models: loaded at startup, and fitted again by every upload job ---
+lightgbm==4.5.0
+scikit-learn==1.5.2
+
+# --- pipeline-only stages that an upload job still runs ---
+simpy==4.1.1
+lifelines==0.29.0
+# Transitive, pinned deliberately: lifelines would otherwise resolve
+# autograd-gamma==0.5.0, which PyPI ships as an sdist only. 0.4.2 is the newest
+# release with a wheel, so the whole install stays build-free -- which is what
+# lets this image drop build-essential.
+autograd-gamma==0.4.2
+# The pipeline writes PNG figures, so the report stage needs a plotting backend.
+matplotlib==3.9.2
+
+# --- API ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.9.2
+# Required by POST /jobs, which takes the uploaded file as multipart form data.
+# FastAPI raises at import time without it, so the whole API depends on it.
+# Bumped from 0.0.20 for CVE-2026-24486, CVE-2026-42561 and CVE-2026-53539
+# (path traversal and two resource-exhaustion issues, all HIGH), fixed by 0.0.30.
+# It parses multipart uploads and touches no model code.
+python-multipart==0.0.30

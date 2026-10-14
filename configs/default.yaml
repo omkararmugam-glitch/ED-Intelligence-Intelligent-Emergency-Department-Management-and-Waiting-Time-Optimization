@@ -1,0 +1,533 @@
+# Default configuration for the ED Intelligence pipeline.
+# Every number the pipeline uses lives here; code should not contain magic constants.
+
+project_name: ed-intelligence
+seed: 20251004                 # global seed; all modules derive from this
+
+paths:
+  schema: schema.yaml
+  column_map: configs/column_map.yaml
+  raw_dir: data/raw
+  processed_dir: data/processed
+  synthetic_dir: data/synthetic
+  synthetic_file: data/synthetic/ed_visits.parquet
+  raw_file: data/raw/ed_v2.csv             # used when --data real
+  artifacts_dir: artifacts
+  models_dir: artifacts/models
+  metrics_dir: artifacts/metrics
+  figures_dir: artifacts/figures
+  tables_dir: artifacts/tables
+  report: artifacts/report.md
+
+logging:
+  level: INFO
+  file: artifacts/pipeline.log
+
+# ---------------------------------------------------------------- synthetic data
+synthetic:
+  n_patients: 50000
+  start_date: "2024-01-01"
+  # Arrival intensity = base_rate * hour_profile[h] * dow_profile[d] * season * surge
+  base_rate_per_hour: 6.0
+  hour_profile: [0.45, 0.35, 0.30, 0.28, 0.30, 0.40, 0.60, 0.85,
+                 1.15, 1.40, 1.55, 1.60, 1.50, 1.45, 1.40, 1.35,
+                 1.35, 1.30, 1.25, 1.15, 1.00, 0.85, 0.70, 0.55]
+  dow_profile: [1.12, 1.05, 1.00, 0.98, 1.00, 0.95, 1.02]   # Mon..Sun
+  seasonality_amplitude: 0.12        # +/- fraction over a 365-day cycle
+  seasonality_peak_doy: 15           # day-of-year of peak demand (winter)
+  surge:
+    prob_per_day: 0.04               # chance a given day contains a surge
+    multiplier: 1.9
+    duration_hours: 6
+  triage_mix: {1: 0.02, 2: 0.12, 3: 0.40, 4: 0.33, 5: 0.13}
+  # Consultation/treatment time, lognormal per ESI level (minutes).
+  service_time:
+    1: {median: 95.0, sigma: 0.55}
+    2: {median: 70.0, sigma: 0.55}
+    3: {median: 45.0, sigma: 0.60}
+    4: {median: 25.0, sigma: 0.55}
+    5: {median: 15.0, sigma: 0.50}
+  # Doctors on duty by shift. Shifts are [start_hour, end_hour) in local time.
+  shifts:
+    night: {start: 0,  end: 8,  doctors: 4}
+    day:   {start: 8,  end: 16, doctors: 8}
+    eve:   {start: 16, end: 24, doctors: 5}
+  # Priority aging: a waiting patient gains one full ESI level of effective priority
+  # for every this many minutes waited, so the lowest-acuity patients are not starved
+  # indefinitely by a stream of higher-acuity arrivals. Smaller = stronger aging.
+  priority_aging_minutes_per_level: 25.0
+  # Clinical safety constraint, not a tuning knob: aging can never promote a patient
+  # past this effective priority. At 2.5 -- strictly between ESI 2 and ESI 3 -- an aged
+  # low-acuity patient may overtake a fresher ESI 3 or 4, but never a freshly arrived
+  # ESI 1 or 2. Raising it to 3.0 stops ESI 3 ageing at all and inverts the ESI 3/5
+  # wait tails; lowering it to 2.0 lets aged patients overtake ESI 2, whose mean wait
+  # then triples. Both were measured; 2.5 is the only safe setting.
+  priority_aging_floor: 2.5
+  # Triage + registration: a patient is not eligible for a clinician until this
+  # elapses, so door-to-doctor time is this floor PLUS any queueing delay.
+  triage_delay_minutes:
+    1: {median: 1.0,  sigma: 0.4}
+    2: {median: 4.0,  sigma: 0.5}
+    3: {median: 9.0,  sigma: 0.5}
+    4: {median: 11.0, sigma: 0.5}
+    5: {median: 12.0, sigma: 0.5}
+  # Boarding / exit-block delay after treatment ends, before departure (minutes).
+  boarding_minutes: {admitted: {median: 110.0, sigma: 0.6}, other: {median: 12.0, sigma: 0.5}}
+  admit_prob_by_triage: {1: 0.78, 2: 0.52, 3: 0.24, 4: 0.06, 5: 0.02}
+  transfer_prob: 0.015
+  # LWBS hazard: patience is lognormal, longer for more urgent patients.
+  lwbs:
+    patience_median_minutes: {1: 1872.0, 2: 780.0, 3: 338.0, 4: 247.0, 5: 208.0}
+    patience_sigma: 0.6
+  demographics:
+    age_mean_by_triage: {1: 66.0, 2: 58.0, 3: 46.0, 4: 36.0, 5: 31.0}
+    age_sd: 20.0
+    female_fraction: 0.51
+    ambulance_prob_by_triage: {1: 0.82, 2: 0.55, 3: 0.22, 4: 0.07, 5: 0.03}
+
+# ---------------------------------------------------------------- splitting
+split:
+  mode: fraction            # 'fraction' or 'dates'
+  floor_to_day: true        # cut at midnight so no calendar day spans two blocks
+  # Four forward-in-time blocks. 'test' takes the remainder and may be omitted.
+  #   train -> fitting
+  #   val   -> early stopping AND the classifier's decision threshold
+  #   calib -> conformal calibration only; held out from fitting and tuning, because
+  #            split conformal needs residuals that were not used for early stopping
+  #   test  -> reported once, touched by nothing else
+  fractions:
+    train: 0.60
+    val: 0.15
+    calib: 0.10
+    test: 0.15              # informational; the remainder is what is used
+  # Used only when mode == 'dates' (cuts chosen to match the fractions above on the
+  # default synthetic span of 2024-01-01 .. 2024-12-20)
+  dates:
+    train_end: "2024-08-08"
+    val_end: "2024-10-02"
+    calib_end: "2024-11-07"
+
+# ---------------------------------------------------------------- features
+features:
+  prolonged_wait_threshold_minutes: 30
+  # Acuity-aware alternative target for the prolonged-wait classifier, used by
+  # src/models/high_acuity.py. The pooled "> 30 min" label is overwhelmingly an
+  # ESI 3-5 event -- on the baseline run ESI 2 supplies 29 positives out of 1,171 test
+  # patients and ESI 1 supplies 1 out of 188 -- so the pooled classifier has a
+  # false-negative rate of 1.000 for ESI 2. Asking instead "did this patient exceed the
+  # target wait for THEIR OWN acuity" creates positives inside the high-acuity group
+  # without manufacturing signal.
+  #
+  # *** THESE ARE ASSUMED ILLUSTRATIVE TARGETS, NOT CLINICAL STANDARDS. ***
+  # They are plausible round numbers, chosen so that the alternative target can be
+  # measured at all. They carry no endorsement from any guideline, college or
+  # department, and they exist to be edited to whatever the department using this
+  # actually commits to. Every number in
+  # artifacts/tables/high_acuity_comparison.csv moves when these move.
+  #
+  # ESI 1 is the band where "a target" means least: the clinical expectation is
+  # immediate care, conventionally written as 0-5 minutes. The top of that range is
+  # used here, so the label reads "was not seen within five minutes".
+  acuity_target_wait_minutes:
+    1: 5
+    2: 15
+    3: 30
+    4: 60
+    5: 120
+  rolling_baseline_k: 20            # last-k patients for the rolling-mean baseline
+  recent_seen_k: 10                 # mean wait of last k seen patients (queue feature)
+  arrival_windows_hours: [1, 3]
+  holidays:                         # configurable; add local public holidays here
+    - "2024-01-01"
+    - "2024-03-29"
+    - "2024-04-01"
+    - "2024-05-06"
+    - "2024-05-27"
+    - "2024-08-26"
+    - "2024-12-25"
+    - "2024-12-26"
+    - "2025-01-01"
+  feature_sets:
+    base: [calendar, patient]
+    "base+queue": [calendar, patient, queue]
+
+# ---------------------------------------------------------------- wait-time model
+wait_model:
+  regressor:
+    objective: regression_l1
+    n_estimators: 2000
+    learning_rate: 0.05
+    num_leaves: 63
+    min_child_samples: 40
+    subsample: 0.9
+    subsample_freq: 1
+    colsample_bytree: 0.9
+    reg_lambda: 1.0
+    early_stopping_rounds: 100
+  classifier:
+    objective: binary
+    n_estimators: 2000
+    learning_rate: 0.05
+    num_leaves: 63
+    min_child_samples: 40
+    subsample: 0.9
+    subsample_freq: 1
+    colsample_bytree: 0.9
+    reg_lambda: 1.0
+    early_stopping_rounds: 100
+    # The threshold is chosen on the 'val' block, never on 'test'.
+    #   min_recall -> highest threshold still reaching target_recall (default)
+    #   f1         -> maximise F1
+    #   fixed      -> use decision_threshold as-is
+    threshold_objective: min_recall
+    target_recall: 0.80
+    # Per-acuity thresholds. A single pooled threshold optimises recall across all
+    # patients, and prolonged waits are overwhelmingly an ESI 3-5 phenomenon, so the
+    # pooled rule can abandon the few high-acuity patients who do face a long wait.
+    # A level with fewer positives than this keeps the pooled threshold: a cut-off
+    # fitted to a handful of cases is noise dressed as a decision.
+    min_positives_per_level: 25
+    decision_threshold: 0.5      # used only when threshold_objective is 'fixed'
+
+# Which target transforms the regressor is trained and compared under.
+# MAE and RMSE are always reported on the original minute scale.
+wait_targets: [raw, log1p]
+
+conformal:
+  coverage: 0.90
+  tolerance: 0.04          # allowed |empirical - nominal| coverage gap in tests
+  # Mondrian (per-group) calibration: intervals are calibrated within each ESI level,
+  # so the 90% guarantee holds per level instead of only on average.
+  mondrian_group: triage_level
+  min_group_size: 100      # smaller groups fall back to the pooled quantile
+  lower_bound: 0.0         # a wait cannot be negative
+  # Rolling calibration. Static conformal calibrates once on a fixed block and assumes
+  # the test residuals are exchangeable with it. Under temporal drift they are not, and
+  # coverage falls. The rolling variant recalibrates per patient from residuals that
+  # were ALREADY OBSERVED when that patient arrived, so it tracks the drift.
+  rolling:
+    window_days: 28          # primary lookback for same-acuity residuals
+    fallback_window_days: 90 # widened lookback when the primary window is too thin
+    min_calibration: 100     # below this, widen, then pool, then fall back to static
+
+# ---------------------------------------------------------------- forecasting
+forecast:
+  # Lags are measured from `as_of`, never from the target timestamp, so a forecast
+  # issued at `as_of` can only ever read data that existed at `as_of`.
+  lags: [1, 2, 24, 48, 168]
+  rolling_windows: [3, 24, 168]
+  seasonal_lag_hours: 168       # same hour, previous week -- also the naive baseline
+  horizon_hours: 72
+  train_stride_hours: 4         # sample one `as_of` every N hours when building rows
+  calibration_hours: 336        # conformal calibration window before each origin
+                                # (held out from fitting, so residuals are honest)
+  peak_quantile: 0.80           # "peak" = hours in the top 20% of observed demand
+  # Mondrian conformal groups for the forecast intervals.
+  hour_bands:
+    night: [0, 6]
+    morning: [6, 12]
+    afternoon: [12, 18]
+    evening: [18, 24]
+  rolling_origin:
+    n_folds: 4
+    step_hours: 168
+  model:
+    objective: poisson
+    n_estimators: 1500
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 30
+    early_stopping_rounds: 100
+
+# ---------------------------------------------------------------- explainability / fairness
+explain:
+  shap_max_samples: 4000
+  top_n_features: 20
+
+fairness:
+  bootstrap_resamples: 400   # percentile bootstrap for every reported gap
+  age_bins: [0, 18, 40, 65, 80, 121]
+  age_labels: ["0-17", "18-39", "40-64", "65-79", "80+"]
+  subgroup_columns: [sex, arrival_mode, triage_level, age_band]
+  min_group_size: 50          # minimum rows before a subgroup gap is judged
+  min_positives_for_fnr: 20   # an FNR is estimated from positives alone, so it
+                              # needs its own minimum; ESI 1-2 rarely wait long
+                              # enough to supply any
+  gap_warn_threshold: 0.10      # warn when a subgroup FNR gap exceeds this
+
+# ---------------------------------------------------------------- survival
+survival:
+  max_followup_minutes: 720
+  cox_covariates: [triage_level, age, is_ambulance, n_waiting, hour_sin, hour_cos]
+  # Significance level for the Schoenfeld-residual proportional-hazards test.
+  ph_test_alpha: 0.05
+  # Rows above which that test runs on a seeded subsample. The test costs far more
+  # than the Cox fit it diagnoses and grows faster than linearly -- measured here at
+  # ~24 s for 57,000 rows but 272 s for 155,000 -- and the upload workflow accepts up
+  # to uploads.limits.max_rows (500,000) against a 1,800 s stage timeout.
+  #
+  # At 100,000 the baseline dataset (57,179 validated rows) is still tested in full.
+  # Only the DIAGNOSTIC is ever subsampled; the hazard ratios are always fitted on
+  # every row, and any subsampling is recorded in the output table. Set to 0 to
+  # disable subsampling entirely.
+  ph_test_max_rows: 100000
+
+
+# ---------------------------------------------------------------- staffing roster
+# The department's doctor roster, supplied the way a hospital publishes it: doctors on
+# duty by hour of day. Doctors are the only capacity bottleneck in this model.
+#
+# This is an INPUT, not something the simulation fits. The roster below is the one
+# operating in data/raw/ed_v2.csv:
+#     00:00-07:00 -> 2    07:00-15:00 -> 3    15:00-23:00 -> 3    23:00-24:00 -> 2
+#
+# `start` is inclusive, `end` exclusive, in local clock hours. The two overnight
+# segments are one shift split across midnight; they are listed separately so the
+# roster reads exactly as published. Every hour of the day must be covered.
+staffing_roster:
+  shifts:
+    night_early: {start: 0,  end: 7,  doctors: 2}
+    day:         {start: 7,  end: 15, doctors: 3}
+    evening:     {start: 15, end: 23, doctors: 3}
+    night_late:  {start: 23, end: 24, doctors: 2}
+
+# ---------------------------------------------------------------- simulation
+simulation:
+  # Scenarios and the staffing search refuse to run on a simulation that failed
+  # validation. Setting this true overrides that, and every downstream number is then
+  # suspect; it exists for wiring tests and for deliberate exploration, not for use.
+  allow_invalid_calibration: false
+  warmup_hours: 24
+  horizon_hours: 336            # 14 days per replication
+  n_replications: 30            # the project specifies at least 30
+  triage_priority_weight: 1000  # ESI dominates arrival order in the priority queue
+  resources:
+    doctors: {night: 4, day: 8, eve: 5}
+    nurses:  {night: 6, day: 12, eve: 8}
+  nurse_time_fraction: 0.35     # nurse-minutes per doctor-minute of treatment
+  # This model constrains doctors only. A nurse is represented as the share of
+  # treatment work she takes off the clinician, i.e. a proportional cut in treatment
+  # time. A modelling choice, not a measurement; reported with the scenario results.
+  nurse_equivalent_service_factor: 0.95
+  shifts:
+    night: {start: 0,  end: 8}
+    day:   {start: 8,  end: 16}
+    eve:   {start: 16, end: 24}
+  calibration:
+    replications: 10            # replications used for the validation run
+    # The two unobservable parameters are fitted by nesting, not alternating: for any
+    # patience scale there is one clinician-time fraction that reproduces mean wait, so
+    # the inner search enforces that and the outer search solves for abandonment.
+    search_steps: 12            # inner bisection steps (fraction, against mean wait)
+    search_rounds: 10           # outer bisection steps (patience, against abandonment)
+    tolerance:
+      mean_wait_rel: 0.20       # warn loudly above these relative errors
+      p90_wait_rel: 0.25
+      mean_los_rel: 0.20
+      abandonment_rel: 0.50     # abandonment is rare, so its relative error is noisy
+      # A metric passes on EITHER the relative tolerance or these absolute floors.
+      # Without them, a clinically irrelevant 2-minute gap on a 6-minute ESI 1 wait
+      # fails a 20% relative gate.
+      absolute_floor_minutes: 3.0
+      absolute_floor_rate: 0.01
+  # ---------------------------------------------------------------- UNCALIBRATED
+  # Second-order resources the department has but `data/raw/ed_v2.csv` does not
+  # record. There is no bed column, no nurse column and no imaging order in the data,
+  # so NONE of this can be validated against it and the calibration gate cannot test
+  # it. Every output produced with any of it active is labelled
+  # "scenario analysis, not calibrated".
+  #
+  # `enabled: false` is the shipped state and must stay that way: with it off the
+  # simulation takes exactly the code paths it did before these existed, draws the
+  # same random numbers in the same order, and reproduces the 49,280 staffing result.
+  # `tests/test_resource_extensions.py` asserts byte-identical output with it off.
+  resource_extensions:
+    enabled: false
+    beds:
+      # Exam rooms/bays. A patient needs one to be treated, so this constrains
+      # dispatch alongside doctors. null leaves beds unlimited, as the base model
+      # assumes.
+      count: null
+      # Exit block: when true an admitted patient keeps their bed through boarding,
+      # which is the usual reason an ED runs out of space.
+      boarding_holds_bed: false
+    nurses:
+      count: null
+      triage_minutes: 0.0
+      reassessment_every_minutes: 0.0
+      reassessment_minutes: 0.0
+    imaging:
+      # Imaging/lab turnaround for the acuities that usually get it. It holds the
+      # patient and their bed; it does not hold the clinician, who moves on.
+      levels: [1, 2, 3]
+      probability: 0.0
+      turnaround_minutes: 0.0
+
+  scenarios:
+    - {name: baseline}
+    - {name: plus_one_doctor_peak, doctors: {day: 4}}
+    - {name: plus_one_nurse_peak, nurses: {day: 1}}
+    - {name: fast_track_esi45, fast_track: {triage_levels: [4, 5], doctors: 1}}
+    - {name: surge_10pct, arrival_multiplier: 1.10}
+    - {name: surge_20pct, arrival_multiplier: 1.20}
+  # Sensitivity: re-run the scenarios with these multipliers on service times and on
+  # arrival rates, and check whether the scenario ranking survives.
+  sensitivity:
+    factors: [0.9, 1.1, 0.8, 1.2]
+    n_replications: 15
+    # Additional axes. One world per value, each moving a single input, so the effect
+    # attributed to an axis is that axis and nothing else.
+    #
+    # patience: fitted from censored data (only patients who ran out of it are
+    # observed), so its scale is one of the two genuinely unidentifiable inputs.
+    patience_factors: [0.7, 1.3]
+    # clinician_time_fraction: the other one. The data never records when treatment
+    # ended, so the split of post-contact time between doctor occupancy and everything
+    # else is a single fitted free parameter (0.207 on the baseline run). These worlds
+    # move it +/-20% while holding length of stay roughly fixed, so the perturbation is
+    # not confounded with the service-time factors above.
+    clinician_share_factors: [0.8, 1.2]
+    # acuity mix: percentage points of the whole mix moved between ESI 2-3 and ESI 4-5,
+    # in both directions. ESI 1 is held fixed -- its share is a property of the
+    # catchment, not of case-mix drift.
+    acuity_shift_points: 5.0
+    # priority aging rate, as a multiplier on priority_aging_minutes_per_level.
+    # Below 1 the queue ages FASTER (one ESI level per fewer minutes waited).
+    aging_minutes_factors: [0.5, 2.0]
+    # priority aging floor. A CLINICAL SAFETY CONSTRAINT, not a tuning knob: only
+    # values at or above the configured floor (2.5) are tested. 2.0 is deliberately
+    # absent -- it lets aged patients overtake ESI 2, whose mean wait then triples
+    # (9.4 -> 31 min). Anything below the configured floor is refused and logged,
+    # rather than quietly run.
+    aging_floors: [2.5, 3.0]
+
+staffing_search:
+  strategy: grid               # 'grid' or 'random'
+  n_random_samples: 40
+  # Searched per roster shift. The two overnight segments move together, as they
+  # are one shift in practice.
+  # The grid must span BELOW the current roster, or "cheapest feasible" can only ever
+  # return the status quo and the search answers nothing.
+  doctor_grid:
+    night_early: [1, 2, 3]
+    day: [2, 3, 4, 5]
+    evening: [2, 3, 4, 5]
+    night_late: [1, 2, 3]
+  nurse_grid:  {night_early: [2, 3], day: [3, 4], evening: [3, 4], night_late: [2, 3]}
+  n_replications: 5
+  # A plan must meet EVERY target, judged on the upper confidence bound so that it is
+  # shown to meet them rather than merely estimated to.
+  target:
+    p90_wait_esi3_minutes: 90.0
+    abandonment_rate: 0.04
+    confidence: 0.95
+  cost:
+    doctor_hour: 110.0
+    nurse_hour: 55.0
+    horizon_hours: 168         # cost is quoted per week of this staffing plan
+
+# ---------------------------------------------------------------- serving limits
+# The API runs a real discrete-event model on /simulate, which is unbounded work if a
+# caller asks for it. These caps keep a request fast; the response says when it clamped.
+serving:
+  simulate:
+    max_replications: 10
+    max_horizon_hours: 336
+
+# ---------------------------------------------------------------- upload workflow
+# Everything the "upload a CSV and run the whole pipeline" workflow is allowed to do.
+# These are guardrails on work a stranger can ask this machine to perform, so every
+# one of them is a hard limit rather than a suggestion.
+uploads:
+  # A run never touches artifacts/. Each job gets runs/<job_id>/ and is deleted whole.
+  runs_dir: runs
+  limits:
+    max_upload_bytes: 52428800     # 50 MB
+    max_rows: 500000               # refuse before parsing a file this large
+    max_queue_length: 4            # jobs waiting behind the one that is running
+    stage_timeout_seconds: 1800    # any single stage
+    total_timeout_seconds: 5400    # the whole job
+    max_runs_on_disk: 10           # oldest run folders are deleted beyond this
+    retention_hours: 24            # a run folder is deleted this long after it ends
+  # Minimum data each stage needs. A job reports SKIPPED with the reason rather than
+  # failing when one of these is not met.
+  requirements:
+    min_rows: 200                  # below this nothing can be fitted
+    min_days_for_split: 8          # four forward-in-time blocks need distinct days
+    min_rows_per_block: 25         # a block smaller than this cannot train or calibrate
+    min_days_for_forecast: 60      # weekly seasonality plus a rolling-origin evaluation
+    min_lwbs_events: 20            # a survival model needs events, not just censoring
+    min_rows_for_fairness: 50      # matches fairness.min_group_size
+  # Column auto-detection. Exact schema names win, then a case/underscore/space
+  # insensitive match, then these aliases. Nothing else: no fuzzy matching, because a
+  # wrong guess on a required column is silently catastrophic.
+  column_aliases:
+    patient_id: [visit_id, encounter_id, csn, patientid, visitid, encounter, id]
+    arrival_time: [arrival, arrived, arrival_dttm, registration_time, reg_time,
+                   presentation_time, door_time, arrive_time, check_in_time]
+    triage_level: [esi, acuity, triage, triage_score, triage_category, severity,
+                   acuity_level, esi_level]
+    seen_time: [provider_time, first_seen, first_provider_time, seen_by_provider,
+                doctor_time, physician_time, treatment_start_time, first_contact_time]
+    departure_time: [discharge_time, depart_time, exit_time, left_time,
+                     disposition_time, end_time]
+    disposition: [outcome, discharge_disposition, visit_outcome, result, ed_disposition]
+    age: [patient_age, age_years, age_at_arrival]
+    sex: [gender, patient_sex, patient_gender]
+    arrival_mode: [mode_of_arrival, transport, arrival_method, transport_mode]
+    chief_complaint: [complaint, presenting_complaint, reason_for_visit, cc]
+  # Text acuity labels are translated only through this map. An unrecognised label is
+  # counted and surfaced, never guessed.
+  acuity_labels:
+    resuscitation: 1
+    immediate: 1
+    critical: 1
+    emergent: 2
+    emergency: 2
+    "very urgent": 2
+    urgent: 3
+    "less urgent": 4
+    standard: 4
+    "non-urgent": 5
+    nonurgent: 5
+    "non urgent": 5
+    minor: 5
+    # Roman numerals and "level N" forms seen in real extracts.
+    i: 1
+    ii: 2
+    iii: 3
+    iv: 4
+    v: 5
+    "level 1": 1
+    "level 2": 2
+    "level 3": 3
+    "level 4": 4
+    "level 5": 5
+  # Disposition values are mapped through this; anything unmapped is counted, shown,
+  # and falls through to `other`.
+  disposition_labels:
+    discharged: discharged
+    discharge: discharged
+    home: discharged
+    "discharged home": discharged
+    routine: discharged
+    admitted: admitted
+    admit: admitted
+    inpatient: admitted
+    "admitted to ward": admitted
+    observation: admitted
+    transferred: transferred
+    transfer: transferred
+    "transferred out": transferred
+    lwbs: lwbs
+    "left without being seen": lwbs
+    "left before being seen": lwbs
+    eloped: lwbs
+    lbts: lwbs
+    "did not wait": lwbs
+    dnw: lwbs
+    deceased: other
+    died: other
+    other: other
+  # Delimiters sniffed, in this order, when the file does not declare one.
+  delimiters: [",", ";", "\t", "|"]

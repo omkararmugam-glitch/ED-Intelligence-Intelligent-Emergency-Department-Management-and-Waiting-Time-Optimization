@@ -1,0 +1,29 @@
+{
+  "coerced_by_reason": {},
+  "dropped_by_reason": {
+    "departure_time before arrival_time (negative LOS)": 0,
+    "duplicate patient_id": 0,
+    "missing or unparseable arrival_time": 0,
+    "missing patient_id": 0,
+    "seen_time after departure_time": 0,
+    "seen_time before arrival_time (negative wait)": 115,
+    "triage_level missing or outside 1-5": 206
+  },
+  "n_dropped": 321,
+  "n_flagged_no_seen_time": 2047,
+  "n_input": 57500,
+  "n_lwbs": 2046,
+  "n_modelling": 55132,
+  "n_still_waiting_at_cutoff": 1,
+  "n_valid": 57179,
+  "optional_columns_missing": [],
+  "optional_columns_present": [
+    "age",
+    "sex",
+    "arrival_mode",
+    "chief_complaint"
+  ],
+  "warnings": [
+    "1 rows have neither seen_time nor departure_time; treated as still present at the data cutoff and right-censored, not as abandonments"
+  ]
+}

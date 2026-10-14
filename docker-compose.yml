@@ -1,0 +1,208 @@
+# ED Intelligence: the API, the dashboard, and a profile for training.
+#
+# This is the demo configuration. It is meant for one machine, for one person
+# showing the system to someone. Three things in here are deliberate and should
+# not be "tidied" away:
+#
+# 1. **Ports are published on the loopback address only.** `127.0.0.1:8000:8000`,
+#    not `8000:8000`. This stack has no authentication of any kind, so binding it
+#    to every interface would publish an unauthenticated service to the whole
+#    network. Inside the containers the services bind 0.0.0.0, which is what makes
+#    them reachable through Docker at all -- the two are not in conflict.
+# 2. **Artifacts are mounted read-only for both services.** The pipeline produces
+#    models and metrics; the services only read them. The `trainer` profile is the
+#    one place that may write there, and it is a separate, short-lived container.
+# 3. **Uploaded files live in a named volume and nowhere else.** `docker compose
+#    down -v` destroys them, which is the documented way to get rid of data someone
+#    handed you. They are never baked into an image and never written to a bind
+#    mount that outlives the stack by accident.
+#
+# Values come from .env (copy .env.example). The defaults after `:-` are what you
+# get with no .env at all, and they are the safe ones.
+
+name: ed-intelligence
+
+services:
+  # ------------------------------------------------------------------- the API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    image: ed-intelligence-api:latest
+    container_name: ed-api
+    # PID 1 must reap and forward signals: an upload job launches
+    # `src.jobs.worker` as a subprocess, and a cancelled or timed-out job has to
+    # die with its whole process tree rather than linger as an orphan. `init`
+    # gives the container a real init process to do that.
+    init: true
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PYTHONPATH: /app
+      ED_API_HOST: ${ED_API_HOST:-0.0.0.0}
+      ED_API_PORT: ${ED_API_PORT:-8000}
+      # Optional shared secret. Empty by default, which leaves the API open exactly
+      # as before; set ED_API_KEY in .env to require an X-API-Key header.
+      ED_API_KEY: ${ED_API_KEY:-}
+      # Run folders go to the writable volume, not into the read-only tree.
+      ED_RUNS_DIR: /app/runs
+    ports:
+      # host-loopback:host-port:container-port -- see note 1 above.
+      - "${ED_API_PUBLISH_HOST:-127.0.0.1}:${ED_API_PORT:-8000}:${ED_API_PORT:-8000}"
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+      - ./data/processed:/app/data/processed:ro
+      - ./configs:/app/configs:ro
+      # The only writable mount: uploaded files and their run folders.
+      - ed-runs:/app/runs
+    # Everything outside the mounts above is immutable at runtime. If the image
+    # is compromised, there is nowhere to persist anything.
+    read_only: true
+    tmpfs:
+      # Python temp files, matplotlib's font cache (MPLCONFIGDIR), and whatever
+      # LightGBM spills. Capped so a runaway job cannot eat the host's memory.
+      - /tmp:size=512m,mode=1777
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import os,sys,urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:' + os.environ.get('ED_API_PORT','8000') + '/health', timeout=4).status==200 else 1)"
+      interval: 15s
+      timeout: 5s
+      # Generous: startup loads LightGBM boosters and the calibrated simulation.
+      start_period: 45s
+      retries: 5
+    restart: unless-stopped
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          # An upload job trains models in here, so it needs real room. The
+          # Docker VM on this machine has ~7.9 GB; this leaves headroom for the
+          # dashboard and the host.
+          cpus: "4.0"
+          memory: 5g
+    logging:
+      # Bounded, so a long demo cannot fill a disk with logs.
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ------------------------------------------------------------- the dashboard
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
+    image: ed-intelligence-app:latest
+    container_name: ed-dashboard
+    init: true
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PYTHONPATH: /app
+      # The compose service name, never localhost: inside this network,
+      # localhost is the dashboard container itself.
+      ED_API_BASE_URL: ${ED_API_BASE_URL:-http://api:8000}
+      ED_API_TIMEOUT: ${ED_API_TIMEOUT:-60}
+      # The same secret the API is given above, so the dashboard can authenticate.
+      ED_API_KEY: ${ED_API_KEY:-}
+      ED_ARTIFACTS_DIR: /app/artifacts
+      ED_PROCESSED_DIR: /app/data/processed
+      ED_APP_HOST: ${ED_APP_HOST:-0.0.0.0}
+      ED_APP_PORT: ${ED_APP_PORT:-8501}
+      STREAMLIT_SERVER_HEADLESS: "true"
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+    ports:
+      - "${ED_APP_PUBLISH_HOST:-127.0.0.1}:${ED_APP_PORT:-8501}:${ED_APP_PORT:-8501}"
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+      - ./data/processed:/app/data/processed:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+      # Streamlit writes into $HOME on first run (a config directory and a
+      # metrics file). With a read-only root it cannot, and the server exits. A
+      # tmpfs home keeps the root immutable and lets it start.
+      - /home/appuser:size=64m,mode=0700,uid=10002,gid=10002
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import os,sys,urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:' + os.environ.get('ED_APP_PORT','8501') + '/_stcore/health', timeout=4).status==200 else 1)"
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    restart: unless-stopped
+    stop_grace_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1g
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------- the trainer
+  # Not part of `up`: it belongs to the `train` profile and runs to completion.
+  #
+  #   docker compose --profile train run --rm trainer
+  #
+  # This is the only service that may write to ./artifacts, and the only one that
+  # can see data/raw. It exits when the pipeline finishes, which is why it has no
+  # healthcheck, no published port and no restart policy.
+  trainer:
+    profiles: ["train"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    image: ed-intelligence-api:latest
+    init: true
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PYTHONPATH: /app
+    volumes:
+      # Writable, deliberately: this is where the models and metrics land.
+      - ./artifacts:/app/artifacts
+      # The extract is read-only. The pipeline never needs to modify its input.
+      - ./data/raw:/app/data/raw:ro
+      - ./data/processed:/app/data/processed
+      - ./configs:/app/configs:ro
+    tmpfs:
+      - /tmp:size=512m,mode=1777
+    deploy:
+      resources:
+        limits:
+          cpus: "6.0"
+          memory: 6g
+    command:
+      - python
+      - -m
+      - src.pipeline
+      - run
+      - --config
+      - configs/default.yaml
+      - --data
+      - real
+
+volumes:
+  # Uploaded files and run folders. Named, so `docker compose down -v` removes
+  # them and a plain `down` keeps them across a restart.
+  ed-runs:
+    name: ed-intelligence-runs

@@ -1,0 +1,55 @@
+kpi,kpi_label,scenario,perturbation,axis,description,noise_control,point_estimate,perturbed,effect,effect_percent,abs_effect,noise_floor,within_noise_floor
+abandonment_rate,walkout rate (LWBS),baseline,clinician_share_x1.2,clinician_time_fraction,clinician share x1.2,False,0.0343,0.114,0.0797,232.04,0.0797,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,service_x1.2,service_time,service x1.2,False,0.0343,0.1089,0.0746,217.34,0.0746,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,arrivals_x1.2,arrival_rate,arrivals x1.2,False,0.0343,0.1025,0.0681,198.42,0.0681,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,service_x0.8,service_time,service x0.8,False,0.0343,0.0026,-0.0317,-92.36,0.0317,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,clinician_share_x0.8,clinician_time_fraction,clinician share x0.8,False,0.0343,0.003,-0.0313,-91.21,0.0313,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,arrivals_x0.8,arrival_rate,arrivals x0.8,False,0.0343,0.0043,-0.03,-87.36,0.03,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,service_x1.1,service_time,service x1.1,False,0.0343,0.0628,0.0285,83.01,0.0285,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,arrivals_x1.1,arrival_rate,arrivals x1.1,False,0.0343,0.0604,0.0261,76.02,0.0261,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,service_x0.9,service_time,service x0.9,False,0.0343,0.009,-0.0253,-73.66,0.0253,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,arrivals_x0.9,arrival_rate,arrivals x0.9,False,0.0343,0.0159,-0.0185,-53.82,0.0185,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,patience_x1.3,patience,patience x1.3,False,0.0343,0.0222,-0.0121,-35.36,0.0121,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,patience_x0.7,patience,patience x0.7,False,0.0343,0.046,0.0117,34.04,0.0117,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,aging_minutes_x2,aging_rate,aging minutes-per-level x2 (slower),False,0.0343,0.0411,0.0067,19.6,0.0067,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,aging_minutes_x0.5,aging_rate,aging minutes-per-level x0.5 (faster),False,0.0343,0.0293,-0.0051,-14.76,0.0051,0.0048,False
+abandonment_rate,walkout rate (LWBS),baseline,aging_floor_2.5,aging_floor,aging floor 2.5,True,0.0343,0.0296,-0.0048,-13.89,0.0048,0.0048,True
+abandonment_rate,walkout rate (LWBS),baseline,acuity_more_esi23_5pts,acuity_mix,+5 points to ESI 2/ESI 3 from ESI 4/ESI 5,False,0.0343,0.0296,-0.0047,-13.79,0.0047,0.0048,True
+abandonment_rate,walkout rate (LWBS),baseline,aging_floor_3,aging_floor,aging floor 3,False,0.0343,0.0361,0.0017,5.09,0.0017,0.0048,True
+abandonment_rate,walkout rate (LWBS),baseline,acuity_more_esi45_5pts,acuity_mix,+5 points to ESI 4/ESI 5 from ESI 2/ESI 3,False,0.0343,0.0332,-0.0011,-3.33,0.0011,0.0048,True
+mean_wait_minutes,mean wait (min),baseline,clinician_share_x1.2,clinician_time_fraction,clinician share x1.2,False,34.8289,62.4414,27.6125,79.28,27.6125,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,service_x1.2,service_time,service x1.2,False,34.8289,60.7031,25.8742,74.29,25.8742,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,arrivals_x1.2,arrival_rate,arrivals x1.2,False,34.8289,59.7514,24.9225,71.56,24.9225,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,service_x0.8,service_time,service x0.8,False,34.8289,10.7781,-24.0507,-69.05,24.0507,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,clinician_share_x0.8,clinician_time_fraction,clinician share x0.8,False,34.8289,11.1051,-23.7238,-68.12,23.7238,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,arrivals_x0.8,arrival_rate,arrivals x0.8,False,34.8289,12.3727,-22.4562,-64.48,22.4562,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,service_x0.9,service_time,service x0.9,False,34.8289,19.7287,-15.1001,-43.36,15.1001,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,arrivals_x0.9,arrival_rate,arrivals x0.9,False,34.8289,22.637,-12.1919,-35.01,12.1919,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,service_x1.1,service_time,service x1.1,False,34.8289,46.1298,11.3009,32.45,11.3009,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,arrivals_x1.1,arrival_rate,arrivals x1.1,False,34.8289,45.4482,10.6193,30.49,10.6193,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,patience_x0.7,patience,patience x0.7,False,34.8289,25.6881,-9.1407,-26.24,9.1407,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,patience_x1.3,patience,patience x1.3,False,34.8289,38.8499,4.021,11.55,4.021,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,aging_minutes_x2,aging_rate,aging minutes-per-level x2 (slower),False,34.8289,30.8156,-4.0133,-11.52,4.0133,3.5458,False
+mean_wait_minutes,mean wait (min),baseline,aging_floor_2.5,aging_floor,aging floor 2.5,True,34.8289,31.2831,-3.5458,-10.18,3.5458,3.5458,True
+mean_wait_minutes,mean wait (min),baseline,acuity_more_esi23_5pts,acuity_mix,+5 points to ESI 2/ESI 3 from ESI 4/ESI 5,False,34.8289,32.5163,-2.3126,-6.64,2.3126,3.5458,True
+mean_wait_minutes,mean wait (min),baseline,aging_minutes_x0.5,aging_rate,aging minutes-per-level x0.5 (faster),False,34.8289,34.1677,-0.6612,-1.9,0.6612,3.5458,True
+mean_wait_minutes,mean wait (min),baseline,acuity_more_esi45_5pts,acuity_mix,+5 points to ESI 4/ESI 5 from ESI 2/ESI 3,False,34.8289,34.247,-0.5819,-1.67,0.5819,3.5458,True
+mean_wait_minutes,mean wait (min),baseline,aging_floor_3,aging_floor,aging floor 3,False,34.8289,35.253,0.4242,1.22,0.4242,3.5458,True
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,service_x0.8,service_time,service x0.8,False,100.7199,26.5351,-74.1847,-73.65,74.1847,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,clinician_share_x0.8,clinician_time_fraction,clinician share x0.8,False,100.7199,29.3822,-71.3377,-70.83,71.3377,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,arrivals_x0.8,arrival_rate,arrivals x0.8,False,100.7199,35.8514,-64.8684,-64.4,64.8684,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,clinician_share_x1.2,clinician_time_fraction,clinician share x1.2,False,100.7199,153.3334,52.6135,52.24,52.6135,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,service_x1.2,service_time,service x1.2,False,100.7199,150.4478,49.7279,49.37,49.7279,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,arrivals_x1.2,arrival_rate,arrivals x1.2,False,100.7199,146.3682,45.6483,45.32,45.6483,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,service_x0.9,service_time,service x0.9,False,100.7199,62.1832,-38.5366,-38.26,38.5366,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,arrivals_x0.9,arrival_rate,arrivals x0.9,False,100.7199,72.251,-28.4688,-28.27,28.4688,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,patience_x0.7,patience,patience x0.7,False,100.7199,75.4878,-25.2321,-25.05,25.2321,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,service_x1.1,service_time,service x1.1,False,100.7199,124.3224,23.6025,23.43,23.6025,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,arrivals_x1.1,arrival_rate,arrivals x1.1,False,100.7199,122.2448,21.5249,21.37,21.5249,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,patience_x1.3,patience,patience x1.3,False,100.7199,118.0094,17.2895,17.17,17.2895,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,aging_minutes_x2,aging_rate,aging minutes-per-level x2 (slower),False,100.7199,84.6167,-16.1032,-15.99,16.1032,4.7964,False
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,aging_floor_2.5,aging_floor,aging floor 2.5,True,100.7199,95.9235,-4.7964,-4.76,4.7964,4.7964,True
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,aging_floor_3,aging_floor,aging floor 3,False,100.7199,104.2486,3.5288,3.5,3.5288,4.7964,True
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,acuity_more_esi23_5pts,acuity_mix,+5 points to ESI 2/ESI 3 from ESI 4/ESI 5,False,100.7199,97.5956,-3.1243,-3.1,3.1243,4.7964,True
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,acuity_more_esi45_5pts,acuity_mix,+5 points to ESI 4/ESI 5 from ESI 2/ESI 3,False,100.7199,97.6681,-3.0518,-3.03,3.0518,4.7964,True
+p90_wait_esi3,"p90 wait, ESI 3 (min)",baseline,aging_minutes_x0.5,aging_rate,aging minutes-per-level x0.5 (faster),False,100.7199,99.2357,-1.4841,-1.47,1.4841,4.7964,True
